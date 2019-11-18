@@ -1,0 +1,76 @@
+{
+  "name": "-",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bundle.js",
+  "scripts": {
+    "pretest": "tsc",
+    "prepare": "tsc",
+    "nodemon": "nodemon dist/bundle.js",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "serve": "webpack --watch --mode=development",
+    "build": "npm run build:types && npm run build:js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "webpack --mode=production",
+    "dev": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"npm:serve\" \"npm:nodemon\"",
+    "start": "tsc && node dist/bundle.js",
+    "test": "mocha",
+    "test:watch": "mocha --watch",
+    "coverage": "nyc npm run test"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.tsx"
+    ],
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.6.2",
+    "@babel/core": "^7.6.2",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-numeric-separator": "^7.2.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/preset-typescript": "^7.6.0",
+    "@types/chai": "^4.2.5",
+    "@types/eyes": "^0.1.31",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.7.8",
+    "babel-loader": "^8.0.6",
+    "chai": "^4.2.0",
+    "concurrently": "^4.1.2",
+    "eyes": "^0.1.8",
+    "fork-ts-checker-webpack-plugin": "^1.5.0",
+    "mocha": "^6.2.2",
+    "mocha-typescript": "^1.1.17",
+    "nodemon": "^1.19.3",
+    "nyc": "^14.1.1",
+    "source-map-support": "^0.5.16",
+    "ts-node": "^8.5.2",
+    "tslint": "^5.20.0",
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.141",
+    "lodash": "^4.17.15"
+  }
+}
