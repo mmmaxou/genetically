@@ -128,7 +128,7 @@ const start = () => {
   // cubeGenetic();
   console.log(linearGenetic);
   console.log(cubeGenetic);
-  // console.log(baeleGenetic);
+  console.log(baeleGenetic);
   boothGenetic();
 };
 

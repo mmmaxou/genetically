@@ -17,13 +17,13 @@ describe('Linear function', () => {
         const x = randomValue();
         expect(x).to.be.a('number');
       });
-      it('should be higher than 0', () => {
+      it('should be higher than -32', () => {
         const x = randomValue();
-        expect(x).to.be.above(-1);
+        expect(x).to.be.at.least(-32);
       });
-      it('should be less than 64', () => {
+      it('should be less than 32', () => {
         const x = randomValue();
-        expect(x).to.be.below(64);
+        expect(x).to.be.at.most(32);
       });
     });
 
@@ -71,10 +71,10 @@ describe('Linear function', () => {
       expect(f).to.be.a('number');
     });
 
-    it('should return a the square of the number', () => {
+    it('should return the square of the number * -1', () => {
       const x = 3;
       const f = fitness(x);
-      expect(f).to.equal(9);
+      expect(f).to.equal(-9);
     });
   });
 });
@@ -115,8 +115,8 @@ describe('Linear Genetic Algorithm', () => {
 
   describe('Computation', () => {
     it('should compute a fitness', () => {
-      expect(ga.fitness(1)).to.be.equal(1);
-      expect(ga.fitness(10)).to.be.equal(10 * 10);
+      expect(ga.fitness(1)).to.be.equal(-1);
+      expect(ga.fitness(10)).to.be.equal(-10 * 10);
       expect(ga.fitness(0)).to.be.equal(0);
     });
   });

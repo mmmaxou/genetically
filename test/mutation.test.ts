@@ -74,7 +74,7 @@ describe('Mutation Strategies', () => {
 
     it('should be less efficicent than naive strategy for high probability p=0.5', () => {
       const p = 0.5;
-      const ITERATIONS = 10000;
+      const ITERATIONS = 30000;
       const nChain = '0110101000100010101010001000100010';
       const flipBit = new SerieFlipBitMutation(p);
       const naive = new NaiveFlipBitMutation(p);

@@ -43,8 +43,8 @@ describe('Selections Strategies', () => {
       expect(c).to.be.lengthOf(pop.popConfig.popsize);
     });
 
-    it('should take at most 20% more than average computation time ( 98% of the time )', () => {
-      const ITERATIONS = 1234;
+    it('should take at most 20% more than average computation time ( 95% of the time )', () => {
+      const ITERATIONS = 12345;
       let cptMore = 0;
       for (let i = 0; i < ITERATIONS; i++) {
         roulette.selection(pop, statistics);
@@ -61,11 +61,11 @@ describe('Selections Strategies', () => {
         cptMore += deltaIter < 130 ? 0.5 : 0;
         cptMore += deltaTime < 130 ? 0.5 : 0;
       }
-      expect(cptMore).to.be.at.least(ITERATIONS * 0.98);
+      expect(cptMore).to.be.at.least(ITERATIONS * 0.95);
     });
 
     it('should have on average a better fitness than the former population', () => {
-      const ITERATIONS = 123;
+      const ITERATIONS = 12345;
       let cptMore = 0;
       for (let i = 0; i < ITERATIONS; i++) {
         const c = roulette.selection(pop);

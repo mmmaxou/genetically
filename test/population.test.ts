@@ -63,7 +63,6 @@ describe('Population Class', () => {
       expect(() => r.sumFitness).to.not.throw(Error);
       expect(r.sumFitness).to.be.a('number');
       expect(r.sumFitness).to.not.equal(0);
-      expect(r.sumFitness).to.be.above(0);
     });
 
     it('should compute the mean', () => {
@@ -72,7 +71,6 @@ describe('Population Class', () => {
       expect(() => r.meanFitness).to.not.throw(Error);
       expect(r.meanFitness).to.be.a('number');
       expect(r.meanFitness).to.not.equal(0);
-      expect(r.meanFitness).to.be.above(0);
     });
 
     it('should sort the individuals', () => {

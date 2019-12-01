@@ -178,9 +178,9 @@ export class Population {
     /**
      * Sort individuals
      */
-    // this.population.sort((A, B) => {
-    //   return B.normalizedFitnessScore - A.normalizedFitnessScore;
-    // });
+    this.population.sort((A, B) => {
+      return B.normalizedFitnessScore - A.normalizedFitnessScore;
+    });
 
     /**
      * Assign

@@ -10,7 +10,7 @@ import {createEncodeFunctionOfBase} from './../lib/Helpers';
 /**
  * Random starting value
  */
-export const randomValue = () => Math.ceil(Math.random() * 64) - 32;
+export const randomValue = () => Math.floor(Math.random() * 64) - 32;
 
 /**
  * Transform x
