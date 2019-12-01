@@ -1,0 +1,15 @@
+{
+  "javascript.preferences.quoteStyle": "single",
+  "prettier.jsxSingleQuote": true,
+  "prettier.quoteProps": "consistent",
+  "prettier.singleQuote": true,
+  "typescript.preferences.quoteStyle": "single",
+  "autoimport.doubleQuotes": true,
+  "editor.autoSurround": "quotes",
+  "editor.autoClosingQuotes": "always",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.tabSize": 2
+}

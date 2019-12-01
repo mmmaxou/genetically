@@ -1,9 +1,9 @@
 // tslint:disable: no-unused-expression
 
-import { Population } from './../src/lib/Population';
-import { expect } from 'chai';
+import {Population} from './../src/lib/Population';
+import {expect} from 'chai';
 import 'mocha';
-import { LinearGeneticAlgorithm } from './../src/example/LinearFunction';
+import {LinearGeneticAlgorithm} from './../src/example/LinearFunction';
 
 describe('Population Class', () => {
   const ga = LinearGeneticAlgorithm();
@@ -50,11 +50,11 @@ describe('Population Class', () => {
     });
 
     it('should compute the least fittest', () => {
-      expect(() => r.leastFittest).to.throw(Error);
+      expect(() => r.leastFit).to.throw(Error);
       r.run();
-      expect(() => r.leastFittest).to.not.throw(Error);
-      expect(r.leastFittest).to.be.a('object');
-      expect(r.leastFittest.chain).to.be.a('string');
+      expect(() => r.leastFit).to.not.throw(Error);
+      expect(r.leastFit).to.be.a('object');
+      expect(r.leastFit.chain).to.be.a('string');
     });
 
     it('should compute the sum', () => {
@@ -73,6 +73,22 @@ describe('Population Class', () => {
       expect(r.meanFitness).to.be.a('number');
       expect(r.meanFitness).to.not.equal(0);
       expect(r.meanFitness).to.be.above(0);
+    });
+
+    it('should sort the individuals', () => {
+      r.run();
+      expect(r.population[0].fitnessScore).to.be.above(
+        r.population[r.population.length - 1].fitnessScore
+      );
+    });
+
+    it('should normalize the individuals', () => {
+      r.run();
+      r.population.forEach((individual) => {
+        expect(individual.normalizedFitnessScore).to.be.a('number');
+        expect(individual.normalizedFitnessScore).to.be.at.least(0);
+        expect(individual.normalizedFitnessScore).to.be.at.most(1);
+      });
     });
   });
 });

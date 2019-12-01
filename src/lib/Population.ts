@@ -1,6 +1,12 @@
-import { Chromosome } from './Chromosome';
-import { PopulationParams, RequiredConfigureParams } from './Params';
-import { GeneticAlgorithm } from './GeneticAlgorithm';
+import {Chromosome, BitChain} from './Chromosome';
+import {PopulationParams, RequiredConfigureParams} from './Params';
+import {GeneticAlgorithm} from './GeneticAlgorithm';
+const now = require('performance-now');
+
+/**
+ * Contains the logic of a population
+ * Descr
+ */
 export class Population {
   /**
    * ==================================
@@ -8,7 +14,7 @@ export class Population {
    * ==================================
    */
   static readonly DEFAULT_CONFIGURATION: PopulationParams = {
-    popsize: 50
+    popsize: 50,
   };
   /**
    * ==================================
@@ -18,17 +24,35 @@ export class Population {
   private _population: Chromosome[] = [];
   private _computed = false;
   private _fittest: Chromosome = this.population[0];
-  private _leastFittest: Chromosome = this.population[0];
+  private _leastFit: Chromosome = this.population[0];
   private _sumFitness = 0;
   private _meanFitness = 0;
+  private _timeToRun = 0;
 
   /**
    * ==================================
    * Constructor
    * ==================================
    */
-  constructor(private geneticAlgorithm: GeneticAlgorithm<any>) {
-    this._population = this.initPopulation();
+  constructor(
+    private geneticAlgorithm: GeneticAlgorithm<any>,
+    initialPopulation?: Chromosome[] | BitChain[]
+  ) {
+    if (initialPopulation) {
+      if (typeof initialPopulation[0] === 'string') {
+        // initialPopulation is an array of string
+        // Create associated chromosomes
+        this._population = (initialPopulation as BitChain[]).map(
+          (chain: BitChain) => new Chromosome(this.geneticAlgorithm, chain)
+        );
+      } else {
+        // initialPopulation is an array of chromosome
+        // Use it as is
+        this._population = initialPopulation as Chromosome[];
+      }
+    } else {
+      this._population = this.initPopulation();
+    }
   }
   /**
    * ==================================
@@ -53,9 +77,7 @@ export class Population {
    */
   get fittest(): Chromosome {
     if (!this._computed) {
-      throw new Error(
-        `You must call population.run() before finding the fittest`
-      );
+      throw this.notComputedError();
     } else {
       return this._fittest;
     }
@@ -64,13 +86,11 @@ export class Population {
   /**
    * Get the least fittest individual
    */
-  get leastFittest(): Chromosome {
+  get leastFit(): Chromosome {
     if (!this._computed) {
-      throw new Error(
-        `You must call population.run() before finding the least fittest`
-      );
+      throw this.notComputedError();
     } else {
-      return this._leastFittest;
+      return this._leastFit;
     }
   }
 
@@ -79,7 +99,7 @@ export class Population {
    */
   get sumFitness(): number {
     if (!this._computed) {
-      throw new Error(`You must call population.run() before finding sum`);
+      throw this.notComputedError();
     } else {
       return this._sumFitness;
     }
@@ -90,7 +110,7 @@ export class Population {
    */
   get meanFitness(): number {
     if (!this._computed) {
-      throw new Error(`You must call population.run() before finding mean`);
+      throw this.notComputedError();
     } else {
       return this._meanFitness;
     }
@@ -112,6 +132,10 @@ export class Population {
 
   /**
    * Can only be called once
+   * Compute the fitness of every individual
+   * Compute statistics for the population
+   * Normalize the population
+   * Sort the population
    */
   public run(): boolean {
     /**
@@ -124,8 +148,9 @@ export class Population {
     /**
      * Process
      */
+    const startTime = now();
     let fittest: Chromosome = this.population[0];
-    let leastFittest: Chromosome = this.population[0];
+    let leastFit: Chromosome = this.population[0];
     let max = Number.MIN_SAFE_INTEGER;
     let min = Number.MAX_SAFE_INTEGER;
     let sum = 0;
@@ -137,19 +162,34 @@ export class Population {
         fittest = individual;
       } else if (min > score) {
         min = score;
-        leastFittest = individual;
+        leastFit = individual;
       }
       sum += score;
     });
     const mean = sum / this.population.length;
 
     /**
+     * Normalize individuals
+     */
+    this.population.forEach((individual) => {
+      individual.normalizeBaseOnSumOfFitness(sum);
+    });
+
+    /**
+     * Sort individuals
+     */
+    // this.population.sort((A, B) => {
+    //   return B.normalizedFitnessScore - A.normalizedFitnessScore;
+    // });
+
+    /**
      * Assign
      */
     this._fittest = fittest;
-    this._leastFittest = leastFittest;
+    this._leastFit = leastFit;
     this._sumFitness = sum;
     this._meanFitness = mean;
+    this._timeToRun = now() - startTime;
 
     /**
      * Freeze _computed
@@ -157,6 +197,32 @@ export class Population {
     this._computed = true;
     Object.freeze(this._computed);
     return true;
+  }
+
+  /**
+   * Display the statistics of the population
+   * Can only be called after run()
+   */
+  public display(): void {
+    if (!this._computed) {
+      console.log(`
+===== Population =====
+Population size is ${this._population.length}
+Population is not yet computed.
+Call population.run()
+      `);
+    } else {
+      console.log(`
+===== Population =====
+Population size is ${this._population.length}
+Time for running was ${this._timeToRun}
+Fittest chromosome is ${this.fittest.fitnessScore}
+Least fit chromosome is ${this.leastFit.fitnessScore}
+Mean fitness is ${this.meanFitness}
+Chain of the fittest is ${this.fittest.chain}
+Solution of the fittest is ${this.geneticAlgorithm.decode(this.fittest.chain)}
+      `);
+    }
   }
 
   /**
@@ -173,5 +239,9 @@ export class Population {
       Array(this.popConfig.popsize),
       () => new Chromosome(this.geneticAlgorithm)
     );
+  }
+
+  private notComputedError(): Error {
+    return new Error(`You must call population.run() before finding mean`);
   }
 }

@@ -1,5 +1,7 @@
-import { GeneticAlgorithm } from './GeneticAlgorithm';
-import { RequiredConfigureParams } from './Params';
+import {GeneticAlgorithm} from './GeneticAlgorithm';
+import {RequiredConfigureParams} from './Params';
+
+export type BitChain = string;
 
 export class Chromosome {
   /**
@@ -13,15 +15,24 @@ export class Chromosome {
    * ==================================
    */
   private _fitnessScore = 0;
+  private _normalizedFitnessScore = 0;
   private _computed = false;
-  private _chain: string;
+  private _normalized = false;
+  private _chain: BitChain;
   /**
    * ==================================
    * Constructor
    * ==================================
    */
-  constructor(private geneticAlgorithm: GeneticAlgorithm<any>) {
-    this._chain = this.config.encode(this.config.randomValue());
+  constructor(
+    private geneticAlgorithm: GeneticAlgorithm<any>,
+    initialChain?: BitChain
+  ) {
+    if (initialChain) {
+      this._chain = initialChain;
+    } else {
+      this._chain = this.config.encode(this.config.randomValue());
+    }
   }
   /**
    * ==================================
@@ -32,12 +43,12 @@ export class Chromosome {
     return this.geneticAlgorithm.configuration;
   }
 
-  get chain(): string {
+  get chain(): BitChain {
     return this._chain;
   }
   /**
    * ==================================
-   * Public
+   * Getter
    * ==================================
    */
 
@@ -53,8 +64,25 @@ export class Chromosome {
     return this._fitnessScore;
   }
 
+  public get normalizedFitnessScore(): number {
+    if (!this._normalized) {
+      throw new Error(
+        'You must call chromosome.normalizeBaseOnSumOfFitness( sum ) before'
+      );
+    } else {
+      return this._normalizedFitnessScore;
+    }
+  }
+  /**
+   * ==================================
+   * Public
+   * ==================================
+   */
+
   /**
    * Can only be called once
+   * return true if computations were done
+   * return false if run was already called
    */
   public run(): boolean {
     /**
@@ -75,6 +103,15 @@ export class Chromosome {
     this._computed = true;
     Object.freeze(this._computed);
     return true;
+  }
+
+  /**
+   * Normalize the fitness score of the individual
+   * Mark it normalized
+   */
+  public normalizeBaseOnSumOfFitness(sum: number) {
+    this._normalized = true;
+    this._normalizedFitnessScore = this._fitnessScore / sum;
   }
 
   /**

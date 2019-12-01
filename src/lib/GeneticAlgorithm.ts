@@ -1,4 +1,9 @@
-import { Population } from './Population';
+import {
+  CrossoverFunction,
+  SinglePointCrossover,
+  CrossoverStatistics,
+} from './Crossover';
+import {Population} from './Population';
 import {
   ConfigureParams,
   RequiredConfigureParams,
@@ -6,8 +11,18 @@ import {
   DecodeFunction,
   RandomValueFunction,
   FitnessFunction,
-  PopulationParams
+  PopulationParams,
+  ChangeConfigurationParams,
 } from './Params';
+import {BitChain, Chromosome} from './Chromosome';
+import {
+  RouletteWheelSelection,
+  SelectionFunction,
+  SelectionStatistics,
+} from './Selection';
+import {MutationStrategy, FlipBitMutation} from './Mutation';
+const now = require('performance-now');
+
 export class GeneticAlgorithm<T> {
   /**
    * ==================================
@@ -16,7 +31,13 @@ export class GeneticAlgorithm<T> {
    */
   static readonly DEFAULT_CONFIGURATION: ConfigureParams = {
     verbose: 'DEBUG',
-    population: Population.DEFAULT_CONFIGURATION
+    population: Population.DEFAULT_CONFIGURATION,
+    selection: new RouletteWheelSelection(),
+    crossover: new SinglePointCrossover(),
+    mutation: new FlipBitMutation(),
+    iterations: 50,
+    stopCondition: () => false,
+    afterEach: () => {},
   };
 
   /**
@@ -26,6 +47,8 @@ export class GeneticAlgorithm<T> {
    */
   private config: RequiredConfigureParams<T>;
   private populations: Population[] = [];
+  private allTimeBestChromosome: Chromosome;
+  private time = 0;
 
   /**
    * ==================================
@@ -39,6 +62,7 @@ export class GeneticAlgorithm<T> {
     this.config = config;
     this.configure(config);
     this.populations = this.initGeneration();
+    this.allTimeBestChromosome = this.lastPopulation.population[0];
   }
 
   /**
@@ -47,23 +71,39 @@ export class GeneticAlgorithm<T> {
    * ==================================
    */
   get encode(): EncodeFunction<T> {
-    return this.config.encode;
+    return this.configuration.encode;
   }
 
   get decode(): DecodeFunction<T> {
-    return this.config.decode;
+    return this.configuration.decode;
   }
 
   get randomValue(): RandomValueFunction<T> {
-    return this.config.randomValue;
+    return this.configuration.randomValue;
   }
 
   get fitness(): FitnessFunction<T> {
-    return this.config.fitness;
+    return this.configuration.fitness;
+  }
+
+  get selection(): SelectionFunction {
+    return this.configuration.selection.selection;
+  }
+
+  get crossover(): CrossoverFunction {
+    return this.configuration.crossover.crossover;
+  }
+
+  get mutation(): MutationStrategy {
+    return this.configuration.mutation;
   }
 
   get configuration(): RequiredConfigureParams<T> {
     return this.config;
+  }
+
+  get allTimeBest(): Chromosome {
+    return this.allTimeBestChromosome;
   }
 
   get lastPopulation(): Population {
@@ -79,21 +119,20 @@ export class GeneticAlgorithm<T> {
    * Public
    * ==================================
    */
+
   /**
-   * Change configuration
+   * Change the configuration on the fly
    */
-  public configure(configuration: RequiredConfigureParams<T>): void {
+  public changeConfiguration(
+    configuration: ChangeConfigurationParams<T>
+  ): void {
     /**
-     * Default configuration
+     * Create new configuration
      */
-    const popConfig: PopulationParams = {
-      ...Population.DEFAULT_CONFIGURATION,
-      ...configuration.population
-    };
     const config: RequiredConfigureParams<T> = {
       ...GeneticAlgorithm.DEFAULT_CONFIGURATION,
+      ...this.configuration,
       ...configuration,
-      population: popConfig
     };
 
     /**
@@ -115,10 +154,126 @@ export class GeneticAlgorithm<T> {
   }
 
   /**
+   * Refresh the last population
+   */
+  public refreshPopulation(): void {
+    this.populations[this.populations.length - 1] = this.initGeneration()[0];
+  }
+
+  /**
+   * Compute statistics
+   */
+  public runPopulation(): void {
+    this.lastPopulation.run();
+  }
+
+  /**
    * Start the generation
    */
   public runOnce(): void {
-    this.lastPopulation.run();
+    /**
+     * Compute the fitness of the population
+     */
+    this.runPopulation();
+
+    /**
+     * Display population
+     */
+    // this.lastPopulation.display();
+
+    /**
+     * Save the all time best
+     */
+    this.tryToSaveAllTimeBest();
+
+    /**
+     * Selection
+     */
+    const selectionStatistics = new SelectionStatistics();
+    const selected: BitChain[] = this.selection(
+      this.lastPopulation,
+      selectionStatistics
+    );
+    /**
+     * Crossover
+     * and
+     * Mutation
+     */
+    const crossoverStatistics = new CrossoverStatistics();
+    const crossed: BitChain[] = this.crossover(
+      selected,
+      this.mutation,
+      crossoverStatistics
+    );
+
+    /**
+     * Create new population
+     */
+    const newPop = new Population(this, crossed);
+    this.populations.push(newPop);
+  }
+
+  /**
+   * Evolve
+   */
+  public run(): void {
+    let stop = false;
+    const start = now();
+    while (!stop) {
+      /**
+       * Run once
+       */
+      this.runOnce();
+      this.runPopulation();
+
+      /**
+       * After each
+       */
+      this.configuration.afterEach(
+        this.lastPopulation,
+        this.populations.length
+      );
+
+      /**
+       * Stop conditions
+       */
+      if (
+        this.populations.length >= this.configuration.iterations ||
+        this.configuration.stopCondition(
+          this.lastPopulation,
+          this.populations.length
+        )
+      ) {
+        stop = true;
+      }
+
+      /**
+       * Save time
+       */
+      this.time = now() - start;
+    }
+
+    /**
+     * Save the all time best
+     */
+    this.tryToSaveAllTimeBest();
+  }
+
+  /**
+   * Display informations about the generation
+   * Display informations about the last population
+   */
+  public display(): void {
+    console.log(`
+===== Generation =====
+Generation is ${this.populations.length}
+Time elapsed is ${this.time}ms
+All time best is ${this.allTimeBest.fitnessScore}
+All time best chain is ${this.allTimeBest.chain}
+All time best code is ${this.decode(this.allTimeBest.chain)}
+
+`);
+    this.lastPopulation.display();
   }
 
   /**
@@ -126,6 +281,47 @@ export class GeneticAlgorithm<T> {
    * Private
    * ==================================
    */
+  private tryToSaveAllTimeBest() {
+    /**
+     * Save the all time best
+     */
+    const currentBest = this.lastPopulation.fittest;
+    if (!this.allTimeBestChromosome) {
+      this.allTimeBestChromosome = currentBest;
+    } else if (
+      this.allTimeBestChromosome.fitnessScore < currentBest.fitnessScore
+    ) {
+      this.allTimeBestChromosome = currentBest;
+    }
+  }
+
+  /**
+   * Change configuration
+   */
+  private configure(configuration: RequiredConfigureParams<T>): void {
+    /**
+     * Default configuration
+     */
+    const popConfig: PopulationParams = {
+      ...Population.DEFAULT_CONFIGURATION,
+      ...configuration.population,
+    };
+    const config: RequiredConfigureParams<T> = {
+      ...GeneticAlgorithm.DEFAULT_CONFIGURATION,
+      ...configuration,
+      population: popConfig,
+    };
+
+    /**
+     * Test configuration
+     */
+    this.testGeneticAlgorithmConfiguration(config);
+
+    /**
+     * Update configuration
+     */
+    this.config = config;
+  }
 
   /**
    * Verify the given configuration is valid
@@ -150,8 +346,8 @@ export class GeneticAlgorithm<T> {
       this.error('\x1b[31mEncoded value is', enc);
       this.error('\x1b[31mDecoded value is', dec);
       throw new Error(
-        `Error trying to encode then decode a random value.
-        code: 'decode(encode(randomValue))' is different than randomValue`
+        `\x1b[31mError trying to encode then decode a random value.
+\x1b[31mcode: 'decode(encode(randomValue))' is different than randomValue`
       );
     }
 
@@ -174,8 +370,8 @@ export class GeneticAlgorithm<T> {
   /**
    * Display error
    */
-  private error(message: string, object?: any) {
-    if (this.config.verbose === 'DEBUG') {
+  private error(message: string, object: any = '') {
+    if (this.configuration.verbose === 'DEBUG') {
       console.error(message, object);
     }
   }

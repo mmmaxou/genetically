@@ -1,9 +1,9 @@
-import {GeneticAlgorithm} from './../lib/GeneticAlgorithm';
-import {createEncodeFunctionOfBase} from './../lib/Helpers';
+import {GeneticAlgorithm} from '../lib/GeneticAlgorithm';
+import {createEncodeFunctionOfBase} from '../lib/Helpers';
 
 /**
  * Function to maximize :
- * f(x) = -x²
+ * f(x) = x³
  * In x in range [-32, 32]
  */
 
@@ -31,12 +31,12 @@ export const decode = (x: string): number => parseInt(x, 2) - 32;
  * Function to optimize
  * f(x) = x²
  */
-export const fitness = (i: number): number => -1 * i ** 2;
+export const fitness = (i: number): number => i ** 3;
 
 /**
  * Genetic algorithm creation
  */
-export const LinearGeneticAlgorithm = () =>
+export const CubeGeneticAlgorithm = () =>
   new GeneticAlgorithm<number>({
     ...GeneticAlgorithm.DEFAULT_CONFIGURATION,
     encode,

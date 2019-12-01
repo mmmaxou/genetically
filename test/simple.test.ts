@@ -1,12 +1,14 @@
+import {Chromosome} from './../src/lib/Chromosome';
 import {
   randomValue,
   encode,
   decode,
-  fitness
+  fitness,
+  LinearGeneticAlgorithm,
 } from './../src/example/LinearFunction';
-import { expect } from 'chai';
+import {expect} from 'chai';
 import 'mocha';
-import { createEncodeFunctionOfBase } from './../src/lib/Helpers';
+import {createEncodeFunctionOfBase} from './../src/lib/Helpers';
 
 describe('Linear function', () => {
   describe('Coding representation of a solution', () => {
@@ -17,7 +19,7 @@ describe('Linear function', () => {
       });
       it('should be higher than 0', () => {
         const x = randomValue();
-        expect(x).to.be.above(0);
+        expect(x).to.be.above(-1);
       });
       it('should be less than 64', () => {
         const x = randomValue();
@@ -104,6 +106,36 @@ describe('Helper functions', () => {
       expect(() =>
         createEncodeFunctionOfBase(Number.MAX_SAFE_INTEGER, 8)
       ).to.throw(Error);
+    });
+  });
+});
+
+describe('Linear Genetic Algorithm', () => {
+  const ga = LinearGeneticAlgorithm();
+
+  describe('Computation', () => {
+    it('should compute a fitness', () => {
+      expect(ga.fitness(1)).to.be.equal(1);
+      expect(ga.fitness(10)).to.be.equal(10 * 10);
+      expect(ga.fitness(0)).to.be.equal(0);
+    });
+  });
+
+  describe('Generations', () => {
+    it('should create a whole population', () => {
+      expect(ga.lastPopulation.population).to.be.lengthOf(
+        ga.configuration.population.popsize
+      );
+    });
+
+    it('should run once', () => {
+      const c: Chromosome = ga.lastPopulation.population[0];
+
+      expect(ga.runOnce());
+
+      const c2 = ga.lastPopulation.population[0];
+
+      expect(c).to.not.deep.equal(c2);
     });
   });
 });

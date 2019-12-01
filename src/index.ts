@@ -1,15 +1,135 @@
-import { randomValue, encode, decode } from './example/LinearFunction';
-// import { inspect } from 'util';
+import {LinearGeneticAlgorithm} from './example/LinearFunction';
+import {CubeGeneticAlgorithm} from './example/CubeFunction';
+import {BealeGeneticAlgorithm} from './example/BealeFunction';
+import {BoothGeneticAlgorithm} from './example/BoothFunction';
 
-console.log(' __ Start __');
+const linearGenetic = () => {
+  console.log(' __ Start __');
+  const ga = LinearGeneticAlgorithm();
 
-const startingValue = randomValue();
-console.log('Random starting value is ' + startingValue);
+  console.log('ga is ', ga);
 
-const encoded = encode(startingValue);
-console.log('Encoded value is ' + encoded);
+  console.log('Changing configuration');
+  ga.changeConfiguration({
+    population: {
+      popsize: 100,
+    },
+    afterEach(pop) {
+      pop.display();
+    },
+    stopCondition(pop) {
+      return pop.fittest.fitnessScore === 0;
+    },
+  });
+  ga.refreshPopulation();
+  ga.display();
 
-const decoded = decode(encoded);
-console.log('Decoded value is ' + decoded);
+  console.log('Before running');
+  ga.runPopulation();
+  ga.display();
 
-console.log(' __ End __');
+  console.log('Let us evolve');
+  ga.run();
+
+  console.log('End evolution');
+  ga.display();
+
+  console.log(' __ End __');
+};
+const cubeGenetic = () => {
+  console.log(' __ Start __');
+  const ga = CubeGeneticAlgorithm();
+  const stop = 31 ** 3;
+  ga.changeConfiguration({
+    population: {
+      popsize: 200,
+    },
+    afterEach(pop) {
+      pop.display();
+    },
+    stopCondition(pop) {
+      return pop.fittest.fitnessScore >= stop - 1;
+    },
+  });
+  ga.refreshPopulation();
+
+  console.log('Before running');
+  ga.runPopulation();
+  ga.display();
+
+  console.log('Let us evolve');
+  ga.run();
+
+  console.log('End evolution');
+  console.log(' __ End __');
+};
+const baeleGenetic = () => {
+  console.log(' __ Start __');
+  const ga = BealeGeneticAlgorithm();
+  ga.changeConfiguration({
+    iterations: 100,
+    population: {
+      popsize: 100,
+    },
+    afterEach(pop, i) {
+      if (i % 10 === 0) {
+        console.log('Generation is', i);
+        pop.display();
+      }
+    },
+    stopCondition(pop) {
+      return pop.fittest.fitnessScore >= -0.01;
+    },
+  });
+  ga.refreshPopulation();
+
+  console.log('Before running');
+  ga.runPopulation();
+  ga.display();
+
+  console.log('Let us evolve');
+  ga.run();
+
+  console.log(' __ End __');
+};
+const boothGenetic = () => {
+  console.log(' __ Start __');
+  const ga = BoothGeneticAlgorithm();
+  ga.changeConfiguration({
+    iterations: 200,
+    population: {
+      popsize: 200,
+    },
+    afterEach(pop, i) {
+      if (i % 10 === 0) {
+        console.log('Generation is', i);
+        pop.display();
+      }
+    },
+    stopCondition(pop) {
+      return pop.fittest.fitnessScore >= -0.1;
+    },
+  });
+  ga.refreshPopulation();
+
+  console.log('Before running');
+  ga.runPopulation();
+  ga.display();
+
+  console.log('Let us evolve');
+  ga.run();
+  ga.display();
+
+  console.log(' __ End __');
+};
+
+const start = () => {
+  // linearGenetic();
+  // cubeGenetic();
+  console.log(linearGenetic);
+  console.log(cubeGenetic);
+  // console.log(baeleGenetic);
+  boothGenetic();
+};
+
+start();
