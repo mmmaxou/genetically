@@ -9,12 +9,15 @@ import {
   ChangeConfigurationParams,
 } from './Params';
 import {BitChain, Chromosome} from './Chromosome';
-import {SelectionFunction, SelectionStatistics} from './Selection';
 import {MutationStrategy} from './Mutation/GenericMutation';
 import {
   CrossoverFunction,
   CrossoverStatistics,
 } from './Crossover/GenericCrossover';
+import {
+  SelectionFunction,
+  SelectionStatistics,
+} from './Selection/SelectionGeneric';
 const now = require('performance-now');
 
 export class GeneticAlgorithm<T> {

@@ -1,40 +1,8 @@
-const now = require('performance-now');
-import {Chromosome, BitChain} from './Chromosome';
-import {Population} from './Population';
-import _ from 'lodash';
+import {SelectionStrategy, SelectionStatistics} from './SelectionGeneric';
 
-/**
- * Inspirations for selections strategies
- * https://en.wikipedia.org/wiki/Selection_(genetic_algorithm)#a._Roulette_Wheel_Selection
- */
-
-/**
- * Interface for a selection strategy
- */
-export abstract class SelectionStrategy {
-  public abstract selection(
-    population: Population,
-    statistics?: SelectionStatistics
-  ): BitChain[];
-}
-
-/**
- * Type for selection strategy
- */
-export type SelectionFunction = (
-  population: Population,
-  statistics?: SelectionStatistics
-) => BitChain[];
-
-/**
- * Interface for statistics
- */
-export class SelectionStatistics {
-  public time = 0;
-  public iterations = 0;
-  public averageIteration = 0;
-  public averageTime = 0;
-}
+import {Population} from '../Population';
+import {BitChain, Chromosome} from '../Chromosome';
+import _, {now} from 'lodash';
 
 /**
  * https://arxiv.org/pdf/1109.3627.pdf

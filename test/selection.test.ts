@@ -1,13 +1,11 @@
 import {expect} from 'chai';
 import {LinearGeneticAlgorithm} from '../src/example/LinearFunction';
 import {Population} from '../src/lib/Population';
-import {
-  RouletteWheelSelection,
-  SelectionStatistics,
-} from '../src/lib/Selection';
 import _ from 'lodash';
 import {FitnessFunctionObjective} from '../src/lib/Params';
 import {ITERATIONS} from './consts.test';
+import {SelectionStatistics} from '../src/lib/Selection/SelectionGeneric';
+import {RouletteWheelSelection} from '../src/lib/Selection/RouletteWheelSelection';
 
 describe('Selections Strategies', () => {
   const ga = LinearGeneticAlgorithm();

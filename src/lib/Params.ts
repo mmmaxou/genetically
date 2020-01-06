@@ -1,7 +1,7 @@
-import {SelectionStrategy} from './Selection';
 import {Population} from './Population';
 import {MutationStrategy} from './Mutation/GenericMutation';
 import {CrossoverStrategy} from './Crossover/GenericCrossover';
+import {SelectionStrategy} from './Selection/SelectionGeneric';
 
 export type EncodeFunction<T> = (x: T) => string;
 export type DecodeFunction<T> = (s: string) => T;
@@ -26,6 +26,7 @@ export interface ConfigureParams {
   stopCondition: StopConditionFunction;
   afterEach: AfterEachFunction;
 }
+
 export interface RequiredConfigureParams<T> extends ConfigureParams {
   encode: EncodeFunction<T>;
   decode: DecodeFunction<T>;
