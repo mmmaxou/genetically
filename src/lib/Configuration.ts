@@ -7,7 +7,7 @@ import {
 } from './Params';
 import {RouletteWheelSelection} from './Selection';
 import {SinglePointCrossover} from './Crossover';
-import {FlipBitMutation} from './Mutation';
+import {FlipBitMutation} from './Mutation/FlipBitMutation';
 
 export const DEFAULT_CONFIGURATION_POPULATION: PopulationParams = {
   popsize: 50,

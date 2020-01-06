@@ -1,6 +1,7 @@
 import {BitChain} from './Chromosome';
 import _ from 'lodash';
-import {MutationStrategy, NoMutation} from './Mutation';
+import {MutationStrategy} from './Mutation/GenericMutation';
+import {NoMutation} from './Mutation/NoMutation';
 const now = require('performance-now');
 
 /**

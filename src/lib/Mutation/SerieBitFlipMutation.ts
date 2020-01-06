@@ -1,57 +1,7 @@
-import {BitChain} from './Chromosome';
-const now = require('performance-now');
-
-/**
- * Inspiration for mutation strategies
- * https://en.wikipedia.org/wiki/Mutation_(genetic_algorithm)
- */
-
-const DEFAULT_MUTATION_CONFIGURATION = {
-  probability: 0.05,
-};
-
-/**
- * Interface for a selection strategy
- */
-export abstract class MutationStrategy {
-  constructor(
-    protected probability: number = DEFAULT_MUTATION_CONFIGURATION.probability
-  ) {}
-
-  /**
-   * Compute statistics
-   */
-  public mutationWithStatistics(
-    chain: BitChain,
-    statistics: MutationStatistics
-  ): BitChain {
-    const start = now();
-    const time = this.mutation(chain);
-    statistics.time += now() - start;
-    return time;
-  }
-
-  /**
-   * Mutate a chain
-   */
-  public abstract mutation(chain: BitChain): BitChain;
-}
-
-/**
- * Interface for statistics
- */
-export class MutationStatistics {
-  public time = 0;
-}
-
-/**
- * No Mutation strategy
- */
-export class NoMutation extends MutationStrategy {
-  public mutation(chain: string): string {
-    return chain;
-  }
-}
+import {
+  MutationStrategy,
+  DEFAULT_MUTATION_CONFIGURATION,
+} from './GenericMutation';
 
 /**
  * Flip bit mutation
@@ -116,52 +66,5 @@ export class SerieFlipBitMutation extends MutationStrategy {
     const p = Math.random();
     const iln1mp = this.invertedLogOfOneMinusProbability;
     this._nextMutationCounter = ~~(Math.log(1 - p) * iln1mp);
-  }
-}
-
-/**
- * Naive Flip bit mutation
- * Use a probability for each mutation
- */
-export class NaiveFlipBitMutation extends MutationStrategy {
-  /**
-   * Mutate a chain
-   */
-  public mutation(chain: string): string {
-    const newChain = chain
-      .split('')
-      .map((c) => {
-        const p = Math.random();
-        if (p < this.probability) {
-          return c === '0' ? '1' : '0';
-        } else {
-          return c;
-        }
-      })
-      .join('');
-    return newChain;
-  }
-}
-
-/**
- * Automatically use the best algorithm based on the probability
- * The threshold 0.04 was found empirically
- */
-export class FlipBitMutation extends MutationStrategy {
-  private strategy: MutationStrategy;
-
-  constructor(
-    probability: number = DEFAULT_MUTATION_CONFIGURATION.probability
-  ) {
-    super(probability);
-    if (probability > 0.65) {
-      this.strategy = new NaiveFlipBitMutation(probability);
-    } else {
-      this.strategy = new SerieFlipBitMutation(probability);
-    }
-  }
-
-  public mutation(chain: string): string {
-    return this.strategy.mutation(chain);
   }
 }

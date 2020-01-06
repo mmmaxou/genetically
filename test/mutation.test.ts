@@ -2,15 +2,13 @@
 
 import {expect} from 'chai';
 import 'mocha';
-import {BitChain} from './../src/lib/Chromosome';
-import {
-  NaiveFlipBitMutation,
-  SerieFlipBitMutation,
-  FlipBitMutation,
-} from './../src/lib/Mutation';
-import {timerFunction} from './../src/lib/Helpers';
+import {BitChain} from '../src/lib/Chromosome';
+import {timerFunction} from '../src/lib/Helpers';
 import _ from 'lodash';
 import {ITERATIONS} from './consts.test';
+import {SerieFlipBitMutation} from '../src/lib/Mutation/SerieBitFlipMutation';
+import {FlipBitMutation} from '../src/lib/Mutation/FlipBitMutation';
+import {NaiveFlipBitMutation} from '../src/lib/Mutation/NaiveFlipBitMutation';
 
 describe('Mutation Strategies', () => {
   describe('Serie Flip Bit Mutation', () => {

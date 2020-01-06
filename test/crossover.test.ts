@@ -1,3 +1,4 @@
+import {NoMutation} from './../src/lib/Mutation/NoMutation';
 import {BitChain} from './../src/lib/Chromosome';
 import {expect} from 'chai';
 import {LinearGeneticAlgorithm} from './../src/example/LinearFunction';
@@ -6,7 +7,6 @@ import {
   CrossoverStatistics,
   SinglePointCrossover,
 } from './../src/lib/Crossover';
-import {NoMutation} from './../src/lib/Mutation';
 import {ITERATIONS} from './consts.test';
 
 describe('Crossover Strategies', () => {

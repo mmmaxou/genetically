@@ -11,7 +11,7 @@ import {
 } from './Params';
 import {BitChain, Chromosome} from './Chromosome';
 import {SelectionFunction, SelectionStatistics} from './Selection';
-import {MutationStrategy} from './Mutation';
+import {MutationStrategy} from './Mutation/GenericMutation';
 const now = require('performance-now');
 
 export class GeneticAlgorithm<T> {
