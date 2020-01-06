@@ -1,3 +1,5 @@
+// tslint:disable: no-unused-expression
+
 import {NoMutation} from '../src/lib/Mutation/NoMutation';
 import {BitChain} from '../src/lib/Chromosome';
 import {expect} from 'chai';

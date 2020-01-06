@@ -1,6 +1,6 @@
-import {DEFAULT_CONFIGURATION_POPULATION} from '../src/lib/Helpers/Configuration';
 // tslint:disable: no-unused-expression
 
+import {DEFAULT_CONFIGURATION_POPULATION} from '../src/lib/Helpers/Configuration';
 import {Population} from './../src/lib/Population';
 import {expect} from 'chai';
 import 'mocha';

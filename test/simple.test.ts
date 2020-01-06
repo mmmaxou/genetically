@@ -1,3 +1,5 @@
+// tslint:disable: no-unused-expression
+
 import {Chromosome} from './../src/lib/Chromosome';
 import {
   randomValue,

@@ -1,3 +1,5 @@
+// tslint:disable: no-unused-expression
+
 import {expect} from 'chai';
 import {LinearGeneticAlgorithm} from '../src/example/LinearFunction';
 import {Population} from '../src/lib/Population';
