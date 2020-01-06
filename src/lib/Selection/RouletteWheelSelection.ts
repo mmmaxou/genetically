@@ -1,18 +1,14 @@
-import {SelectionStrategy, SelectionStatistics} from './SelectionGeneric';
-
+import {SelectionStrategy} from './SelectionGeneric';
 import {Population} from '../Population';
 import {BitChain, Chromosome} from '../Chromosome';
-import _, {now} from 'lodash';
+import _ from 'lodash';
 
 /**
  * https://arxiv.org/pdf/1109.3627.pdf
  * Article about roulette wheel theory
  */
 export class RouletteWheelSelection extends SelectionStrategy {
-  public selection(
-    pop: Population,
-    statistics = new SelectionStatistics()
-  ): BitChain[] {
+  public selection(pop: Population): BitChain[] {
     /**
      * Init
      */
@@ -21,9 +17,7 @@ export class RouletteWheelSelection extends SelectionStrategy {
     // console.log('fitness max is ', fitnessMax);
     // console.log('fitness min is ', fitnessMin);
     const selected: BitChain[] = [];
-    const start = now();
     const averageIteration = pop.population.length * 3;
-    const averageTime = averageIteration * 0.0005;
     let ctr = 0;
 
     /**
@@ -59,14 +53,6 @@ export class RouletteWheelSelection extends SelectionStrategy {
         selected.push(_.clone(individual.chain));
       }
     }
-
-    /**
-     * Return
-     */
-    statistics.time += now() - start;
-    statistics.iterations += ctr;
-    statistics.averageIteration += averageIteration;
-    statistics.averageTime += averageTime;
 
     return selected;
   }

@@ -4,7 +4,7 @@ import {createEncodeFunctionOfBase} from '../lib/Helpers/Helpers';
 import {FitnessFunctionObjective} from '../lib/Helpers/Params';
 
 /**
- * Function to maximize :
+ * Function to minimize :
  * f(x) = -x²
  * In x in range [-32, 32]
  */

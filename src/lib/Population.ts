@@ -1,11 +1,16 @@
 import {Chromosome, BitChain} from './Chromosome';
-import {PopulationParams, RequiredConfigureParams} from './Helpers/Params';
+import {
+  PopulationParams,
+  RequiredConfigureParams,
+  FitnessFunctionObjective,
+} from './Helpers/Params';
 import {GeneticAlgorithm} from './GeneticAlgorithm';
+import assert from 'assert';
+const computeHistogram = require('compute-histogram');
 const now = require('performance-now');
 
 /**
  * Contains the logic of a population
- * Descr
  */
 export class Population {
   /**
@@ -20,6 +25,7 @@ export class Population {
   private _sumFitness = 0;
   private _meanFitness = 0;
   private _timeToRun = 0;
+  private _histogram: number[][] = [];
 
   /**
    * ==================================
@@ -68,44 +74,37 @@ export class Population {
    * Get the fittest individual
    */
   get fittest(): Chromosome {
-    if (!this._computed) {
-      throw this.notComputedError();
-    } else {
-      return this._fittest;
-    }
+    assert(this.computed, this.notComputedError());
+    return this._fittest;
   }
 
   /**
    * Get the least fittest individual
    */
   get leastFit(): Chromosome {
-    if (!this._computed) {
-      throw this.notComputedError();
-    } else {
-      return this._leastFit;
-    }
+    assert(this.computed, this.notComputedError());
+    return this._leastFit;
   }
 
   /**
    * Get the mean fitness of the population
    */
   get sumFitness(): number {
-    if (!this._computed) {
-      throw this.notComputedError();
-    } else {
-      return this._sumFitness;
-    }
+    assert(this.computed, this.notComputedError());
+    return this._sumFitness;
   }
 
   /**
    * Get the mean fitness of the population
    */
   get meanFitness(): number {
-    if (!this._computed) {
-      throw this.notComputedError();
-    } else {
-      return this._meanFitness;
-    }
+    assert(this.computed, this.notComputedError());
+    return this._meanFitness;
+  }
+
+  get histogram(): number[][] {
+    assert(this.computed, this.notComputedError());
+    return this._histogram;
   }
 
   /**
@@ -156,14 +155,24 @@ export class Population {
     });
     const mean = sum / this.population.length;
 
-    /// Normalize individuals
-    this.population.forEach((individual) => {
-      individual.normalizeBaseOnSumOfFitness(sum);
-    });
-
     /// Sort individuals
-    this.population.sort((A, B) => {
-      return B.normalizedFitnessScore - A.normalizedFitnessScore;
+    const MaximizeSort = (A: Chromosome, B: Chromosome) => {
+      return B.fitnessScore - A.fitnessScore;
+    };
+    const MinimizeSort = (A: Chromosome, B: Chromosome) => {
+      return A.fitnessScore - B.fitnessScore;
+    };
+    const SortFunction =
+      this.config.objective === FitnessFunctionObjective.MAXIMIZE
+        ? MaximizeSort
+        : MinimizeSort;
+    this.population.sort(SortFunction);
+
+    /// Normalize individuals
+    const fitnesses: number[] = [];
+    this.population.forEach((individual) => {
+      fitnesses.push(individual.fitnessScore);
+      individual.normalizeBaseOnSumOfFitness(sum);
     });
 
     /// Assign
@@ -171,6 +180,7 @@ export class Population {
     this._leastFit = leastFit;
     this._sumFitness = sum;
     this._meanFitness = mean;
+    this._histogram = computeHistogram(fitnesses);
     this._timeToRun = now() - startTime;
 
     /// Freeze _computed

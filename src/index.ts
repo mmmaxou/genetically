@@ -130,9 +130,8 @@ const start = () => {
   console.log(cubeGenetic);
   console.log(baeleGenetic);
   console.log(boothGenetic);
-
-  const ga = LinearGeneticAlgorithm();
-  console.log('config is ', ga.configuration);
+  console.log('config is ', LinearGeneticAlgorithm().configuration);
+  linearGenetic();
 };
 
 start();

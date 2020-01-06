@@ -70,8 +70,8 @@ describe('Mutation Strategies', () => {
       expect(naiveTime).to.be.above(flipBitTime);
     });
 
-    it('should be less efficicent than naive strategy for high probability p=0.85', () => {
-      const p = 0.85;
+    it('should be less efficicent than naive strategy for high probability p=0.9', () => {
+      const p = 0.9;
       const nChain = '0110101000100010101010001000100010';
       const flipBit = new SerieFlipBitMutation(p);
       const naive = new NaiveFlipBitMutation(p);
