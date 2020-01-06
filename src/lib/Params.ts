@@ -1,7 +1,7 @@
 import {SelectionStrategy} from './Selection';
-import {CrossoverStrategy} from './Crossover';
 import {Population} from './Population';
 import {MutationStrategy} from './Mutation/GenericMutation';
+import {CrossoverStrategy} from './Crossover/GenericCrossover';
 
 export type EncodeFunction<T> = (x: T) => string;
 export type DecodeFunction<T> = (s: string) => T;

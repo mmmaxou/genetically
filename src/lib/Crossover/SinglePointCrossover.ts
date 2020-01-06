@@ -1,50 +1,10 @@
-import {BitChain} from './Chromosome';
-import _ from 'lodash';
-import {MutationStrategy} from './Mutation/GenericMutation';
-import {NoMutation} from './Mutation/NoMutation';
-const now = require('performance-now');
+import {CrossoverStrategy, CrossoverStatistics} from './GenericCrossover';
 
-/**
- * Inspiration for crossover strategies
- * https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)
- */
+import {BitChain} from '../Chromosome';
 
-/**
- * Interface for a selection strategy
- */
-export abstract class CrossoverStrategy {
-  public abstract crossover(
-    chains: BitChain[],
-    mutation: MutationStrategy,
-    statistics?: CrossoverStatistics
-  ): BitChain[];
-}
+import {MutationStrategy} from '../Mutation/GenericMutation';
 
-/**
- * Crossover function
- */
-export type CrossoverFunction = (
-  chains: BitChain[],
-  mutation: MutationStrategy,
-  statistics?: CrossoverStatistics
-) => BitChain[];
-
-/**
- * Interface for statistics
- */
-export class CrossoverStatistics {
-  public time = 0;
-}
-
-/**
- * No Crossover
- * But apply mutation
- */
-export class NoCrossover extends CrossoverStrategy {
-  public crossover(chains: string[], mutation = new NoMutation()): string[] {
-    return chains.map((s) => mutation.mutation(s));
-  }
-}
+import _, {now} from 'lodash';
 
 /**
  * https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)#Single-point_crossover

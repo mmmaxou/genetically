@@ -1,13 +1,11 @@
-import {NoMutation} from './../src/lib/Mutation/NoMutation';
-import {BitChain} from './../src/lib/Chromosome';
+import {NoMutation} from '../src/lib/Mutation/NoMutation';
+import {BitChain} from '../src/lib/Chromosome';
 import {expect} from 'chai';
-import {LinearGeneticAlgorithm} from './../src/example/LinearFunction';
-import {Population} from './../src/lib/Population';
-import {
-  CrossoverStatistics,
-  SinglePointCrossover,
-} from './../src/lib/Crossover';
+import {LinearGeneticAlgorithm} from '../src/example/LinearFunction';
+import {Population} from '../src/lib/Population';
 import {ITERATIONS} from './consts.test';
+import {CrossoverStatistics} from '../src/lib/Crossover/GenericCrossover';
+import {SinglePointCrossover} from '../src/lib/Crossover/SinglePointCrossover';
 
 describe('Crossover Strategies', () => {
   const ga = LinearGeneticAlgorithm();

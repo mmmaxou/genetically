@@ -1,5 +1,4 @@
 import {Configuration} from './Configuration';
-import {CrossoverFunction, CrossoverStatistics} from './Crossover';
 import {Population} from './Population';
 import {
   RequiredConfigureParams,
@@ -12,6 +11,10 @@ import {
 import {BitChain, Chromosome} from './Chromosome';
 import {SelectionFunction, SelectionStatistics} from './Selection';
 import {MutationStrategy} from './Mutation/GenericMutation';
+import {
+  CrossoverFunction,
+  CrossoverStatistics,
+} from './Crossover/GenericCrossover';
 const now = require('performance-now');
 
 export class GeneticAlgorithm<T> {
