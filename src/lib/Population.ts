@@ -1,5 +1,5 @@
 import {Chromosome, BitChain} from './Chromosome';
-import {PopulationParams, RequiredConfigureParams} from './Params';
+import {PopulationParams, RequiredConfigureParams} from './Helpers/Params';
 import {GeneticAlgorithm} from './GeneticAlgorithm';
 const now = require('performance-now');
 

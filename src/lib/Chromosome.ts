@@ -1,5 +1,5 @@
 import {GeneticAlgorithm} from './GeneticAlgorithm';
-import {RequiredConfigureParams} from './Params';
+import {RequiredConfigureParams} from './Helpers/Params';
 
 export type BitChain = string;
 

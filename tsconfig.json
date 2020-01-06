@@ -11,14 +11,14 @@
     "declaration": true,
     "baseUrl": "./",
     "outDir": "dist",
-    "module": "commonjs",
-    "target": "es2015",
+    "module": "es6",
+    "target": "es6",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src/**/*", "test/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

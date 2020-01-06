@@ -3,7 +3,7 @@
 import {expect} from 'chai';
 import 'mocha';
 import {BitChain} from '../src/lib/Chromosome';
-import {timerFunction} from '../src/lib/Helpers';
+import {timerFunction} from '../src/lib/Helpers/Helpers';
 import _ from 'lodash';
 import {ITERATIONS} from './consts.test';
 import {SerieFlipBitMutation} from '../src/lib/Mutation/SerieBitFlipMutation';

@@ -8,7 +8,7 @@ import {
 } from './../src/example/LinearFunction';
 import {expect} from 'chai';
 import 'mocha';
-import {createEncodeFunctionOfBase} from './../src/lib/Helpers';
+import {createEncodeFunctionOfBase} from '../src/lib/Helpers/Helpers';
 
 describe('Linear function', () => {
   describe('Coding representation of a solution', () => {

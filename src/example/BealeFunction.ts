@@ -1,7 +1,7 @@
-import {DEFAULT_CONFIGURATION} from '../lib/Configuration';
+import {DEFAULT_CONFIGURATION} from '../lib/Helpers/Configuration';
 import {GeneticAlgorithm} from '../lib/GeneticAlgorithm';
-import {createEncodeFunctionOfBase} from '../lib/Helpers';
-import {FitnessFunctionObjective} from '../lib/Params';
+import {createEncodeFunctionOfBase} from '../lib/Helpers/Helpers';
+import {FitnessFunctionObjective} from '../lib/Helpers/Params';
 
 /**
  * Motivation for function optimization

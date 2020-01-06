@@ -1,11 +1,11 @@
-import {DEFAULT_CONFIGURATION_POPULATION} from './../src/lib/Configuration';
+import {DEFAULT_CONFIGURATION_POPULATION} from '../src/lib/Helpers/Configuration';
 // tslint:disable: no-unused-expression
 
 import {Population} from './../src/lib/Population';
 import {expect} from 'chai';
 import 'mocha';
 import {LinearGeneticAlgorithm} from './../src/example/LinearFunction';
-import {FitnessFunctionObjective} from './../src/lib/Params';
+import {FitnessFunctionObjective} from '../src/lib/Helpers/Params';
 
 describe('Population Class', () => {
   const ga = LinearGeneticAlgorithm();

@@ -1,7 +1,7 @@
 import {GeneticAlgorithm} from '../lib/GeneticAlgorithm';
-import {createEncodeFunctionOfBase} from '../lib/Helpers';
-import {FitnessFunctionObjective} from '../lib/Params';
-import {DEFAULT_CONFIGURATION} from '../lib/Configuration';
+import {createEncodeFunctionOfBase} from '../lib/Helpers/Helpers';
+import {FitnessFunctionObjective} from '../lib/Helpers/Params';
+import {DEFAULT_CONFIGURATION} from '../lib/Helpers/Configuration';
 
 /**
  * Function to maximize :

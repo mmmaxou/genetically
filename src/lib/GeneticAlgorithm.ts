@@ -1,4 +1,4 @@
-import {Configuration} from './Configuration';
+import {Configuration} from './Helpers/Configuration';
 import {Population} from './Population';
 import {
   RequiredConfigureParams,
@@ -7,7 +7,7 @@ import {
   RandomValueFunction,
   FitnessFunction,
   ChangeConfigurationParams,
-} from './Params';
+} from './Helpers/Params';
 import {BitChain, Chromosome} from './Chromosome';
 import {MutationStrategy} from './Mutation/GenericMutation';
 import {
