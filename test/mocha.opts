@@ -3,4 +3,5 @@
 --ui bdd
 --full-trace
 --bail
+--recursive
 test/**/*.test.ts

@@ -1,6 +1,6 @@
 // tslint:disable: no-unused-expression
 
-import {Chromosome} from './../src/lib/Chromosome';
+import {Chromosome} from '../src/lib/Chromosome';
 import {expect} from 'chai';
 import 'mocha';
 import {LinearGeneticAlgorithm} from './../src/example/LinearFunction';

@@ -2,7 +2,7 @@
   "name": "genetica",
   "version": "1.0.0",
   "description": "",
-  "main": "bundle.js",
+  "main": "dist",
   "scripts": {
     "pretest": "tsc",
     "prepare": "tsc",
