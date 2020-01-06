@@ -138,16 +138,12 @@ export class Population {
    * Sort the population
    */
   public run(): boolean {
-    /**
-     * Verify it was not already run
-     */
+    /// Verify it was not already run
     if (this._computed) {
       return false;
     }
 
-    /**
-     * Process
-     */
+    /// Process
     const startTime = now();
     let fittest: Chromosome = this.population[0];
     let leastFit: Chromosome = this.population[0];
@@ -168,32 +164,24 @@ export class Population {
     });
     const mean = sum / this.population.length;
 
-    /**
-     * Normalize individuals
-     */
+    /// Normalize individuals
     this.population.forEach((individual) => {
       individual.normalizeBaseOnSumOfFitness(sum);
     });
 
-    /**
-     * Sort individuals
-     */
+    /// Sort individuals
     this.population.sort((A, B) => {
       return B.normalizedFitnessScore - A.normalizedFitnessScore;
     });
 
-    /**
-     * Assign
-     */
+    /// Assign
     this._fittest = fittest;
     this._leastFit = leastFit;
     this._sumFitness = sum;
     this._meanFitness = mean;
     this._timeToRun = now() - startTime;
 
-    /**
-     * Freeze _computed
-     */
+    /// Freeze _computed
     this._computed = true;
     Object.freeze(this._computed);
     return true;

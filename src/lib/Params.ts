@@ -10,8 +10,14 @@ export type FitnessFunction<T> = (individual: T) => number;
 export type StopConditionFunction = (pop: Population, i: number) => boolean;
 export type AfterEachFunction = (pop: Population, i: number) => void;
 
+export enum FitnessFunctionObjective {
+  MINIMIZE,
+  MAXIMIZE,
+}
+
 export interface ConfigureParams {
   verbose: 'NONE' | 'INFO' | 'DEBUG';
+  objective: FitnessFunctionObjective;
   iterations: number;
   population: PopulationParams;
   selection: SelectionStrategy;
@@ -30,6 +36,7 @@ export interface RequiredConfigureParams<T> extends ConfigureParams {
 export interface ChangeConfigurationParams<T> {
   // Configure
   verbose?: 'NONE' | 'INFO' | 'DEBUG';
+  objective?: FitnessFunctionObjective;
   iterations?: number;
   population?: PopulationParams;
   selection?: SelectionStrategy;
@@ -44,7 +51,6 @@ export interface ChangeConfigurationParams<T> {
   randomValue?: RandomValueFunction<T>;
   fitness?: FitnessFunction<T>;
 }
-
 export interface PopulationParams {
   popsize: number;
 }

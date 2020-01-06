@@ -1,11 +1,13 @@
 import {expect} from 'chai';
-import {LinearGeneticAlgorithm} from './../src/example/LinearFunction';
-import {Population} from './../src/lib/Population';
+import {LinearGeneticAlgorithm} from '../src/example/LinearFunction';
+import {Population} from '../src/lib/Population';
 import {
   RouletteWheelSelection,
   SelectionStatistics,
-} from './../src/lib/Selection';
+} from '../src/lib/Selection';
 import _ from 'lodash';
+import {FitnessFunctionObjective} from '../src/lib/Params';
+import {ITERATIONS} from './consts.test';
 
 describe('Selections Strategies', () => {
   const ga = LinearGeneticAlgorithm();
@@ -44,7 +46,6 @@ describe('Selections Strategies', () => {
     });
 
     it('should take at most 20% more than average computation time ( 95% of the time )', () => {
-      const ITERATIONS = 12345;
       let cptMore = 0;
       for (let i = 0; i < ITERATIONS; i++) {
         roulette.selection(pop, statistics);
@@ -65,15 +66,20 @@ describe('Selections Strategies', () => {
     });
 
     it('should have on average a better fitness than the former population', () => {
-      const ITERATIONS = 12345;
       let cptMore = 0;
       for (let i = 0; i < ITERATIONS; i++) {
         const c = roulette.selection(pop);
         const newPop = new Population(ga, c);
         newPop.run();
-        cptMore += newPop.meanFitness > pop.meanFitness ? 1 : 0;
+
+        const objective: FitnessFunctionObjective = newPop.config.objective;
+        if (objective === FitnessFunctionObjective.MAXIMIZE) {
+          cptMore += newPop.meanFitness > pop.meanFitness ? 1 : 0;
+        } else if (objective === FitnessFunctionObjective.MINIMIZE) {
+          cptMore += newPop.meanFitness < pop.meanFitness ? 1 : 0;
+        }
       }
-      expect(cptMore).to.be.at.least(ITERATIONS / 2);
+      expect(cptMore).to.be.at.least(ITERATIONS / 2.2);
     });
   });
 });

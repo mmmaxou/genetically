@@ -4,6 +4,7 @@ import {Population} from './../src/lib/Population';
 import {expect} from 'chai';
 import 'mocha';
 import {LinearGeneticAlgorithm} from './../src/example/LinearFunction';
+import {FitnessFunctionObjective} from './../src/lib/Params';
 
 describe('Population Class', () => {
   const ga = LinearGeneticAlgorithm();
@@ -75,9 +76,16 @@ describe('Population Class', () => {
 
     it('should sort the individuals', () => {
       r.run();
-      expect(r.population[0].fitnessScore).to.be.above(
-        r.population[r.population.length - 1].fitnessScore
-      );
+      const objective: FitnessFunctionObjective = r.config.objective;
+      if (objective === FitnessFunctionObjective.MAXIMIZE) {
+        expect(r.population[0].fitnessScore).to.be.above(
+          r.population[r.population.length - 1].fitnessScore
+        );
+      } else if (objective === FitnessFunctionObjective.MINIMIZE) {
+        expect(r.population[0].fitnessScore).to.be.below(
+          r.population[r.population.length - 1].fitnessScore
+        );
+      }
     });
 
     it('should normalize the individuals', () => {

@@ -7,6 +7,7 @@ import {
   SinglePointCrossover,
 } from './../src/lib/Crossover';
 import {NoMutation} from './../src/lib/Mutation';
+import {ITERATIONS} from './consts.test';
 
 describe('Crossover Strategies', () => {
   const ga = LinearGeneticAlgorithm();
@@ -41,7 +42,6 @@ describe('Crossover Strategies', () => {
     });
 
     it('should have a different fitness than the former population', () => {
-      const ITERATIONS = 123;
       let cptDifferent = 0;
       for (let i = 0; i < ITERATIONS; i++) {
         const c = singlePoint.crossover(chains, new NoMutation(), statistics);

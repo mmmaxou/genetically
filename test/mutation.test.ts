@@ -10,6 +10,7 @@ import {
 } from './../src/lib/Mutation';
 import {timerFunction} from './../src/lib/Helpers';
 import _ from 'lodash';
+import {ITERATIONS} from './consts.test';
 
 describe('Mutation Strategies', () => {
   describe('Serie Flip Bit Mutation', () => {
@@ -48,9 +49,8 @@ describe('Mutation Strategies', () => {
       expect(nChain).to.be.lengthOf(c.length);
     });
 
-    it('should be more efficicent than naive strategy for small probability p=0.1', () => {
-      const p = 0.1;
-      const ITERATIONS = 10000;
+    it('should be more efficicent than naive strategy for small probability p=0.05', () => {
+      const p = 0.05;
       const nChain = '0110101000100010101010001000100010';
       const flipBit = new SerieFlipBitMutation(p);
       const naive = new NaiveFlipBitMutation(p);
@@ -72,9 +72,8 @@ describe('Mutation Strategies', () => {
       expect(naiveTime).to.be.above(flipBitTime);
     });
 
-    it('should be less efficicent than naive strategy for high probability p=0.5', () => {
-      const p = 0.5;
-      const ITERATIONS = 30000;
+    it('should be less efficicent than naive strategy for high probability p=0.3', () => {
+      const p = 0.3;
       const nChain = '0110101000100010101010001000100010';
       const flipBit = new SerieFlipBitMutation(p);
       const naive = new NaiveFlipBitMutation(p);
@@ -98,7 +97,6 @@ describe('Mutation Strategies', () => {
 
     it('should be roughly ( 30% close ) the same efficiency for probability p=0.3', () => {
       const p = 0.3;
-      const ITERATIONS = 10000;
       const nChain = '0110101000100010101010001000100010';
       const flipBit = new SerieFlipBitMutation(p);
       const naive = new NaiveFlipBitMutation(p);

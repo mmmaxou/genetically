@@ -13,6 +13,7 @@ import {
   FitnessFunction,
   PopulationParams,
   ChangeConfigurationParams,
+  FitnessFunctionObjective,
 } from './Params';
 import {BitChain, Chromosome} from './Chromosome';
 import {
@@ -31,6 +32,7 @@ export class GeneticAlgorithm<T> {
    */
   static readonly DEFAULT_CONFIGURATION: ConfigureParams = {
     verbose: 'DEBUG',
+    objective: FitnessFunctionObjective.MAXIMIZE,
     population: Population.DEFAULT_CONFIGURATION,
     selection: new RouletteWheelSelection(),
     crossover: new SinglePointCrossover(),
