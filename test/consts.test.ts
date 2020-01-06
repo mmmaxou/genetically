@@ -1,1 +1,1 @@
-export const ITERATIONS = 1234;
+export const ITERATIONS = 3000;

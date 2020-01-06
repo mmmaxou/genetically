@@ -129,7 +129,10 @@ const start = () => {
   console.log(linearGenetic);
   console.log(cubeGenetic);
   console.log(baeleGenetic);
-  boothGenetic();
+  console.log(boothGenetic);
+
+  const ga = LinearGeneticAlgorithm();
+  console.log('config is ', ga.configuration);
 };
 
 start();

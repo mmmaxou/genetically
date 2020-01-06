@@ -1,3 +1,4 @@
+import {DEFAULT_CONFIGURATION} from '../lib/Configuration';
 import {GeneticAlgorithm} from '../lib/GeneticAlgorithm';
 import {createEncodeFunctionOfBase} from '../lib/Helpers';
 import {FitnessFunctionObjective} from '../lib/Params';
@@ -116,7 +117,7 @@ export const fitness = (struct: BaeleSolutionStruct): number => {
  */
 export const BealeGeneticAlgorithm = () =>
   new GeneticAlgorithm<BaeleSolutionStruct>({
-    ...GeneticAlgorithm.DEFAULT_CONFIGURATION,
+    ...DEFAULT_CONFIGURATION.GENETIC_ALGORITHM,
     objective: FitnessFunctionObjective.MINIMIZE,
     encode,
     decode,

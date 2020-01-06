@@ -49,8 +49,8 @@ describe('Mutation Strategies', () => {
       expect(nChain).to.be.lengthOf(c.length);
     });
 
-    it('should be more efficicent than naive strategy for small probability p=0.05', () => {
-      const p = 0.05;
+    it('should be more efficicent than naive strategy for small probability p=0.2', () => {
+      const p = 0.2;
       const nChain = '0110101000100010101010001000100010';
       const flipBit = new SerieFlipBitMutation(p);
       const naive = new NaiveFlipBitMutation(p);
@@ -72,8 +72,8 @@ describe('Mutation Strategies', () => {
       expect(naiveTime).to.be.above(flipBitTime);
     });
 
-    it('should be less efficicent than naive strategy for high probability p=0.3', () => {
-      const p = 0.3;
+    it('should be less efficicent than naive strategy for high probability p=0.85', () => {
+      const p = 0.85;
       const nChain = '0110101000100010101010001000100010';
       const flipBit = new SerieFlipBitMutation(p);
       const naive = new NaiveFlipBitMutation(p);
@@ -95,8 +95,9 @@ describe('Mutation Strategies', () => {
       expect(flipBitTime).to.be.above(naiveTime);
     });
 
-    it('should be roughly ( 30% close ) the same efficiency for probability p=0.3', () => {
-      const p = 0.3;
+    it('should be roughly ( 25% close ) the same efficiency for probability p=0.65', () => {
+      const p = 0.65;
+      const roughly = 25;
       const nChain = '0110101000100010101010001000100010';
       const flipBit = new SerieFlipBitMutation(p);
       const naive = new NaiveFlipBitMutation(p);
@@ -116,8 +117,8 @@ describe('Mutation Strategies', () => {
       const delta = percentage(flipBitTime, naiveTime);
       // console.log('delta is', delta);
 
-      expect(delta).to.be.above(70);
-      expect(delta).to.be.lessThan(130);
+      expect(delta).to.be.above(100 - roughly);
+      expect(delta).to.be.lessThan(100 + roughly);
     });
   });
 });

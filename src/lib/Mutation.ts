@@ -17,13 +17,24 @@ export abstract class MutationStrategy {
   constructor(
     protected probability: number = DEFAULT_MUTATION_CONFIGURATION.probability
   ) {}
+
+  /**
+   * Compute statistics
+   */
+  public mutationWithStatistics(
+    chain: BitChain,
+    statistics: MutationStatistics
+  ): BitChain {
+    const start = now();
+    const time = this.mutation(chain);
+    statistics.time += now() - start;
+    return time;
+  }
+
   /**
    * Mutate a chain
    */
-  public abstract mutation(
-    chain: BitChain,
-    statistics?: MutationStatistics
-  ): BitChain;
+  public abstract mutation(chain: BitChain): BitChain;
 }
 
 /**
@@ -61,11 +72,7 @@ export class SerieFlipBitMutation extends MutationStrategy {
   /**
    * Mutate a chain
    */
-  public mutation(
-    chain: string,
-    statistics = new MutationStatistics()
-  ): string {
-    const start = now();
+  public mutation(chain: string): string {
     let returnChain: string;
     // console.log('chain length is ', chain.length);
     // console.log('next mutation counter is ', this._nextMutationCounter);
@@ -93,16 +100,18 @@ export class SerieFlipBitMutation extends MutationStrategy {
 
       // Complete chain
       this.computeNextMutation();
-      returnChain = begin + flipped + this.mutation(end, statistics);
+      returnChain = begin + flipped + this.mutation(end);
     }
 
     /**
      * Returns
      */
-    statistics.time += now() - start;
     return returnChain;
   }
 
+  /**
+   * Compute the next mutation
+   */
   private computeNextMutation() {
     const p = Math.random();
     const iln1mp = this.invertedLogOfOneMinusProbability;
@@ -118,11 +127,7 @@ export class NaiveFlipBitMutation extends MutationStrategy {
   /**
    * Mutate a chain
    */
-  public mutation(
-    chain: string,
-    statistics = new MutationStatistics()
-  ): string {
-    const start = now();
+  public mutation(chain: string): string {
     const newChain = chain
       .split('')
       .map((c) => {
@@ -134,7 +139,6 @@ export class NaiveFlipBitMutation extends MutationStrategy {
         }
       })
       .join('');
-    statistics.time += now() - start;
     return newChain;
   }
 }
@@ -150,17 +154,14 @@ export class FlipBitMutation extends MutationStrategy {
     probability: number = DEFAULT_MUTATION_CONFIGURATION.probability
   ) {
     super(probability);
-    if (probability > 0.04) {
+    if (probability > 0.65) {
       this.strategy = new NaiveFlipBitMutation(probability);
     } else {
       this.strategy = new SerieFlipBitMutation(probability);
     }
   }
 
-  public mutation(
-    chain: string,
-    statistics = new MutationStatistics()
-  ): string {
-    return this.strategy.mutation(chain, statistics);
+  public mutation(chain: string): string {
+    return this.strategy.mutation(chain);
   }
 }

@@ -10,14 +10,6 @@ const now = require('performance-now');
 export class Population {
   /**
    * ==================================
-   * Static
-   * ==================================
-   */
-  static readonly DEFAULT_CONFIGURATION: PopulationParams = {
-    popsize: 50,
-  };
-  /**
-   * ==================================
    * Attributes
    * ==================================
    */

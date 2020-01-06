@@ -1,3 +1,4 @@
+import {DEFAULT_CONFIGURATION_POPULATION} from './../src/lib/Configuration';
 // tslint:disable: no-unused-expression
 
 import {Population} from './../src/lib/Population';
@@ -24,7 +25,7 @@ describe('Population Class', () => {
   });
   describe('Configuration', () => {
     it('should load the default configuration', () => {
-      expect(p.popConfig).to.deep.equal(Population.DEFAULT_CONFIGURATION);
+      expect(p.popConfig).to.deep.equal(DEFAULT_CONFIGURATION_POPULATION);
     });
   });
   describe('Run function', () => {

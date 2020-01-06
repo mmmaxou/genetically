@@ -1,4 +1,5 @@
-import {FitnessFunctionObjective} from './../lib/Params';
+import {DEFAULT_CONFIGURATION} from '../lib/Configuration';
+import {FitnessFunctionObjective} from '../lib/Params';
 import {GeneticAlgorithm} from '../lib/GeneticAlgorithm';
 import {createEncodeFunctionOfBase} from '../lib/Helpers';
 
@@ -113,7 +114,7 @@ export const fitness = (struct: BoothSolutionStruct): number => {
  */
 export const BoothGeneticAlgorithm = () =>
   new GeneticAlgorithm<BoothSolutionStruct>({
-    ...GeneticAlgorithm.DEFAULT_CONFIGURATION,
+    ...DEFAULT_CONFIGURATION.GENETIC_ALGORITHM,
     objective: FitnessFunctionObjective.MINIMIZE,
     encode,
     decode,
