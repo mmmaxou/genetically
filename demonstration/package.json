@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --live-reload false",
-    "build": "ng build",
-    "postbuild": "shx mv dist/demonstration ../docs",
+    "build": "ng build --prod --base-href \"genetic-algorithm\"",
+    "postbuild": "shx rm -rf ../docs && shx mv dist/demonstration ../docs && ngh",
     "lint": "ng lint"
   },
   "private": true,
