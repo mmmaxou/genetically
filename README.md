@@ -3,6 +3,12 @@
 Genetic algorithm library for javascript.
 Can be used in node js or in browser
 
+## Demonstration
+
+A [demonstration](https://mmmaxou.github.io/genetic-algorithm/) is available on this address [https://mmmaxou.github.io/genetic-algorithm/](https://mmmaxou.github.io/genetic-algorithm/)
+
+## Installation
+
 - Import in the browser
 
 ```html

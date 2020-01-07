@@ -1,0 +1,41 @@
+nb-layout nb-layout-header,
+nb-layout nb-sidebar,
+nb-layout nb-layout-column {
+  background-color: transparent;
+  z-index: 1;
+}
+
+nb-layout {
+  border: 1px solid red;
+}
+nb-layout-header h1 {
+  margin-left: 1.25rem;
+}
+
+#parallax-parent {
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  #parallax-wrapper {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+    padding: 121.1% 0 0 0; /* 34.37% = 100 / (w / h) = 100 / (640 / 220) */
+
+    div {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: url('/assets/sky.jpg') no-repeat center;
+      background-size: cover;
+    }
+  }
+}
