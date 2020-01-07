@@ -1,6 +1,6 @@
 import {Population} from '../Population';
-import {BitChain} from '../Chromosome';
 import {now} from 'lodash';
+import {BitChain} from '../Helpers/BitChain';
 
 /**
  * Type for selection strategy

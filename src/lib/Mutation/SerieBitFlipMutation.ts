@@ -2,6 +2,7 @@ import {
   MutationStrategy,
   DEFAULT_MUTATION_CONFIGURATION,
 } from './GenericMutation';
+import {BitChain} from '../Helpers/BitChain';
 
 /**
  * Flip bit mutation
@@ -22,8 +23,8 @@ export class SerieFlipBitMutation extends MutationStrategy {
   /**
    * Mutate a chain
    */
-  public mutation(chain: string): string {
-    let returnChain: string;
+  public mutation(chain: BitChain): BitChain {
+    let returnChain: BitChain;
     // console.log('chain length is ', chain.length);
     // console.log('next mutation counter is ', this._nextMutationCounter);
 
@@ -34,15 +35,15 @@ export class SerieFlipBitMutation extends MutationStrategy {
       this._nextMutationCounter -= chain.length;
       returnChain = chain;
     } else if (chain.length === this._nextMutationCounter + 1) {
-      const begin: string = chain.substring(0, this._nextMutationCounter);
-      const flipped: string = chain[0] === '0' ? '1' : '0';
+      const begin: BitChain = chain.substring(0, this._nextMutationCounter);
+      const flipped: BitChain = chain[0] === '0' ? '1' : '0';
       this.computeNextMutation();
       returnChain = begin + flipped;
     } else {
       // Operate a bit flip on the selected bit chain number and redo a mutation
-      const begin: string = chain.substring(0, this._nextMutationCounter);
-      const flipped: string = chain[0] === '0' ? '1' : '0';
-      const end: string = chain.substring(this._nextMutationCounter + 1);
+      const begin: BitChain = chain.substring(0, this._nextMutationCounter);
+      const flipped: BitChain = chain[0] === '0' ? '1' : '0';
+      const end: BitChain = chain.substring(this._nextMutationCounter + 1);
 
       // console.log('begining is', begin);
       // console.log('flipped is', flipped);

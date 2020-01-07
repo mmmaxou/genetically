@@ -1,4 +1,4 @@
-import {Chromosome, BitChain} from './Chromosome';
+import {Chromosome} from './Chromosome';
 import {
   PopulationParams,
   RequiredConfigureParams,
@@ -6,6 +6,7 @@ import {
 } from './Helpers/Params';
 import {GeneticAlgorithm} from './GeneticAlgorithm';
 import assert from 'assert';
+import {BitChain} from './Helpers/BitChain';
 const computeHistogram = require('compute-histogram');
 const now = require('performance-now');
 

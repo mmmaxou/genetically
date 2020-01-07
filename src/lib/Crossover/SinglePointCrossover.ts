@@ -1,10 +1,7 @@
 import {CrossoverStrategy, CrossoverStatistics} from './GenericCrossover';
-
-import {BitChain} from '../Chromosome';
-
 import {MutationStrategy} from '../Mutation/GenericMutation';
-
 import _, {now} from 'lodash';
+import {BitChain} from '../Helpers/BitChain';
 
 /**
  * https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)#Single-point_crossover

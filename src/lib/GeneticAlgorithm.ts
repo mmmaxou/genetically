@@ -8,7 +8,7 @@ import {
   FitnessFunction,
   ChangeConfigurationParams,
 } from './Helpers/Params';
-import {BitChain, Chromosome} from './Chromosome';
+import {Chromosome} from './Chromosome';
 import {MutationStrategy} from './Mutation/GenericMutation';
 import {
   CrossoverFunction,
@@ -18,6 +18,7 @@ import {
   SelectionFunction,
   SelectionStatistics,
 } from './Selection/SelectionGeneric';
+import {BitChain} from './Helpers/BitChain';
 const now = require('performance-now');
 
 export class GeneticAlgorithm<T> {

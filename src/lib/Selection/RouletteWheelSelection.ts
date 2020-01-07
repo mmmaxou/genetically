@@ -1,7 +1,8 @@
 import {SelectionStrategy} from './SelectionGeneric';
 import {Population} from '../Population';
-import {BitChain, Chromosome} from '../Chromosome';
+import {Chromosome} from '../Chromosome';
 import _ from 'lodash';
+import {BitChain} from '../Helpers/BitChain';
 
 /**
  * https://arxiv.org/pdf/1109.3627.pdf

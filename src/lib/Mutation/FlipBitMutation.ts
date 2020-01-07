@@ -4,6 +4,7 @@ import {
 } from './GenericMutation';
 import {NaiveFlipBitMutation} from './NaiveFlipBitMutation';
 import {SerieFlipBitMutation} from './SerieBitFlipMutation';
+import {BitChain} from '../Helpers/BitChain';
 
 /**
  * Automatically use the best algorithm based on the probability
@@ -23,7 +24,7 @@ export class FlipBitMutation extends MutationStrategy {
     }
   }
 
-  public mutation(chain: string): string {
+  public mutation(chain: BitChain): BitChain {
     return this.strategy.mutation(chain);
   }
 }

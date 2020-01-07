@@ -1,6 +1,5 @@
-import {BitChain} from '../Chromosome';
-
 import {now} from 'lodash';
+import {BitChain} from '../Helpers/BitChain';
 
 /**
  * Inspiration for mutation strategies

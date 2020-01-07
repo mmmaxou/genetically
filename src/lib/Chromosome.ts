@@ -1,7 +1,6 @@
 import {GeneticAlgorithm} from './GeneticAlgorithm';
 import {RequiredConfigureParams} from './Helpers/Params';
-
-export type BitChain = string;
+import {BitChain} from './Helpers/BitChain';
 
 export class Chromosome {
   /**

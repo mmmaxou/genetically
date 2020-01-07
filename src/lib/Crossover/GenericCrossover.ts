@@ -1,6 +1,5 @@
-import {BitChain} from '../Chromosome';
-
 import {MutationStrategy} from '../Mutation/GenericMutation';
+import {BitChain} from '../Helpers/BitChain';
 
 /**
  * Inspiration for crossover strategies

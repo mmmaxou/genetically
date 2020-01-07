@@ -2,9 +2,10 @@ import {Population} from '../Population';
 import {MutationStrategy} from '../Mutation/GenericMutation';
 import {CrossoverStrategy} from '../Crossover/GenericCrossover';
 import {SelectionStrategy} from '../Selection/SelectionGeneric';
+import {BitChain} from './BitChain';
 
-export type EncodeFunction<T> = (x: T) => string;
-export type DecodeFunction<T> = (s: string) => T;
+export type EncodeFunction<T> = (x: T) => BitChain;
+export type DecodeFunction<T> = (s: BitChain) => T;
 export type RandomValueFunction<T> = () => T;
 export type FitnessFunction<T> = (individual: T) => number;
 export type StopConditionFunction = (pop: Population, i: number) => boolean;

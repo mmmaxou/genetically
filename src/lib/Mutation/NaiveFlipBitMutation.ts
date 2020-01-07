@@ -1,4 +1,5 @@
 import {MutationStrategy} from './GenericMutation';
+import {BitChain} from '../Helpers/BitChain';
 
 /**
  * Naive Flip bit mutation
@@ -8,7 +9,7 @@ export class NaiveFlipBitMutation extends MutationStrategy {
   /**
    * Mutate a chain
    */
-  public mutation(chain: string): string {
+  public mutation(chain: BitChain): BitChain {
     const newChain = chain
       .split('')
       .map((c) => {
