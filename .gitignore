@@ -2,9 +2,10 @@
 
 # compiled output
 /dist
-
-# dependencies
-/node_modules
+node_modules
+lib
+lib-esm
+_bundles
 
 # IDEs and editors
 

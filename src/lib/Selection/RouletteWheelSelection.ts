@@ -1,4 +1,4 @@
-import {SelectionStrategy} from './SelectionGeneric';
+import {SelectionStrategy, SelectionStatistics} from './SelectionGeneric';
 import {Population} from '../Population';
 import {Chromosome} from '../Chromosome';
 import _ from 'lodash';
@@ -9,7 +9,10 @@ import {BitChain} from '../Helpers/BitChain';
  * Article about roulette wheel theory
  */
 export class RouletteWheelSelection extends SelectionStrategy {
-  public selection(pop: Population): BitChain[] {
+  public selection(
+    pop: Population,
+    statistics?: SelectionStatistics
+  ): BitChain[] {
     /**
      * Init
      */
@@ -55,6 +58,12 @@ export class RouletteWheelSelection extends SelectionStrategy {
       }
     }
 
+    /// Add counter to statistics
+    if (statistics) {
+      statistics.iterations = ctr;
+    }
+
+    /// Return the selected bitchains
     return selected;
   }
 }

@@ -2,6 +2,7 @@ import {LinearGeneticAlgorithm} from './example/LinearFunction';
 import {CubeGeneticAlgorithm} from './example/CubeFunction';
 import {BealeGeneticAlgorithm} from './example/BealeFunction';
 import {BoothGeneticAlgorithm} from './example/BoothFunction';
+import {GeneticAlgorithm} from './lib/GeneticAlgorithm';
 
 const linearGenetic = () => {
   console.log(' __ Start __');
@@ -22,9 +23,8 @@ const linearGenetic = () => {
     },
   });
   ga.refreshPopulation();
-  ga.display();
 
-  console.log('Before running');
+  console.log('\nBefore running');
   ga.runPopulation();
   ga.display();
 
@@ -130,8 +130,9 @@ const start = () => {
   console.log(cubeGenetic);
   console.log(baeleGenetic);
   console.log(boothGenetic);
-  console.log('config is ', LinearGeneticAlgorithm().configuration);
   linearGenetic();
 };
 
-start();
+console.log(start);
+
+export default GeneticAlgorithm;

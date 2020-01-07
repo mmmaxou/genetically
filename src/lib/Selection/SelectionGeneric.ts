@@ -15,6 +15,7 @@ export type SelectionFunction = (
  */
 export class SelectionStatistics {
   public time = 0;
+  public iterations = 0;
   public averageIteration = 0;
   public averageTime = 0;
 }
@@ -28,7 +29,10 @@ export class SelectionStatistics {
  * Interface for a selection strategy
  */
 export abstract class SelectionStrategy {
-  public abstract selection(population: Population): BitChain[];
+  public abstract selection(
+    population: Population,
+    statistics?: SelectionStatistics
+  ): BitChain[];
 
   public selectionWithStatistics(
     population: Population,

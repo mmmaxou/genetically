@@ -6,7 +6,6 @@ import {timerFunction} from '../src/lib/Helpers/Helpers';
 import _ from 'lodash';
 import {ITERATIONS} from './consts.test';
 import {SerieFlipBitMutation} from '../src/lib/Mutation/SerieBitFlipMutation';
-import {FlipBitMutation} from '../src/lib/Mutation/FlipBitMutation';
 import {NaiveFlipBitMutation} from '../src/lib/Mutation/NaiveFlipBitMutation';
 import {BitChain} from 'src/lib/Helpers/BitChain';
 
@@ -25,7 +24,7 @@ describe('Mutation Strategies', () => {
     });
 
     it('should create a chain of bits', () => {
-      const M = new FlipBitMutation();
+      const M = new SerieFlipBitMutation();
       const c = M.mutation(chain);
       c.split('').forEach((char) => {
         expect(char).to.be.satisfy((s: string) => s === '0' || '1');
@@ -33,7 +32,7 @@ describe('Mutation Strategies', () => {
     });
 
     it('should not mutate in place', () => {
-      const M = new FlipBitMutation();
+      const M = new SerieFlipBitMutation();
       const nChain = '01'.repeat(1000);
       const clone = _.clone(nChain);
       M.mutation(nChain);
@@ -41,14 +40,14 @@ describe('Mutation Strategies', () => {
     });
 
     it('should create a chain of same length than the one given', () => {
-      const M = new FlipBitMutation();
+      const M = new SerieFlipBitMutation();
       const nChain = '01'.repeat(1000);
       const c = M.mutation(nChain);
-      expect(nChain).to.be.lengthOf(c.length);
+      expect(c).to.be.lengthOf(nChain.length);
     });
 
-    it('should be more efficicent than naive strategy for small probability p=0.2', () => {
-      const p = 0.2;
+    it('should be more efficicent than naive strategy for small probability p=0.25', () => {
+      const p = 0.25;
       const nChain = '0110101000100010101010001000100010';
       const flipBit = new SerieFlipBitMutation(p);
       const naive = new NaiveFlipBitMutation(p);

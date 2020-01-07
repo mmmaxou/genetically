@@ -8,6 +8,7 @@ import {FitnessFunctionObjective} from '../src/lib/Helpers/Params';
 import {ITERATIONS} from './consts.test';
 import {SelectionStatistics} from '../src/lib/Selection/SelectionGeneric';
 import {RouletteWheelSelection} from '../src/lib/Selection/RouletteWheelSelection';
+import {Chromosome} from 'src/lib/Chromosome';
 
 describe('Selections Strategies', () => {
   const ga = LinearGeneticAlgorithm();
@@ -34,7 +35,12 @@ describe('Selections Strategies', () => {
     const roulette = new RouletteWheelSelection();
 
     it('should not mutate a population', () => {
-      const copyOfPopulation = _.cloneDeep(pop.population);
+      const copyOfPopulation: Chromosome[] = [];
+      pop.population.forEach((chromosome) => {
+        const clone = _.clone(chromosome);
+        clone.normalizeBaseOnSumOfFitness(pop.sumFitness);
+        copyOfPopulation.push(clone);
+      });
       roulette.selectionWithStatistics(pop, statistics);
       expect(pop.population).to.deep.equal(copyOfPopulation);
     });
