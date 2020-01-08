@@ -1,3 +1,4 @@
+import {now} from 'lodash';
 import {Configuration} from './Helpers/Configuration';
 import {Population} from './Population';
 import {
@@ -19,7 +20,6 @@ import {
   SelectionStatistics,
 } from './Selection/SelectionGeneric';
 import {BitChain} from './Helpers/BitChain';
-const now = require('performance-now');
 
 export class GeneticAlgorithm<T> {
   /**

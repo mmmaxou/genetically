@@ -1,3 +1,4 @@
+import {now} from 'lodash';
 import {Chromosome} from './Chromosome';
 import {
   PopulationParams,
@@ -5,10 +6,9 @@ import {
   FitnessFunctionObjective,
 } from './Helpers/Params';
 import {GeneticAlgorithm} from './GeneticAlgorithm';
-import assert from 'assert';
 import {BitChain} from './Helpers/BitChain';
-const computeHistogram = require('compute-histogram');
-const now = require('performance-now');
+import assert from 'assert';
+import {calculateHistogram} from 'compute-histogram';
 
 /**
  * Contains the logic of a population
@@ -181,7 +181,7 @@ export class Population {
     this._leastFit = leastFit;
     this._sumFitness = sum;
     this._meanFitness = mean;
-    this._histogram = computeHistogram(fitnesses);
+    this._histogram = calculateHistogram(fitnesses);
     this._timeToRun = now() - startTime;
 
     /// Freeze _computed

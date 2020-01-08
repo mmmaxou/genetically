@@ -1,11 +1,10 @@
-import {LinearGeneticAlgorithm} from 'genetica/src/example/LinearFunction';
+import {LinearGeneticAlgorithm} from 'genetica/src/index';
 
 const linearGenetic = () => {
   console.log(' __ Start __');
   const ga = LinearGeneticAlgorithm();
 
   console.log('ga is ', ga);
-
   console.log('Changing configuration');
   ga.changeConfiguration({
     population: {

@@ -1,5 +1,4 @@
-const now = require('performance-now');
-
+import {now} from 'lodash';
 /**
  * High order function to create an encoder of a certain base
  */

@@ -10,8 +10,7 @@
   "deprecated": false,
   "description": "A Genetic Algorithm library designed for browser and node.js",
   "dependencies": {
-    "compute-histogram": "^0.9.7",
-    "performance-now": "^2.1.0"
+    "compute-histogram": "^0.9.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.2",
