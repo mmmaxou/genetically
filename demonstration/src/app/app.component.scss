@@ -1,20 +1,45 @@
-nb-layout nb-layout-header,
-nb-layout nb-sidebar,
-nb-layout nb-layout-column {
-  background-color: transparent;
-  z-index: 1;
-}
+@import '../variables.scss';
+@import '../mixins.scss';
 
-nb-layout {
-  border: 1px solid red;
-}
 nb-layout-header h1 {
   margin-left: 1.25rem;
 }
 
+/*
+  Header
+*/
+section#header {
+  @include responsive-image('background-header-gradient-export', 'gradient');
+
+  .center-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+  }
+
+  h1 {
+    color: white;
+  }
+  p.subtitle {
+    color: white;
+  }
+  p.caption {
+    color: rgba(255, 255, 255, 0.75);
+  }
+}
+
+/*
+  Old parallax effect
+*/
+
+/*
+
 #parallax-parent {
   position: fixed;
   top: 0;
+  bottom: 0;
   width: 100%;
 
   #parallax-wrapper {
@@ -23,7 +48,7 @@ nb-layout-header h1 {
     height: auto;
     position: relative;
     overflow: hidden;
-    padding: 121.1% 0 0 0; /* 34.37% = 100 / (w / h) = 100 / (640 / 220) */
+    padding: 158% 0 0 0; // 34.37% = 100 / (w / h) = 100 / (640 / 220)
 
     div {
       display: block;
@@ -34,8 +59,34 @@ nb-layout-header h1 {
       bottom: 0;
       left: 0;
       right: 0;
-      background: url('/assets/sky.jpg') no-repeat center;
       background-size: cover;
+      background-repeat: repeat-y;
+    }
+
+    @media (min-width: 800px) {
+      div {
+        background-image: url('/assets/background-sky-gradient-export/800w/sky@800w-wash.jpg');
+      }
+    }
+
+    @media (min-width: 1400px) {
+      div {
+        background-image: url('/assets/background-sky-gradient-export/1400w/sky@1400w-wash.jpg');
+      }
+    }
+
+    @media (min-width: 1900px) {
+      div {
+        background-image: url('/assets/background-sky-gradient-export/1x/sky-20-wash.jpg');
+      }
+    }
+
+    @media (max-width: 1901px) {
+      div {
+        background-image: url('/assets/background-sky-gradient-export/2x/sky@2x-20-wash.jpg');
+      }
     }
   }
 }
+
+*/

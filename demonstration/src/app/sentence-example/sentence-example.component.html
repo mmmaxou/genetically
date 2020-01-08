@@ -1,0 +1,52 @@
+<p>
+  In this example, we will try to evolve a chain of characters into a desired
+  string. We start by generating a random chain of character of the same length
+  than the desired string.
+</p>
+<p>
+  Here, the problem is well defined. We start with a random string, and need to
+  evolve it into a desired string. This example seems to be pointless because
+  there is no practical need in it. It's just for the sake of the example.
+  However, a more realistic problem would be to find a secret code. We would
+  send a solution string to a black box mechanism and it would tell us how far
+  our solution is to the secret code.
+</p>
+<p>
+  One way to solve this problem would be to brute force and try every possible
+  solution, but it would take a lot of time. Let's try to solve this problem
+  using a genetic algorithm.
+</p>
+<p>
+  Given the length of the solution, we need to generate a random string of this
+  length. Here we can do this using the code below.
+</p>
+<div class="holder">
+  <button nbButton ghost status="primary" (click)="generateRandomSentence()">
+    <nb-icon icon="play-circle-outline"></nb-icon>
+    Generate new random sentence
+  </button>
+  <p class="label">{{ randomSentence }}</p>
+</div>
+<pre>
+  <code [highlight]="code.generateRandomSentence" [languages]="['javascript']"></code>
+</pre>
+<p>
+  Then we need to define an objective string. For this example, the objective
+  string will remain hidden to have more suspense.
+</p>
+
+<label class="label" for="objectiveSentence">Objective sentence</label>
+<input
+  type="text"
+  name="objectiveSentence"
+  nbInput
+  fullWidth
+  [(ngModel)]="objectiveSentence"
+  (input)="onChangeObjective()"
+/>
+
+<app-genetic-environment
+  (start)="onStartEnvironment()"
+  (stop)="onStopEnvironment()"
+>
+</app-genetic-environment>

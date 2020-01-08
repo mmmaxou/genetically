@@ -1,0 +1,25 @@
+<div class="holder">
+  <p class="caption">Environment is {{ status }}</p>
+  <button
+    nbButton
+    ghost
+    size="small"
+    status="success"
+    (click)="runEnv()"
+    *ngIf="!isRunning"
+  >
+    <nb-icon icon="play-circle-outline"></nb-icon>
+    Start
+  </button>
+  <button
+    nbButton
+    ghost
+    size="small"
+    status="danger"
+    (click)="stopEnv()"
+    *ngIf="isRunning"
+  >
+    <nb-icon icon="close-circle-outline"></nb-icon>
+    Stop
+  </button>
+</div>

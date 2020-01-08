@@ -1,1 +1,73 @@
 /* You can add global styles to this file, and also import other style files */
+
+// this is our just created themes.scss file, make sure the path to the file is correct
+@import 'theme';
+@import 'variables';
+
+// framework component styles
+@import '~@nebular/theme/styles/globals';
+
+// install the framework styles
+@include nb-install() {
+  @include nb-theme-global();
+}
+
+// Import highlighting theme
+@import '~highlight.js/styles/monokai-sublime.css';
+
+/*
+=================================
+Global
+=================================
+*/
+
+.margin-constraint {
+  // On indique tout simplement une marge
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.useful-width {
+  // On règle ensuite la largeur utile puis on centre
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*
+  Section
+*/
+
+section {
+  min-height: calc(100vh - (#{$header-height}));
+
+  &:not(.full) {
+    @extend .margin-constraint;
+    @extend .useful-width;
+  }
+
+  &.full {
+    margin-left: -$layout-padding;
+    margin-right: -$layout-padding;
+  }
+
+  &.full:first-child {
+    margin-top: -$layout-padding;
+  }
+}
+
+/*
+Holder
+*/
+
+.holder {
+  display: block;
+
+  & > * {
+    display: inline;
+  }
+
+  & > *:not(:last-child) {
+    margin-right: 1.25rem;
+  }
+}
