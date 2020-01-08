@@ -1,6 +1,6 @@
 import {CrossoverStrategy, CrossoverStatistics} from './GenericCrossover';
 import {MutationStrategy} from '../Mutation/GenericMutation';
-import _, {now} from 'lodash';
+import {shuffle, now} from 'lodash';
 import {BitChain} from '../Helpers/BitChain';
 
 /**
@@ -18,7 +18,7 @@ export class SinglePointCrossover extends CrossoverStrategy {
      */
     const created: BitChain[] = [];
     const start = now();
-    _.shuffle(chains);
+    shuffle(chains);
     /**
      * For loop to create children
      */

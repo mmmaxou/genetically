@@ -1,8 +1,4 @@
-import {LinearGeneticAlgorithm} from './example/LinearFunction';
-import {CubeGeneticAlgorithm} from './example/CubeFunction';
-import {BealeGeneticAlgorithm} from './example/BealeFunction';
-import {BoothGeneticAlgorithm} from './example/BoothFunction';
-import {GeneticAlgorithm} from './lib/GeneticAlgorithm';
+import {LinearGeneticAlgorithm} from 'genetica/src/example/LinearFunction';
 
 const linearGenetic = () => {
   console.log(' __ Start __');
@@ -36,6 +32,8 @@ const linearGenetic = () => {
 
   console.log(' __ End __');
 };
+
+/*
 const cubeGenetic = () => {
   console.log(' __ Start __');
   const ga = CubeGeneticAlgorithm();
@@ -122,17 +120,15 @@ const boothGenetic = () => {
 
   console.log(' __ End __');
 };
-
+*/
 const start = () => {
   // linearGenetic();
   // cubeGenetic();
   console.log(linearGenetic);
-  console.log(cubeGenetic);
-  console.log(baeleGenetic);
-  console.log(boothGenetic);
+  //   console.log(cubeGenetic);
+  //   console.log(baeleGenetic);
+  //   console.log(boothGenetic);
   linearGenetic();
 };
 
 console.log(start);
-
-export default GeneticAlgorithm;

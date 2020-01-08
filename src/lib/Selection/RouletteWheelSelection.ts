@@ -1,7 +1,6 @@
 import {SelectionStrategy, SelectionStatistics} from './SelectionGeneric';
 import {Population} from '../Population';
 import {Chromosome} from '../Chromosome';
-import _ from 'lodash';
 import {BitChain} from '../Helpers/BitChain';
 
 /**
@@ -54,7 +53,7 @@ export class RouletteWheelSelection extends SelectionStrategy {
       const p = individual.normalizedFitnessScore / fitnessMax;
       const accepted = p >= rng;
       if (accepted) {
-        selected.push(_.clone(individual.chain));
+        selected.push(String(individual.chain));
       }
     }
 
