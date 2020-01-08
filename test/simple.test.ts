@@ -2,15 +2,17 @@
 
 import {Chromosome} from './../src/lib/Chromosome';
 import {
-  randomValue,
-  encode,
-  decode,
-  fitness,
+  LinearFunctions,
   LinearGeneticAlgorithm,
 } from './../src/example/LinearFunction';
 import {expect} from 'chai';
 import 'mocha';
 import {createEncodeFunctionOfBase} from '../src/lib/Helpers/Helpers';
+
+const randomValue = LinearFunctions.randomValue;
+const encode = LinearFunctions.encode;
+const decode = LinearFunctions.decode;
+const fitness = LinearFunctions.fitness;
 
 describe('Linear function', () => {
   describe('Coding representation of a solution', () => {

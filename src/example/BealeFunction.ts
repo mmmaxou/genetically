@@ -40,7 +40,7 @@ export class BaeleSolutionStruct {
  * end is   [00000000 <= x,y <= 11111111]
  */
 const encoder8 = createEncodeFunctionOfBase(2, 8);
-export const encode = (struct: BaeleSolutionStruct): string => {
+const encode = (struct: BaeleSolutionStruct): string => {
   // console.log('encode struct', struct);
 
   const encX = encoder8(struct.x + 128);
@@ -60,7 +60,7 @@ export const encode = (struct: BaeleSolutionStruct): string => {
  * start is [00000000 <= x,y <= 11111111]
  * end is   [-128 <= x,y <= 128]
  */
-export const decode = (s: string): BaeleSolutionStruct => {
+const decode = (s: string): BaeleSolutionStruct => {
   // console.log('decode s', s);
   // console.log('s length is', s.length);
 
@@ -82,7 +82,7 @@ export const decode = (s: string): BaeleSolutionStruct => {
  * Random starting value
  * Solution Range is [-4.5 <= x,y <= 4.5]
  */
-export const randomValue = (): BaeleSolutionStruct => {
+const randomValue = (): BaeleSolutionStruct => {
   const x = Math.floor(Math.random() * 256 - 128);
   const y = Math.floor(Math.random() * 256 - 128);
   const struct = new BaeleSolutionStruct(x, y);
@@ -99,7 +99,7 @@ export const randomValue = (): BaeleSolutionStruct => {
  * Map structure from [-128,127] to [-4.5, 4.5]
  * 0.03529411764705924 = 1 / (128 / 4.5)
  */
-export const fitness = (struct: BaeleSolutionStruct): number => {
+const fitness = (struct: BaeleSolutionStruct): number => {
   const x = struct.x * 0.03529411764705924;
   const y = struct.y * 0.03529411764705924;
   const xy = x * y;
@@ -124,3 +124,13 @@ export const BealeGeneticAlgorithm = () =>
     randomValue,
     fitness,
   });
+
+/**
+ * Exporting BealeFunctions
+ */
+export const BealeFunctions = {
+  encode,
+  decode,
+  randomValue,
+  fitness,
+};

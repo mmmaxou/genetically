@@ -1,138 +1,44 @@
-import {LinearGeneticAlgorithm} from './example/LinearFunction';
-import {CubeGeneticAlgorithm} from './example/CubeFunction';
-import {BealeGeneticAlgorithm} from './example/BealeFunction';
-import {BoothGeneticAlgorithm} from './example/BoothFunction';
-import {GeneticAlgorithm} from './lib/GeneticAlgorithm';
+/**
+ * Functions
+ */
+export * from './../src/example/BealeFunction';
+export * from './../src/example/BoothFunction';
+export * from './../src/example/CubeFunction';
+export * from './../src/example/LinearFunction';
 
-const linearGenetic = () => {
-  console.log(' __ Start __');
-  const ga = LinearGeneticAlgorithm();
+/**
+ * Main
+ */
+export * from './../src/lib/Chromosome';
+export * from './../src/lib/Population';
+export * from './../src/lib/GeneticAlgorithm';
 
-  console.log('ga is ', ga);
+/**
+ * Crossover
+ */
+export * from './../src/lib/Crossover/GenericCrossover';
+export * from './../src/lib/Crossover/NoCrossover';
+export * from './../src/lib/Crossover/SinglePointCrossover';
 
-  console.log('Changing configuration');
-  ga.changeConfiguration({
-    population: {
-      popsize: 100,
-    },
-    afterEach(pop) {
-      pop.display();
-    },
-    stopCondition(pop) {
-      return pop.fittest.fitnessScore === 0;
-    },
-  });
-  ga.refreshPopulation();
+/**
+ * Mutations
+ */
+export * from './../src/lib/Mutation/FlipBitMutation';
+export * from './../src/lib/Mutation/GenericMutation';
+export * from './../src/lib/Mutation/NaiveFlipBitMutation';
+export * from './../src/lib/Mutation/NoMutation';
+export * from './../src/lib/Mutation/SerieBitFlipMutation';
 
-  console.log('\nBefore running');
-  ga.runPopulation();
-  ga.display();
+/**
+ * Selection
+ */
+export * from './../src/lib/Selection/RouletteWheelSelection';
+export * from './../src/lib/Selection/SelectionGeneric';
 
-  console.log('Let us evolve');
-  ga.run();
-
-  console.log('End evolution');
-  ga.display();
-
-  console.log(' __ End __');
-};
-const cubeGenetic = () => {
-  console.log(' __ Start __');
-  const ga = CubeGeneticAlgorithm();
-  const stop = 31 ** 3;
-  ga.changeConfiguration({
-    population: {
-      popsize: 200,
-    },
-    afterEach(pop) {
-      pop.display();
-    },
-    stopCondition(pop) {
-      return pop.fittest.fitnessScore >= stop - 1;
-    },
-  });
-  ga.refreshPopulation();
-
-  console.log('Before running');
-  ga.runPopulation();
-  ga.display();
-
-  console.log('Let us evolve');
-  ga.run();
-
-  console.log('End evolution');
-  console.log(' __ End __');
-};
-const baeleGenetic = () => {
-  console.log(' __ Start __');
-  const ga = BealeGeneticAlgorithm();
-  ga.changeConfiguration({
-    iterations: 100,
-    population: {
-      popsize: 100,
-    },
-    afterEach(pop, i) {
-      if (i % 10 === 0) {
-        console.log('Generation is', i);
-        pop.display();
-      }
-    },
-    stopCondition(pop) {
-      return pop.fittest.fitnessScore >= -0.01;
-    },
-  });
-  ga.refreshPopulation();
-
-  console.log('Before running');
-  ga.runPopulation();
-  ga.display();
-
-  console.log('Let us evolve');
-  ga.run();
-
-  console.log(' __ End __');
-};
-const boothGenetic = () => {
-  console.log(' __ Start __');
-  const ga = BoothGeneticAlgorithm();
-  ga.changeConfiguration({
-    iterations: 200,
-    population: {
-      popsize: 200,
-    },
-    afterEach(pop, i) {
-      if (i % 10 === 0) {
-        console.log('Generation is', i);
-        pop.display();
-      }
-    },
-    stopCondition(pop) {
-      return pop.fittest.fitnessScore >= -0.1;
-    },
-  });
-  ga.refreshPopulation();
-
-  console.log('Before running');
-  ga.runPopulation();
-  ga.display();
-
-  console.log('Let us evolve');
-  ga.run();
-  ga.display();
-
-  console.log(' __ End __');
-};
-
-const start = () => {
-  // linearGenetic();
-  // cubeGenetic();
-  console.log(linearGenetic);
-  console.log(cubeGenetic);
-  console.log(baeleGenetic);
-  console.log(boothGenetic);
-  linearGenetic();
-};
-
-console.log(start);
-
-export default GeneticAlgorithm;
+/**
+ * Helpers
+ */
+export * from './../src/lib/Helpers/BitChain';
+export * from './../src/lib/Helpers/Configuration';
+export * from './../src/lib/Helpers/Helpers';
+export * from './../src/lib/Helpers/Params';

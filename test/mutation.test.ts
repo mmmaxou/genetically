@@ -3,7 +3,6 @@
 import {expect} from 'chai';
 import 'mocha';
 import {timerFunction} from '../src/lib/Helpers/Helpers';
-import _ from 'lodash';
 import {ITERATIONS} from './consts.test';
 import {SerieFlipBitMutation} from '../src/lib/Mutation/SerieBitFlipMutation';
 import {NaiveFlipBitMutation} from '../src/lib/Mutation/NaiveFlipBitMutation';
@@ -34,9 +33,9 @@ describe('Mutation Strategies', () => {
     it('should not mutate in place', () => {
       const M = new SerieFlipBitMutation();
       const nChain = '01'.repeat(1000);
-      const clone = _.clone(nChain);
+      const nClone = JSON.parse(JSON.stringify(nChain));
       M.mutation(nChain);
-      expect(clone).to.deep.equal(nChain);
+      expect(nClone).to.deep.equal(nChain);
     });
 
     it('should create a chain of same length than the one given', () => {

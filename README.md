@@ -40,3 +40,7 @@ npm run dev
 ```bash
 npm run test
 ```
+
+## Bundling
+
+Bundling is done according to this [tutorial](https://marcobotto.com/blog/compiling-and-bundling-typescript-libraries-with-webpack/)

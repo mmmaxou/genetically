@@ -3,7 +3,6 @@
 import {expect} from 'chai';
 import {LinearGeneticAlgorithm} from '../src/example/LinearFunction';
 import {Population} from '../src/lib/Population';
-import _ from 'lodash';
 import {FitnessFunctionObjective} from '../src/lib/Helpers/Params';
 import {ITERATIONS} from './consts.test';
 import {SelectionStatistics} from '../src/lib/Selection/SelectionGeneric';
@@ -37,9 +36,9 @@ describe('Selections Strategies', () => {
     it('should not mutate a population', () => {
       const copyOfPopulation: Chromosome[] = [];
       pop.population.forEach((chromosome) => {
-        const clone = _.clone(chromosome);
-        clone.normalizeBaseOnSumOfFitness(pop.sumFitness);
-        copyOfPopulation.push(clone);
+        const nClone = JSON.parse(JSON.stringify(chromosome));
+        nClone.normalizeBaseOnSumOfFitness(pop.sumFitness);
+        copyOfPopulation.push(nClone);
       });
       roulette.selectionWithStatistics(pop, statistics);
       expect(pop.population).to.deep.equal(copyOfPopulation);

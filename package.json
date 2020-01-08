@@ -32,7 +32,6 @@
     "cross-env": "^6.0.3",
     "eyes": "^0.1.8",
     "fork-ts-checker-webpack-plugin": "^1.5.0",
-    "lodash": "^4.17.15",
     "mocha": "^6.2.2",
     "mocha-typescript": "^1.1.17",
     "nyc": "^14.1.1",
@@ -44,6 +43,11 @@
     "webpack-cli": "^3.3.9",
     "webpack-closure-compiler": "^2.1.6"
   },
+  "files": [
+    "lib/**/*",
+    "lib-esm/**/*",
+    "_bundles/**/*"
+  ],
   "homepage": "https://github.com/mmmaxou/genetica",
   "keywords": [
     "genetic",
@@ -57,7 +61,7 @@
     "machine learning"
   ],
   "license": "ISC",
-  "main": "dist/genetica",
+  "main": "genetica.js",
   "name": "genetica",
   "repository": {
     "type": "git",
@@ -65,7 +69,7 @@
   },
   "types": "dist/types",
   "scripts": {
-    "clean": "shx rm -rf _bundles lib lib-esm",
+    "clean": "shx rm -rf _bundles lib lib-esm dist",
     "pretest": "tsc && tsc -m es6 --outDir lib-esm",
     "prepare": "tsc && tsc -m es6 --outDir lib-esm",
     "serve": "webpack --watch --mode=development",
@@ -75,7 +79,7 @@
     "build:types": "cross-env NODE_ENV=production tsc --emitDeclarationOnly",
     "build:prod": "cross-env NODE_ENV=production webpack --mode=production",
     "dev": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"npm:serve\" \"npm:nodemon\"",
-    "start": "tsc && tsc -m es6 --outDir lib-esm && node dist/bundle.js",
+    "start": "tsc && tsc -m es6 --outDir lib-esm && node dist/genetica.js",
     "test": "mocha",
     "test:watch": "mocha --watch",
     "coverage": "nyc npm run test"

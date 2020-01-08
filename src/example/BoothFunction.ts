@@ -44,7 +44,7 @@ export class BoothSolutionStruct {
  * end is   [00000000 <= x,y <= 11111111]
  */
 const encoder8 = createEncodeFunctionOfBase(2, N_BITS);
-export const encode = (struct: BoothSolutionStruct): string => {
+const encode = (struct: BoothSolutionStruct): string => {
   // console.log('encode struct', struct);
 
   const encX = encoder8(struct.x + HALF_RANGE);
@@ -64,7 +64,7 @@ export const encode = (struct: BoothSolutionStruct): string => {
  * start is [00000000 <= x,y <= 11111111]
  * end is   [-HALF_RANGE <= x,y <= HALF_RANGE]
  */
-export const decode = (s: string): BoothSolutionStruct => {
+const decode = (s: string): BoothSolutionStruct => {
   // console.log('decode s', s);
   // console.log('s length is', s.length);
 
@@ -86,7 +86,7 @@ export const decode = (s: string): BoothSolutionStruct => {
  * Random starting value
  * Solution Range is [-4.5 <= x,y <= 4.5]
  */
-export const randomValue = (): BoothSolutionStruct => {
+const randomValue = (): BoothSolutionStruct => {
   const x = Math.floor(Math.random() * RANGE - HALF_RANGE);
   const y = Math.floor(Math.random() * RANGE - HALF_RANGE);
   const struct = new BoothSolutionStruct(x, y);
@@ -100,7 +100,7 @@ export const randomValue = (): BoothSolutionStruct => {
  *
  * Map structure from [-HALF_RANGE, HALF_RANGE] to [-FINAL_RANGE, FINAL_RANGE]
  */
-export const fitness = (struct: BoothSolutionStruct): number => {
+const fitness = (struct: BoothSolutionStruct): number => {
   const x = struct.x * M_HALFRANGE_TO_FINALRANGE;
   const y = struct.y * M_HALFRANGE_TO_FINALRANGE;
   const p1 = x + 2 * y - 7;
@@ -121,3 +121,13 @@ export const BoothGeneticAlgorithm = () =>
     randomValue,
     fitness,
   });
+
+/**
+ * Exporting Booth Functions
+ */
+export const BoothFunctions = {
+  encode,
+  decode,
+  randomValue,
+  fitness,
+};
