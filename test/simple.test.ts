@@ -6,7 +6,6 @@ import {
   LinearGeneticAlgorithm,
 } from './../src/example/LinearFunction';
 import {expect} from 'chai';
-import 'mocha';
 import {createEncodeFunctionOfBase} from '../src/lib/Helpers/Helpers';
 
 const randomValue = LinearFunctions.randomValue;

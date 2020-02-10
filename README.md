@@ -1,24 +1,24 @@
-# Genetica
+# Genetical
 
 Genetic algorithm library for javascript.
 Can be used in node js or in browser
 
 ## Demonstration
 
-A [demonstration](https://mmmaxou.github.io/genetic-algorithm/) is available on this address [https://mmmaxou.github.io/genetic-algorithm/](https://mmmaxou.github.io/genetic-algorithm/)
+A [demonstration](https://mmmaxou.github.io/genetical/) is available on this address [https://mmmaxou.github.io/genetical/](https://mmmaxou.github.io/genetical/)
 
 ## Installation
 
 - Import in the browser
 
 ```html
-<script scr="script/genetica/genetica.js">
+<script scr="script/genetica/genetical.js">
 ```
 
 - Import in node.js
 
 ```javascript
-import {GeneticAlgorithm} from 'genetica';
+import {Genetical} from 'genetical';
 ```
 
 ## Utils commands

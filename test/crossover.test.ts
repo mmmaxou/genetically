@@ -1,7 +1,7 @@
 // tslint:disable: no-unused-expression
 
-import {NoMutation} from '../src/lib/Mutation/NoMutation';
 import {expect} from 'chai';
+import {NoMutation} from '../src/lib/Mutation/NoMutation';
 import {LinearGeneticAlgorithm} from '../src/example/LinearFunction';
 import {Population} from '../src/lib/Population';
 import {ITERATIONS} from './consts.test';

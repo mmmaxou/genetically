@@ -1,4 +1,4 @@
-import {now} from 'lodash';
+import {CountTime} from './../Helpers/CountTime';
 import {BitChain} from '../Helpers/BitChain';
 
 /**
@@ -32,10 +32,10 @@ export abstract class MutationStrategy {
     chain: BitChain,
     statistics: MutationStatistics
   ): BitChain {
-    const start = now();
-    const time = this.mutation(chain);
-    statistics.time += now() - start;
-    return time;
+    const timer = new CountTime();
+    const newChain = this.mutation(chain);
+    statistics.time += timer.time();
+    return newChain;
   }
 
   /**

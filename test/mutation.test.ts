@@ -1,7 +1,6 @@
 // tslint:disable: no-unused-expression
 
 import {expect} from 'chai';
-import 'mocha';
 import {timerFunction} from '../src/lib/Helpers/Helpers';
 import {ITERATIONS} from './consts.test';
 import {SerieFlipBitMutation} from '../src/lib/Mutation/SerieBitFlipMutation';

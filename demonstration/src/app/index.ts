@@ -1,8 +1,8 @@
-import {LinearGeneticAlgorithm} from 'genetica/src/index';
+import {Genetical} from 'genetical';
 
 const linearGenetic = () => {
   console.log(' __ Start __');
-  const ga = LinearGeneticAlgorithm();
+  const ga = Genetical.ExampleFunctions.Linear.GeneticAlgorithm();
 
   console.log('ga is ', ga);
   console.log('Changing configuration');

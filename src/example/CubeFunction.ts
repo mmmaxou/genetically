@@ -52,6 +52,7 @@ export const CubeGeneticAlgorithm = () =>
  * Exporting Cube Functions
  */
 export const CubeFunctions = {
+  GeneticAlgorithm: CubeGeneticAlgorithm,
   encode,
   decode,
   randomValue,

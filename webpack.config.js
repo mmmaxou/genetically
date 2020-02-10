@@ -2,10 +2,10 @@ const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'src'),
+  entry: path.resolve(__dirname, 'src', 'genetical.ts'),
 
   output: {
-    filename: 'genetica.js',
+    filename: 'genetical.js',
     path: path.resolve(__dirname, 'dist'),
   },
 
@@ -30,14 +30,14 @@ module.exports = {
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.entry = {
-    genetica: path.resolve(__dirname, 'src'),
-    'genetica.min': path.resolve(__dirname, 'src'),
+    genetical: path.resolve(__dirname, 'src', 'genetical.ts'),
+    'genetical.min': path.resolve(__dirname, 'src', 'genetical.ts'),
   };
   module.exports.output = {
     filename: '[name].js',
     path: path.resolve(__dirname, '_bundles'),
     libraryTarget: 'umd',
-    library: 'genetica',
+    library: 'genetical',
     umdNamedDefine: true,
   };
   module.exports.module.rules[0].exclude = [

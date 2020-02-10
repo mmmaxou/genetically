@@ -126,6 +126,7 @@ export const BoothGeneticAlgorithm = () =>
  * Exporting Booth Functions
  */
 export const BoothFunctions = {
+  GeneticAlgorithm: BoothGeneticAlgorithm,
   encode,
   decode,
   randomValue,

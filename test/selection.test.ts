@@ -36,7 +36,7 @@ describe('Selections Strategies', () => {
     it('should not mutate a population', () => {
       const copyOfPopulation: Chromosome[] = [];
       pop.population.forEach((chromosome) => {
-        const nClone = JSON.parse(JSON.stringify(chromosome));
+        const nClone = new Chromosome(ga, chromosome.chain);
         nClone.normalizeBaseOnSumOfFitness(pop.sumFitness);
         copyOfPopulation.push(nClone);
       });

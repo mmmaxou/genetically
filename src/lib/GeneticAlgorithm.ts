@@ -1,4 +1,4 @@
-import {now} from 'lodash';
+import {CountTime} from './Helpers/CountTime';
 import {Configuration} from './Helpers/Configuration';
 import {Population} from './Population';
 import {
@@ -182,7 +182,7 @@ export class GeneticAlgorithm<T> {
    */
   public run(): void {
     let stop = false;
-    const start = now();
+    const timer = new CountTime();
     while (!stop) {
       /**
        * Run once
@@ -214,7 +214,7 @@ export class GeneticAlgorithm<T> {
       /**
        * Save time
        */
-      this.time = now() - start;
+      this.time = timer.time();
     }
 
     /**

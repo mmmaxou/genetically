@@ -2,7 +2,6 @@
 
 import {Chromosome} from '../src/lib/Chromosome';
 import {expect} from 'chai';
-import 'mocha';
 import {LinearGeneticAlgorithm} from './../src/example/LinearFunction';
 
 describe('Chromosome Class', () => {

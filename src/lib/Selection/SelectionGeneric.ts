@@ -1,5 +1,5 @@
+import {CountTime} from './../Helpers/CountTime';
 import {Population} from '../Population';
-import {now} from 'lodash';
 import {BitChain} from '../Helpers/BitChain';
 
 /**
@@ -38,11 +38,11 @@ export abstract class SelectionStrategy {
     population: Population,
     statistics: SelectionStatistics
   ): BitChain[] {
-    const start = now();
+    const timer = new CountTime();
     const averageIteration = population.population.length * 3;
     const averageTime = averageIteration * 0.0005;
     const chain = this.selection(population);
-    statistics.time += now() - start;
+    statistics.time += timer.time();
     statistics.averageIteration += averageIteration;
     statistics.averageTime += averageTime;
     return chain;

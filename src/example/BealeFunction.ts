@@ -129,6 +129,7 @@ export const BealeGeneticAlgorithm = () =>
  * Exporting BealeFunctions
  */
 export const BealeFunctions = {
+  GeneticAlgorithm: BealeGeneticAlgorithm,
   encode,
   decode,
   randomValue,

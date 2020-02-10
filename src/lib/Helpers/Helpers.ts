@@ -1,4 +1,5 @@
-import {now} from 'lodash';
+import {CountTime} from './CountTime';
+
 /**
  * High order function to create an encoder of a certain base
  */
@@ -27,14 +28,105 @@ export const createEncodeFunctionOfBase = (
     return res;
   };
 };
-
 export const timerFunction = (
   functionToTime: () => any,
   iterations: number = 10000
 ): number => {
-  const start = now();
+  const timer = new CountTime();
   for (let i = 0; i < iterations; i++) {
     functionToTime();
   }
-  return now() - start;
+  return timer.time();
 };
+
+// https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb
+export const shuffleArray = (arr: any[]) => {
+  const array = arr.slice();
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * i);
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+};
+
+// https://github.com/baus/compute-histogram
+export function computeHistogram(
+  arr: number[],
+  numBins = 0,
+  trimTailPercentage = 0.0
+) {
+  const bins: number[][] = [];
+
+  let dataCopy = arr.sort((a, b) => a - b);
+
+  if (trimTailPercentage !== 0.0) {
+    const rightPercentile =
+      dataCopy[Math.floor((1.0 - trimTailPercentage) * dataCopy.length - 1)];
+    const leftPercentile =
+      dataCopy[Math.ceil(trimTailPercentage * dataCopy.length - 1)];
+    dataCopy = dataCopy.filter(
+      (x) => x <= rightPercentile && x >= leftPercentile
+    );
+  }
+
+  const min = dataCopy[0];
+  const max = dataCopy[dataCopy.length - 1];
+
+  if (numBins === 0) {
+    const sturges = Math.ceil(Math.log2(dataCopy.length)) + 1;
+    const iqr = computeIQR(dataCopy);
+    // If IQR is 0, fd returns 1 bin. This is as per the NumPy implementation:
+    //   https://github.com/numpy/numpy/blob/master/numpy/lib/histograms.py#L138
+    let fdbins = 1;
+    if (iqr !== 0.0) {
+      const fd = 2.0 * (iqr / Math.pow(dataCopy.length, 1.0 / 3.0));
+      fdbins = Math.ceil((max - min) / fd);
+    }
+    numBins = Math.max(sturges, fdbins);
+  }
+  for (let i = 0; i < numBins; i++) {
+    bins.push([i, 0]);
+  }
+
+  const binSize = (max - min) / numBins === 0 ? 1 : (max - min) / numBins;
+  dataCopy.forEach((item) => {
+    let binIndex = Math.floor((item - min) / binSize);
+    // for values that lie exactly on last bin we need to subtract one
+    if (binIndex === numBins) {
+      binIndex--;
+    }
+    bins[binIndex][1]++;
+  });
+
+  return bins;
+}
+
+// Simple helper function
+const ascending = (a: number, b: number): number => a - b;
+
+// https://github.com/compute-io/iqr/blob/master/lib/index.js
+function computeIQR(arr: number[]) {
+  const tab = arr.slice();
+  tab.sort(ascending);
+  return quantile(tab, 0.75) - quantile(tab, 0.25);
+}
+
+// https://github.com/compute-io/quantile/blob/master/lib/index.js
+function quantile(arr: number[], p: number) {
+  const len = arr.length;
+  let id;
+  if (p === 0.0) {
+    return arr[0];
+  }
+  if (p === 1.0) {
+    return arr[len - 1];
+  }
+  id = len * p - 1;
+  if (id === Math.floor(id)) {
+    return (arr[id] + arr[id + 1]) / 2.0;
+  }
+  id = Math.ceil(id);
+  return arr[id];
+}

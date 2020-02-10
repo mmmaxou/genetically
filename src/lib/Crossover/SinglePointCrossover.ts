@@ -1,7 +1,8 @@
+import {CountTime} from './../Helpers/CountTime';
 import {CrossoverStrategy, CrossoverStatistics} from './GenericCrossover';
 import {MutationStrategy} from '../Mutation/GenericMutation';
-import {shuffle, now} from 'lodash';
 import {BitChain} from '../Helpers/BitChain';
+import {shuffleArray} from '../Helpers/Helpers';
 
 /**
  * https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)#Single-point_crossover
@@ -17,8 +18,8 @@ export class SinglePointCrossover extends CrossoverStrategy {
      * Init
      */
     const created: BitChain[] = [];
-    const start = now();
-    shuffle(chains);
+    const start = new CountTime();
+    chains = shuffleArray(chains);
     /**
      * For loop to create children
      */
@@ -60,7 +61,7 @@ export class SinglePointCrossover extends CrossoverStrategy {
     /**
      * Returns
      */
-    statistics.time += now() - start;
+    statistics.time += start.time();
     return created;
   }
 }

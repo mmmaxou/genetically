@@ -3,7 +3,6 @@
 import {DEFAULT_CONFIGURATION_POPULATION} from '../src/lib/Helpers/Configuration';
 import {Population} from './../src/lib/Population';
 import {expect} from 'chai';
-import 'mocha';
 import {LinearGeneticAlgorithm} from './../src/example/LinearFunction';
 import {FitnessFunctionObjective} from '../src/lib/Helpers/Params';
 

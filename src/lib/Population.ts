@@ -1,4 +1,4 @@
-import {now} from 'lodash';
+import {CountTime} from './Helpers/CountTime';
 import {Chromosome} from './Chromosome';
 import {
   PopulationParams,
@@ -8,7 +8,7 @@ import {
 import {GeneticAlgorithm} from './GeneticAlgorithm';
 import {BitChain} from './Helpers/BitChain';
 import assert from 'assert';
-import {calculateHistogram} from 'compute-histogram';
+import {computeHistogram} from './Helpers/Helpers';
 
 /**
  * Contains the logic of a population
@@ -136,7 +136,7 @@ export class Population {
     }
 
     /// Process
-    const startTime = now();
+    const timer = new CountTime();
     let fittest: Chromosome = this.population[0];
     let leastFit: Chromosome = this.population[0];
     let max = Number.MIN_SAFE_INTEGER;
@@ -181,8 +181,8 @@ export class Population {
     this._leastFit = leastFit;
     this._sumFitness = sum;
     this._meanFitness = mean;
-    this._histogram = calculateHistogram(fitnesses);
-    this._timeToRun = now() - startTime;
+    this._histogram = computeHistogram(fitnesses);
+    this._timeToRun = timer.time();
 
     /// Freeze _computed
     this._computed = true;

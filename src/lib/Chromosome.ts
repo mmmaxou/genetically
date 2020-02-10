@@ -45,17 +45,12 @@ export class Chromosome {
   get chain(): BitChain {
     return this._chain;
   }
-  /**
-   * ==================================
-   * Getter
-   * ==================================
-   */
 
   /**
    * Return the fitness score of the individual
    * Compute it if required
    */
-  public get fitnessScore(): number {
+  get fitnessScore(): number {
     if (!this._computed) {
       this.run();
     }
@@ -63,7 +58,10 @@ export class Chromosome {
     return this._fitnessScore;
   }
 
-  public get normalizedFitnessScore(): number {
+  /**
+   * Return the normalized fitness score based on the population this is living in
+   */
+  get normalizedFitnessScore(): number {
     if (!this._normalized) {
       throw new Error(
         'You must call chromosome.normalizeBaseOnSumOfFitness( sum ) before'

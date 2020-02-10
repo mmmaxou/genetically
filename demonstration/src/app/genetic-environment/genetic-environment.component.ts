@@ -1,9 +1,11 @@
+import {Genetical, GeneticAlgorithm, BitChain} from 'genetical';
 import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
   Output,
   EventEmitter,
+  Input,
 } from '@angular/core';
 
 type GeneticEnvironmentStatus = 'Running' | 'Stopped';
@@ -15,6 +17,7 @@ type GeneticEnvironmentStatus = 'Running' | 'Stopped';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GeneticEnvironmentComponent implements OnInit {
+  @Input() geneticAlgorithm: GeneticAlgorithm<any>;
   @Output() stop = new EventEmitter();
   @Output() start = new EventEmitter();
 

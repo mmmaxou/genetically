@@ -52,6 +52,7 @@ export const LinearGeneticAlgorithm = () =>
  * Exporting Linear Functions
  */
 export const LinearFunctions = {
+  GeneticAlgorithm: LinearGeneticAlgorithm,
   encode,
   decode,
   randomValue,
