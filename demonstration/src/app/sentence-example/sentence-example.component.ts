@@ -1,5 +1,6 @@
 import {CodeStrings} from './code';
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import { GeneticAlgorithm, BitChain } from '../../../../lib/types/src/genetical';
 
 @Component({
   selector: 'app-sentence-example',
@@ -13,6 +14,7 @@ export class SentenceExampleComponent implements OnInit {
   public encoded: number[];
   public decoded: string;
   public code = CodeStrings;
+  public geneticAlgorithm: GeneticAlgorithm<string>;
 
   constructor() {}
 
@@ -29,13 +31,18 @@ export class SentenceExampleComponent implements OnInit {
   }
   onChangeObjective() {}
 
-  createGeneticAlgorithm() {}
+  createGeneticAlgorithm() {
+    this.geneticAlgorithm = new GeneticAlgorithm<string>({
+      decode: this.decode,
+      encode: 
+    })
+  }
 
   /**
    *
    * @param sentence A normal string
    */
-  encode(sentence: string): number[] {
+  encode(sentence: string): BitChain {
     return sentence.split('').map((character) => {
       character = character.toLowerCase().replace(' ', '{');
       return character.charCodeAt(0) - 97;

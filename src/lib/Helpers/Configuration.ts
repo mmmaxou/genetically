@@ -1,3 +1,4 @@
+import {BitChain} from './BitChain';
 import {
   ConfigureParams,
   FitnessFunctionObjective,
@@ -30,21 +31,21 @@ export const DEFAULT_CONFIGURATION = {
   POPULATION: DEFAULT_CONFIGURATION_POPULATION,
 };
 
-export class Configuration<T> {
+export class Configuration<T, EncodedType = BitChain> {
   /**
    * ==================================
    * Attributes
    * ==================================
    */
 
-  private _config: RequiredConfigureParams<T>;
+  private _config: RequiredConfigureParams<T, EncodedType>;
 
   /**
    * ==================================
    * Constructor
    * ==================================
    */
-  constructor(config: RequiredConfigureParams<T>) {
+  constructor(config: RequiredConfigureParams<T, EncodedType>) {
     this._config = config;
     this.configure(config);
   }
@@ -55,7 +56,7 @@ export class Configuration<T> {
    * ==================================
    */
 
-  get(): RequiredConfigureParams<T> {
+  get(): RequiredConfigureParams<T, EncodedType> {
     return this._config;
   }
 
@@ -69,12 +70,12 @@ export class Configuration<T> {
    * Change the configuration on the fly
    */
   public changeConfiguration(
-    configuration: ChangeConfigurationParams<T>
+    configuration: ChangeConfigurationParams<T, EncodedType>
   ): void {
     /**
      * Create new configuration
      */
-    const config: RequiredConfigureParams<T> = {
+    const config: RequiredConfigureParams<T, EncodedType> = {
       ...DEFAULT_CONFIGURATION_GENETIC_ALGORITHM,
       ...this._config,
       ...configuration,
@@ -99,7 +100,9 @@ export class Configuration<T> {
   /**
    * Change configuration
    */
-  private configure(configuration: RequiredConfigureParams<T>): void {
+  private configure(
+    configuration: RequiredConfigureParams<T, EncodedType>
+  ): void {
     /**
      * Default configuration
      */
@@ -107,7 +110,7 @@ export class Configuration<T> {
       ...DEFAULT_CONFIGURATION_POPULATION,
       ...configuration.population,
     };
-    const config: RequiredConfigureParams<T> = {
+    const config: RequiredConfigureParams<T, EncodedType> = {
       ...DEFAULT_CONFIGURATION_GENETIC_ALGORITHM,
       ...configuration,
       population: popConfig,
@@ -128,7 +131,7 @@ export class Configuration<T> {
    * Verify the given configuration is valid
    */
   private testGeneticAlgorithmConfiguration(
-    config: RequiredConfigureParams<T>
+    config: RequiredConfigureParams<T, EncodedType>
   ) {
     /**
      * Test

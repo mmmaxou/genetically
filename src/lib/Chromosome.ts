@@ -2,7 +2,7 @@ import {GeneticAlgorithm} from './GeneticAlgorithm';
 import {RequiredConfigureParams} from './Helpers/Params';
 import {BitChain} from './Helpers/BitChain';
 
-export class Chromosome {
+export class Chromosome<EncodedType = BitChain> {
   /**
    * ==================================
    * Static
@@ -17,15 +17,15 @@ export class Chromosome {
   private _normalizedFitnessScore = 0;
   private _computed = false;
   private _normalized = false;
-  private _chain: BitChain;
+  private _chain: EncodedType;
   /**
    * ==================================
    * Constructor
    * ==================================
    */
   constructor(
-    private geneticAlgorithm: GeneticAlgorithm<any>,
-    initialChain?: BitChain
+    private geneticAlgorithm: GeneticAlgorithm<any, EncodedType>,
+    initialChain?: EncodedType
   ) {
     if (initialChain) {
       this._chain = initialChain;
@@ -42,7 +42,7 @@ export class Chromosome {
     return this.geneticAlgorithm.configuration;
   }
 
-  get chain(): BitChain {
+  get chain(): EncodedType {
     return this._chain;
   }
 

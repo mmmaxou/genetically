@@ -13,16 +13,16 @@ import {computeHistogram} from './Helpers/Helpers';
 /**
  * Contains the logic of a population
  */
-export class Population {
+export class Population<EncodedType = BitChain> {
   /**
    * ==================================
    * Attributes
    * ==================================
    */
-  private _population: Chromosome[] = [];
+  private _population: Chromosome<EncodedType>[] = [];
   private _computed = false;
-  private _fittest: Chromosome = this.population[0];
-  private _leastFit: Chromosome = this.population[0];
+  private _fittest: Chromosome<EncodedType> = this.population[0];
+  private _leastFit: Chromosome<EncodedType> = this.population[0];
   private _sumFitness = 0;
   private _meanFitness = 0;
   private _timeToRun = 0;
@@ -35,19 +35,20 @@ export class Population {
    */
   constructor(
     private geneticAlgorithm: GeneticAlgorithm<any>,
-    initialPopulation?: Chromosome[] | BitChain[]
+    initialPopulation?: Chromosome<EncodedType>[] | EncodedType[]
   ) {
     if (initialPopulation) {
       if (typeof initialPopulation[0] === 'string') {
         // initialPopulation is an array of string
         // Create associated chromosomes
-        this._population = (initialPopulation as BitChain[]).map(
-          (chain: BitChain) => new Chromosome(this.geneticAlgorithm, chain)
+        this._population = (initialPopulation as EncodedType[]).map(
+          (chain: EncodedType) =>
+            new Chromosome<EncodedType>(this.geneticAlgorithm, chain)
         );
       } else {
         // initialPopulation is an array of chromosome
         // Use it as is
-        this._population = initialPopulation as Chromosome[];
+        this._population = initialPopulation as Chromosome<EncodedType>[];
       }
     } else {
       this._population = this.initPopulation();
@@ -67,14 +68,14 @@ export class Population {
   /**
    * Get an overview of the population
    */
-  get population(): Chromosome[] {
+  get population(): Chromosome<EncodedType>[] {
     return this._population;
   }
 
   /**
    * Get the fittest individual
    */
-  get fittest(): Chromosome {
+  get fittest(): Chromosome<EncodedType> {
     assert(this.computed, this.notComputedError());
     return this._fittest;
   }
@@ -82,7 +83,7 @@ export class Population {
   /**
    * Get the least fittest individual
    */
-  get leastFit(): Chromosome {
+  get leastFit(): Chromosome<EncodedType> {
     assert(this.computed, this.notComputedError());
     return this._leastFit;
   }
@@ -137,8 +138,8 @@ export class Population {
 
     /// Process
     const timer = new CountTime();
-    let fittest: Chromosome = this.population[0];
-    let leastFit: Chromosome = this.population[0];
+    let fittest: Chromosome<EncodedType> = this.population[0];
+    let leastFit: Chromosome<EncodedType> = this.population[0];
     let max = Number.MIN_SAFE_INTEGER;
     let min = Number.MAX_SAFE_INTEGER;
     let sum = 0;
@@ -157,10 +158,16 @@ export class Population {
     const mean = sum / this.population.length;
 
     /// Sort individuals
-    const MaximizeSort = (A: Chromosome, B: Chromosome) => {
+    const MaximizeSort = (
+      A: Chromosome<EncodedType>,
+      B: Chromosome<EncodedType>
+    ) => {
       return B.fitnessScore - A.fitnessScore;
     };
-    const MinimizeSort = (A: Chromosome, B: Chromosome) => {
+    const MinimizeSort = (
+      A: Chromosome<EncodedType>,
+      B: Chromosome<EncodedType>
+    ) => {
       return A.fitnessScore - B.fitnessScore;
     };
     const SortFunction =
@@ -225,10 +232,10 @@ Solution of the fittest is ${this.geneticAlgorithm.decode(this.fittest.chain)}
   /**
    * Generate a new population with empty individuals
    */
-  private initPopulation(): Chromosome[] {
+  private initPopulation(): Chromosome<EncodedType>[] {
     return Array.from(
       Array(this.popConfig.popsize),
-      () => new Chromosome(this.geneticAlgorithm)
+      () => new Chromosome<EncodedType>(this.geneticAlgorithm)
     );
   }
 

@@ -9,22 +9,22 @@ import {BitChain} from '../Helpers/BitChain';
 /**
  * Interface for a selection strategy
  */
-export abstract class CrossoverStrategy {
+export abstract class CrossoverStrategy<EncodedType = BitChain> {
   public abstract crossover(
-    chains: BitChain[],
+    chains: EncodedType[],
     mutation: MutationStrategy,
     statistics?: CrossoverStatistics
-  ): BitChain[];
+  ): EncodedType[];
 }
 
 /**
  * Crossover function
  */
-export type CrossoverFunction = (
-  chains: BitChain[],
+export type CrossoverFunction<EncodedType = BitChain> = (
+  chains: EncodedType[],
   mutation: MutationStrategy,
   statistics?: CrossoverStatistics
-) => BitChain[];
+) => EncodedType[];
 
 /**
  * Interface for statistics

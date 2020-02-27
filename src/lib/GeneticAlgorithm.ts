@@ -21,15 +21,15 @@ import {
 } from './Selection/SelectionGeneric';
 import {BitChain} from './Helpers/BitChain';
 
-export class GeneticAlgorithm<T> {
+export class GeneticAlgorithm<T, EncodedType = BitChain> {
   /**
    * ==================================
    * Attributes
    * ==================================
    */
   private config: Configuration<T>;
-  private populations: Population[] = [];
-  private allTimeBestChromosome: Chromosome;
+  private populations: Population<EncodedType>[] = [];
+  private allTimeBestChromosome: Chromosome<EncodedType>;
   private time = 0;
 
   /**
@@ -83,11 +83,11 @@ export class GeneticAlgorithm<T> {
     return this.config.get();
   }
 
-  get allTimeBest(): Chromosome {
+  get allTimeBest(): Chromosome<EncodedType> {
     return this.allTimeBestChromosome;
   }
 
-  get lastPopulation(): Population {
+  get lastPopulation(): Population<EncodedType> {
     if (this.populations.length === 0) {
       throw new Error(
         `Population array of genetic algorithm is currently empty`
@@ -113,8 +113,8 @@ export class GeneticAlgorithm<T> {
   /**
    * Create a fresh population
    */
-  public initGeneration(): Population[] {
-    return [new Population(this)];
+  public initGeneration(): Population<EncodedType>[] {
+    return [new Population<EncodedType>(this)];
   }
 
   /**
@@ -154,7 +154,7 @@ export class GeneticAlgorithm<T> {
      * Selection
      */
     const selectionStatistics = new SelectionStatistics();
-    const selected: BitChain[] = this.selection(
+    const selected: EncodedType[] = this.selection(
       this.lastPopulation,
       selectionStatistics
     );
@@ -164,7 +164,7 @@ export class GeneticAlgorithm<T> {
      * Mutation
      */
     const crossoverStatistics = new CrossoverStatistics();
-    const crossed: BitChain[] = this.crossover(
+    const crossed: EncodedType[] = this.crossover(
       selected,
       this.mutation,
       crossoverStatistics
