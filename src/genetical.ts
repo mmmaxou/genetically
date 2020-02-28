@@ -1,11 +1,11 @@
-import {Helper} from './lib/Helpers/export';
-import {GeneticAlgorithm} from './lib/GeneticAlgorithm';
-import {Population} from './lib/Population';
-import {Chromosome} from './lib/Chromosome';
-import {Mutation} from './lib/Mutation/export';
-import {Selection} from './lib/Selection/export';
-import {Crossover} from './lib/Crossover/export';
-import {Functions} from './example/export';
+import {Helper} from './../src/lib/Helpers/export';
+import {GeneticAlgorithm} from './../src/lib/GeneticAlgorithm';
+import {Population} from './../src/lib/Population';
+import {Chromosome} from './../src/lib/Chromosome';
+import {Mutation} from './../src/lib/Mutation/export';
+import {Selection} from './../src/lib/Selection/export';
+import {Crossover} from './../src/lib/Crossover/export';
+import {Functions} from './../src/example/export';
 
 /**
  * Crossover

@@ -1,4 +1,4 @@
-import {CountTime} from './../Helpers/CountTime';
+import {CountTime} from '../Helpers/CountTime';
 import {CrossoverStrategy, CrossoverStatistics} from './GenericCrossover';
 import {MutationStrategy} from '../Mutation/GenericMutation';
 import {BitChain} from '../Helpers/BitChain';
