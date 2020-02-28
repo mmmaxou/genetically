@@ -2,10 +2,10 @@
 
 # compiled output
 /dist
-node_modules
-lib
-lib-esm
-_bundles
+/node_modules
+/lib
+/lib-esm
+/_bundles
 
 # IDEs and editors
 
