@@ -5,7 +5,7 @@ import {Chromosome} from './lib/Chromosome';
 import {Mutation} from './lib/Mutation/export';
 import {Selection} from './lib/Selection/export';
 import {Crossover} from './lib/Crossover/export';
-import Functions from './example/export';
+import {Functions} from './example/export';
 
 /**
  * Crossover

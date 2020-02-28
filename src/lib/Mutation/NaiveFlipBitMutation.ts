@@ -5,7 +5,7 @@ import {BitChain} from '../Helpers/BitChain';
  * Naive Flip bit mutation
  * Use a probability for each mutation
  */
-export class NaiveFlipBitMutation extends MutationStrategy {
+export class NaiveFlipBitMutation extends MutationStrategy<BitChain> {
   /**
    * Mutate a chain
    */

@@ -1,6 +1,9 @@
 import {CodeStrings} from './code';
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import { GeneticAlgorithm, BitChain } from '../../../../lib/types/src/genetical';
+import {
+  GeneticAlgorithm,
+  DEFAULT_CONFIGURATION,
+} from '../../../../src/genetical';
 
 @Component({
   selector: 'app-sentence-example',
@@ -14,7 +17,7 @@ export class SentenceExampleComponent implements OnInit {
   public encoded: number[];
   public decoded: string;
   public code = CodeStrings;
-  public geneticAlgorithm: GeneticAlgorithm<string>;
+  public geneticAlgorithm: GeneticAlgorithm<string, number[]>;
 
   constructor() {}
 
@@ -32,17 +35,25 @@ export class SentenceExampleComponent implements OnInit {
   onChangeObjective() {}
 
   createGeneticAlgorithm() {
-    this.geneticAlgorithm = new GeneticAlgorithm<string>({
+    this.geneticAlgorithm = new GeneticAlgorithm<string, number[]>({
+      ...DEFAULT_CONFIGURATION.GENETIC_ALGORITHM,
       decode: this.decode,
-      encode: 
-    })
+      encode: this.encode,
+      randomValue: () => '',
+      fitness: () => 1,
+      selection: null,
+      crossover: null,
+      mutation: null,
+      stopCondition: null,
+      afterEach: null,
+    });
   }
 
   /**
    *
    * @param sentence A normal string
    */
-  encode(sentence: string): BitChain {
+  encode(sentence: string): number[] {
     return sentence.split('').map((character) => {
       character = character.toLowerCase().replace(' ', '{');
       return character.charCodeAt(0) - 97;
@@ -58,7 +69,7 @@ export class SentenceExampleComponent implements OnInit {
     return String.fromCharCode(...shiftedCharacters).replace(/\{/g, ' ');
   }
 
-  /**
+  /*
    * Create a random sequence of numbers of the length of the objective sentence
    */
   generateRandomSentence() {

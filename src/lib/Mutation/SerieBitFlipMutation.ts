@@ -9,7 +9,7 @@ import {BitChain} from '../Helpers/BitChain';
  * Compute next probability each time a mutation is done
  * Use probabilities to compute a counter for the next flip bit
  */
-export class SerieFlipBitMutation extends MutationStrategy {
+export class SerieFlipBitMutation extends MutationStrategy<BitChain> {
   public _nextMutationCounter = 0;
   private invertedLogOfOneMinusProbability: number;
 

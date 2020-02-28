@@ -7,11 +7,13 @@ import {BitChain} from '../Helpers/BitChain';
  * https://arxiv.org/pdf/1109.3627.pdf
  * Article about roulette wheel theory
  */
-export class RouletteWheelSelection extends SelectionStrategy {
+export class RouletteWheelSelection<
+  EncodedType = BitChain
+> extends SelectionStrategy<EncodedType> {
   public selection(
-    pop: Population,
+    pop: Population<EncodedType>,
     statistics?: SelectionStatistics
-  ): BitChain[] {
+  ): EncodedType[] {
     /**
      * Init
      */
@@ -19,7 +21,7 @@ export class RouletteWheelSelection extends SelectionStrategy {
     // const fitnessMin = pop.leastFit.normalizedFitnessScore;
     // console.log('fitness max is ', fitnessMax);
     // console.log('fitness min is ', fitnessMin);
-    const selected: BitChain[] = [];
+    const selected: EncodedType[] = [];
     const averageIteration = pop.population.length * 3;
     let ctr = 0;
 
@@ -39,7 +41,7 @@ export class RouletteWheelSelection extends SelectionStrategy {
        * which does not depend on the individual’s fitness
        */
       const i = Math.round(Math.random() * (pop.population.length - 1));
-      const individual: Chromosome = pop.population[i];
+      const individual: Chromosome<EncodedType> = pop.population[i];
 
       /**
        * 2.
@@ -53,7 +55,7 @@ export class RouletteWheelSelection extends SelectionStrategy {
       const p = individual.normalizedFitnessScore / fitnessMax;
       const accepted = p >= rng;
       if (accepted) {
-        selected.push(String(individual.chain));
+        selected.push(individual.cloneChain());
       }
     }
 

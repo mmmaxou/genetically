@@ -12,7 +12,7 @@ import {BitChain} from '../Helpers/BitChain';
 export abstract class CrossoverStrategy<EncodedType = BitChain> {
   public abstract crossover(
     chains: EncodedType[],
-    mutation: MutationStrategy,
+    mutation: MutationStrategy<EncodedType>,
     statistics?: CrossoverStatistics
   ): EncodedType[];
 }
@@ -22,7 +22,7 @@ export abstract class CrossoverStrategy<EncodedType = BitChain> {
  */
 export type CrossoverFunction<EncodedType = BitChain> = (
   chains: EncodedType[],
-  mutation: MutationStrategy,
+  mutation: MutationStrategy<EncodedType>,
   statistics?: CrossoverStatistics
 ) => EncodedType[];
 

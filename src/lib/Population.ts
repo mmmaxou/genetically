@@ -2,8 +2,8 @@ import {CountTime} from './Helpers/CountTime';
 import {Chromosome} from './Chromosome';
 import {
   PopulationParams,
-  RequiredConfigureParams,
   FitnessFunctionObjective,
+  CompleteConfigureParams,
 } from './Helpers/Params';
 import {GeneticAlgorithm} from './GeneticAlgorithm';
 import {BitChain} from './Helpers/BitChain';
@@ -34,7 +34,7 @@ export class Population<EncodedType = BitChain> {
    * ==================================
    */
   constructor(
-    private geneticAlgorithm: GeneticAlgorithm<any>,
+    private geneticAlgorithm: GeneticAlgorithm<any, EncodedType>,
     initialPopulation?: Chromosome<EncodedType>[] | EncodedType[]
   ) {
     if (initialPopulation) {
@@ -59,12 +59,21 @@ export class Population<EncodedType = BitChain> {
    * Getters
    * ==================================
    */
-  get config(): RequiredConfigureParams<any> {
+
+  /**
+   * Return the configuration in use
+   */
+  get config(): CompleteConfigureParams<any, EncodedType> {
     return this.geneticAlgorithm.configuration;
   }
+
+  /**
+   * Return the configuration of the population in use
+   */
   get popConfig(): PopulationParams {
     return this.config.population;
   }
+
   /**
    * Get an overview of the population
    */

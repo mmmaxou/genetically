@@ -10,7 +10,7 @@ import {BitChain} from '../Helpers/BitChain';
  * Automatically use the best algorithm based on the probability
  * The threshold 0.65 was found empirically in the mutation.test.ts file
  */
-export class FlipBitMutation extends MutationStrategy {
+export class FlipBitMutation extends MutationStrategy<BitChain> {
   private strategy: MutationStrategy;
 
   constructor(

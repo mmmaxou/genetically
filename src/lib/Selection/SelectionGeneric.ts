@@ -5,10 +5,10 @@ import {BitChain} from '../Helpers/BitChain';
 /**
  * Type for selection strategy
  */
-export type SelectionFunction = (
-  population: Population,
+export type SelectionFunction<EncodedType = BitChain> = (
+  population: Population<EncodedType>,
   statistics?: SelectionStatistics
-) => BitChain[];
+) => EncodedType[];
 
 /**
  * Interface for statistics
@@ -28,16 +28,16 @@ export class SelectionStatistics {
 /**
  * Interface for a selection strategy
  */
-export abstract class SelectionStrategy {
+export abstract class SelectionStrategy<EncodedType = any> {
   public abstract selection(
-    population: Population,
+    population: Population<EncodedType>,
     statistics?: SelectionStatistics
-  ): BitChain[];
+  ): EncodedType[];
 
   public selectionWithStatistics(
-    population: Population,
+    population: Population<EncodedType>,
     statistics: SelectionStatistics
-  ): BitChain[] {
+  ): EncodedType[] {
     const timer = new CountTime();
     const averageIteration = population.population.length * 3;
     const averageTime = averageIteration * 0.0005;

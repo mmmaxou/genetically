@@ -22,64 +22,10 @@ export enum FitnessFunctionObjective {
   MAXIMIZE,
 }
 
-export interface ConfigureParams<EncodedType = BitChain> {
-  /**
-   * Verbose parameter control the level of verbose the application is using. Change the informations provided in the console
-   * Default is DEBUG
-   */
-  verbose: 'NONE' | 'INFO' | 'DEBUG';
-
-  /**
-   * Wheither you want to maximize or minimize a function
-   * Default is maximize
-   */
-  objective: FitnessFunctionObjective;
-
-  /**
-   * Amount of iteration the genetic algorithm should do for completion
-   * Default is 50
-   */
-  iterations: number;
-
-  /**
-   * Population configuration object. Refer to PopulationParams for more details
-   */
-  population: PopulationParams;
-
-  /**
-   * The selection function used to create new population. Use your own selection function or use one provided in Selection namespace
-   * Default is RouletteWheelSelection
-   */
-  selection: SelectionStrategy;
-
-  /**
-   * The crossover function used to mix two encoded chromosomes into two descendant.
-   * Use your own crossover function or use one provided in Crossover namespace
-   * Default is SinglePointCrossover
-   */
-  crossover: CrossoverStrategy;
-
-  /**
-   * The mutation function used to alter a chromosome after the crossover
-   * Use your own mutation function or use one provided in Mutation namespace
-   */
-  mutation: MutationStrategy;
-
-  /**
-   * A function returning a boolean. If the function returns true, the evolution will stop
-   * Default is undefined
-   */
-  stopCondition: StopConditionFunction;
-
-  /**
-   * A visitor function running after each iteration of the population
-   * Default is undefined
-   */
-  afterEach: AfterEachFunction;
-}
-
-export interface RequiredConfigureParams<T, EncodedType = BitChain>
-  extends ConfigureParams<EncodedType> {
+/**
+ * Required parameters for the configuration of the GeneticAlgorithm Object
+ */
+export interface RequiredConfigureParams<T, EncodedType = BitChain> {
   /**
    * The encoding function takes a variable of your type T and must return a BitChain encoded version of this variable.
    * It is the opposite of the decode function
@@ -108,6 +54,69 @@ export interface RequiredConfigureParams<T, EncodedType = BitChain>
   fitness: FitnessFunction<T>;
 }
 
+/**
+ * Optionnal Parameters used to configure the GeneticAlgorithm Object
+ */
+export interface CompleteConfigureParams<T, EncodedType = BitChain>
+  extends RequiredConfigureParams<T, EncodedType> {
+  /**
+   * Verbose parameter control the level of verbose the application is using. Change the informations provided in the console
+   * Default is DEBUG
+   */
+  verbose: 'NONE' | 'INFO' | 'DEBUG';
+
+  /**
+   * Wheither you want to maximize or minimize a function
+   * Default is maximize
+   */
+  objective: FitnessFunctionObjective;
+
+  /**
+   * Amount of iteration the genetic algorithm should do for completion
+   * Default is 50
+   */
+  iterations: number;
+
+  /**
+   * Population configuration object. Refer to PopulationParams for more details
+   */
+  population: PopulationParams;
+
+  /**
+   * The selection function used to create new population. Use your own selection function or use one provided in Selection namespace
+   * Default is RouletteWheelSelection
+   */
+  selection: SelectionStrategy<EncodedType>;
+
+  /**
+   * The crossover function used to mix two encoded chromosomes into two descendant.
+   * Use your own crossover function or use one provided in Crossover namespace
+   * Default is SinglePointCrossover
+   */
+  crossover: CrossoverStrategy<EncodedType>;
+
+  /**
+   * The mutation function used to alter a chromosome after the crossover
+   * Use your own mutation function or use one provided in Mutation namespace
+   */
+  mutation: MutationStrategy<EncodedType>;
+
+  /**
+   * A function returning a boolean. If the function returns true, the evolution will stop
+   * Default is undefined
+   */
+  stopCondition: StopConditionFunction<EncodedType>;
+
+  /**
+   * A visitor function running after each iteration of the population
+   * Default is undefined
+   */
+  afterEach: AfterEachFunction<EncodedType>;
+}
+
+/**
+ * Parameters used to change the configuration of the GeneticAlgorithm Object after it's initialization
+ */
 export interface ChangeConfigurationParams<T, EncodedType = BitChain> {
   // Configure
   /**
@@ -133,29 +142,29 @@ export interface ChangeConfigurationParams<T, EncodedType = BitChain> {
   /**
    * The selection function used to create new population. Use your own selection function or use one provided in Selection namespace
    */
-  selection?: SelectionStrategy;
+  selection?: SelectionStrategy<EncodedType>;
 
   /**
    * The crossover function used to mix two encoded chromosomes into two descendant.
    * Use your own crossover function or use one provided in Crossover namespace
    */
-  crossover?: CrossoverStrategy;
+  crossover?: CrossoverStrategy<EncodedType>;
 
   /**
    * The mutation function used to alter a chromosome after the crossover
    * Use your own mutation function or use one provided in Mutation namespace
    */
-  mutation?: MutationStrategy;
+  mutation?: MutationStrategy<EncodedType>;
 
   /**
    * A function returning a boolean. If the function returns true, the evolution will stop
    */
-  stopCondition?: StopConditionFunction;
+  stopCondition?: StopConditionFunction<EncodedType>;
 
   /**
    * A visitor function running after each iteration of the population
    */
-  afterEach?: AfterEachFunction;
+  afterEach?: AfterEachFunction<EncodedType>;
 
   // Required
   /**

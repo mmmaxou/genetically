@@ -20,7 +20,7 @@ export class MutationStatistics {
 /**
  * Class for a selection strategy
  */
-export abstract class MutationStrategy {
+export abstract class MutationStrategy<EncodedType = BitChain> {
   constructor(
     protected probability: number = DEFAULT_MUTATION_CONFIGURATION.probability
   ) {}
@@ -29,9 +29,9 @@ export abstract class MutationStrategy {
    * Compute statistics
    */
   public mutationWithStatistics(
-    chain: BitChain,
+    chain: EncodedType,
     statistics: MutationStatistics
-  ): BitChain {
+  ): EncodedType {
     const timer = new CountTime();
     const newChain = this.mutation(chain);
     statistics.time += timer.time();
@@ -41,5 +41,5 @@ export abstract class MutationStrategy {
   /**
    * Mutate a chain
    */
-  public abstract mutation(chain: BitChain): BitChain;
+  public abstract mutation(chain: EncodedType): EncodedType;
 }

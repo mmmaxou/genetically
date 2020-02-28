@@ -8,7 +8,7 @@ import {shuffleArray} from '../Helpers/Helpers';
  * https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)#Single-point_crossover
  * Single Point Crossover
  */
-export class SinglePointCrossover extends CrossoverStrategy {
+export class SinglePointCrossover extends CrossoverStrategy<BitChain> {
   public crossover(
     chains: BitChain[],
     mutation: MutationStrategy,

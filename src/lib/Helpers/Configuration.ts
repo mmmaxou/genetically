@@ -1,10 +1,10 @@
 import {BitChain} from './BitChain';
 import {
-  ConfigureParams,
   FitnessFunctionObjective,
   PopulationParams,
   ChangeConfigurationParams,
   RequiredConfigureParams,
+  CompleteConfigureParams,
 } from './Params';
 import {FlipBitMutation} from '../Mutation/FlipBitMutation';
 import {SinglePointCrossover} from '../Crossover/SinglePointCrossover';
@@ -14,8 +14,20 @@ export const DEFAULT_CONFIGURATION_POPULATION: PopulationParams = {
   popsize: 50,
 };
 
-export const DEFAULT_CONFIGURATION_GENETIC_ALGORITHM: ConfigureParams = {
-  verbose: 'DEBUG',
+export const DEFAULT_CONFIGURATION_GENETIC_ALGORITHM = {
+  encode: () => {
+    throw new Error('You need to give a custom encode function.');
+  },
+  decode: () => {
+    throw new Error('You need to give a custom decode function.');
+  },
+  fitness: () => {
+    throw new Error('You need to give a custom fitness function.');
+  },
+  randomValue: () => {
+    throw new Error('You need to give a custom randomValue function.');
+  },
+  verbose: 'DEBUG' as 'NONE' | 'INFO' | 'DEBUG',
   objective: FitnessFunctionObjective.MAXIMIZE,
   population: DEFAULT_CONFIGURATION_POPULATION,
   selection: new RouletteWheelSelection(),
@@ -38,16 +50,22 @@ export class Configuration<T, EncodedType = BitChain> {
    * ==================================
    */
 
-  private _config: RequiredConfigureParams<T, EncodedType>;
+  /**
+   * Store the complete configuration
+   */
+  private _config: CompleteConfigureParams<T, EncodedType>;
 
   /**
    * ==================================
    * Constructor
    * ==================================
    */
-  constructor(config: RequiredConfigureParams<T, EncodedType>) {
-    this._config = config;
-    this.configure(config);
+  constructor(
+    config:
+      | RequiredConfigureParams<T, EncodedType>
+      | CompleteConfigureParams<T, EncodedType>
+  ) {
+    this._config = this.configure(config);
   }
 
   /**
@@ -56,7 +74,7 @@ export class Configuration<T, EncodedType = BitChain> {
    * ==================================
    */
 
-  get(): RequiredConfigureParams<T, EncodedType> {
+  get(): CompleteConfigureParams<T, EncodedType> {
     return this._config;
   }
 
@@ -75,8 +93,7 @@ export class Configuration<T, EncodedType = BitChain> {
     /**
      * Create new configuration
      */
-    const config: RequiredConfigureParams<T, EncodedType> = {
-      ...DEFAULT_CONFIGURATION_GENETIC_ALGORITHM,
+    const config: CompleteConfigureParams<T, EncodedType> = {
       ...this._config,
       ...configuration,
     };
@@ -101,17 +118,22 @@ export class Configuration<T, EncodedType = BitChain> {
    * Change configuration
    */
   private configure(
-    configuration: RequiredConfigureParams<T, EncodedType>
-  ): void {
+    configuration:
+      | RequiredConfigureParams<T, EncodedType>
+      | CompleteConfigureParams<T, EncodedType>
+  ): CompleteConfigureParams<T, EncodedType> {
     /**
      * Default configuration
      */
     const popConfig: PopulationParams = {
       ...DEFAULT_CONFIGURATION_POPULATION,
-      ...configuration.population,
+      ...(configuration as CompleteConfigureParams<T, EncodedType>).population,
     };
-    const config: RequiredConfigureParams<T, EncodedType> = {
-      ...DEFAULT_CONFIGURATION_GENETIC_ALGORITHM,
+    const config: CompleteConfigureParams<T, EncodedType> = {
+      ...(DEFAULT_CONFIGURATION_GENETIC_ALGORITHM as CompleteConfigureParams<
+        T,
+        any
+      >),
       ...configuration,
       population: popConfig,
     };
@@ -124,14 +146,14 @@ export class Configuration<T, EncodedType = BitChain> {
     /**
      * Update configuration
      */
-    this._config = config;
+    return config;
   }
 
   /**
    * Verify the given configuration is valid
    */
   private testGeneticAlgorithmConfiguration(
-    config: RequiredConfigureParams<T, EncodedType>
+    config: CompleteConfigureParams<T, EncodedType>
   ) {
     /**
      * Test
@@ -168,6 +190,50 @@ export class Configuration<T, EncodedType = BitChain> {
       throw new Error(
         `Config.verbose should be one of 'INFO', 'DEBUG', 'NONE'`
       );
+    }
+
+    /**
+     * Default configuration only work on Bitchain
+     * Bitchain currently is a string
+     * If not a string, then mu
+     */
+    if (typeof dec !== 'string') {
+      // Mutation test
+      try {
+        const m = config.mutation.mutation;
+        m(enc);
+      } catch (e) {
+        this.error(`\x1b[31mError during Genetic Algorithm configuration :`);
+        this.error(`\x1b[31mGiven configuration is wrong`);
+        this.error(
+          `\x1b[31mYou used a type other than BitChain(=string),
+but you did not provide a custom MutationStrategy to handle it.`,
+          r
+        );
+        throw new Error(
+          `\x1b[31mYou used a type other than BitChain(=string),
+but you did not provide a custom MutationStrategy to handle it.`
+        );
+      }
+
+      // Crossover test
+      try {
+        const m = config.mutation;
+        const c = config.crossover.crossover;
+        c([enc], m);
+      } catch (e) {
+        this.error(`\x1b[31mError during Genetic Algorithm configuration :`);
+        this.error(`\x1b[31mGiven configuration is wrong`);
+        this.error(
+          `\x1b[31mYou used a type other than BitChain(=string),
+but you did not provide a custom CrossoverStrategy to handle it.`,
+          r
+        );
+        throw new Error(
+          `\x1b[31mYou used a type other than BitChain(=string),
+but you did not provide a custom CrossoverStrategy to handle it.`
+        );
+      }
     }
   }
 

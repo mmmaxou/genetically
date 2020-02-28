@@ -5,11 +5,6 @@ import {BitChain} from './Helpers/BitChain';
 export class Chromosome<EncodedType = BitChain> {
   /**
    * ==================================
-   * Static
-   * ==================================
-   */
-  /**
-   * ==================================
    * Attributes
    * ==================================
    */
@@ -18,6 +13,23 @@ export class Chromosome<EncodedType = BitChain> {
   private _computed = false;
   private _normalized = false;
   private _chain: EncodedType;
+
+  /**
+   * ==================================
+   * Static
+   * ==================================
+   */
+
+  static From(chromosome: Chromosome<any>): Chromosome<any> {
+    const c = new Chromosome(chromosome.geneticAlgorithm);
+    c._chain = chromosome._chain;
+    c._computed = chromosome._computed;
+    c._fitnessScore = chromosome._fitnessScore;
+    c._normalized = chromosome._normalized;
+    c._normalizedFitnessScore = chromosome._normalizedFitnessScore;
+    return c;
+  }
+
   /**
    * ==================================
    * Constructor
@@ -33,15 +45,23 @@ export class Chromosome<EncodedType = BitChain> {
       this._chain = this.config.encode(this.config.randomValue());
     }
   }
+
   /**
    * ==================================
    * Getters
    * ==================================
    */
-  get config(): RequiredConfigureParams<any> {
+
+  /**
+   * Return the configuration in use
+   */
+  get config(): RequiredConfigureParams<any, EncodedType> {
     return this.geneticAlgorithm.configuration;
   }
 
+  /**
+   * Return the chain in use
+   */
   get chain(): EncodedType {
     return this._chain;
   }
@@ -77,6 +97,21 @@ export class Chromosome<EncodedType = BitChain> {
    */
 
   /**
+   * Return a deep copy of the chromosome
+   */
+  public clone(): Chromosome<EncodedType> {
+    return Chromosome.From(this);
+  }
+
+  /**
+   * Return a deep copy of the chain
+   * TODO: MODIFY THIS !!!!!!!
+   */
+  public cloneChain(): EncodedType {
+    return JSON.parse(JSON.stringify(this._chain));
+  }
+
+  /**
    * Can only be called once
    * return true if computations were done
    * return false if run was already called
@@ -104,7 +139,9 @@ export class Chromosome<EncodedType = BitChain> {
 
   /**
    * Normalize the fitness score of the individual
-   * Mark it normalized
+   * Mark it normalize
+   *
+   * TODO : Normalize based on INV SUM
    */
   public normalizeBaseOnSumOfFitness(sum: number) {
     this._normalized = true;

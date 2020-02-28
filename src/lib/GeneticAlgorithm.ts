@@ -8,6 +8,7 @@ import {
   RandomValueFunction,
   FitnessFunction,
   ChangeConfigurationParams,
+  CompleteConfigureParams,
 } from './Helpers/Params';
 import {Chromosome} from './Chromosome';
 import {MutationStrategy} from './Mutation/GenericMutation';
@@ -27,7 +28,7 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
    * Attributes
    * ==================================
    */
-  private config: Configuration<T>;
+  private config: Configuration<T, EncodedType>;
   private populations: Population<EncodedType>[] = [];
   private allTimeBestChromosome: Chromosome<EncodedType>;
   private time = 0;
@@ -40,7 +41,11 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
   /**
    * Require a configuration objet to start
    */
-  constructor(config: RequiredConfigureParams<T>) {
+  constructor(
+    config:
+      | RequiredConfigureParams<T, EncodedType>
+      | CompleteConfigureParams<T, EncodedType>
+  ) {
     this.config = new Configuration(config);
     this.populations = this.initGeneration();
     this.allTimeBestChromosome = this.lastPopulation.population[0];
@@ -51,11 +56,11 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
    * Getters
    * ==================================
    */
-  get encode(): EncodeFunction<T> {
+  get encode(): EncodeFunction<T, EncodedType> {
     return this.configuration.encode;
   }
 
-  get decode(): DecodeFunction<T> {
+  get decode(): DecodeFunction<T, EncodedType> {
     return this.configuration.decode;
   }
 
@@ -67,19 +72,19 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
     return this.configuration.fitness;
   }
 
-  get selection(): SelectionFunction {
+  get selection(): SelectionFunction<EncodedType> {
     return this.configuration.selection.selection;
   }
 
-  get crossover(): CrossoverFunction {
+  get crossover(): CrossoverFunction<EncodedType> {
     return this.configuration.crossover.crossover;
   }
 
-  get mutation(): MutationStrategy {
+  get mutation(): MutationStrategy<EncodedType> {
     return this.configuration.mutation;
   }
 
-  get configuration(): RequiredConfigureParams<T> {
+  get configuration(): CompleteConfigureParams<T, EncodedType> {
     return this.config.get();
   }
 
@@ -105,7 +110,7 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
    * Change the configuration on the fly
    */
   public changeConfiguration(
-    configuration: ChangeConfigurationParams<T>
+    configuration: ChangeConfigurationParams<T, EncodedType>
   ): void {
     this.config.changeConfiguration(configuration);
   }

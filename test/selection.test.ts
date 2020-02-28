@@ -7,7 +7,7 @@ import {FitnessFunctionObjective} from '../src/lib/Helpers/Params';
 import {ITERATIONS} from './consts.test';
 import {SelectionStatistics} from '../src/lib/Selection/SelectionGeneric';
 import {RouletteWheelSelection} from '../src/lib/Selection/RouletteWheelSelection';
-import {Chromosome} from 'src/lib/Chromosome';
+import {Chromosome} from './../src/lib/Chromosome';
 
 describe('Selections Strategies', () => {
   const ga = LinearGeneticAlgorithm();
@@ -36,8 +36,7 @@ describe('Selections Strategies', () => {
     it('should not mutate a population', () => {
       const copyOfPopulation: Chromosome[] = [];
       pop.population.forEach((chromosome) => {
-        const nClone = new Chromosome(ga, chromosome.chain);
-        nClone.normalizeBaseOnSumOfFitness(pop.sumFitness);
+        const nClone = Chromosome.From(chromosome);
         copyOfPopulation.push(nClone);
       });
       roulette.selectionWithStatistics(pop, statistics);
