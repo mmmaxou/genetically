@@ -44,9 +44,7 @@
     "webpack-closure-compiler": "^2.1.6"
   },
   "files": [
-    "lib/**/*",
-    "lib-esm/**/*",
-    "_bundles/**/*"
+    "build/**/*"
   ],
   "homepage": "https://github.com/mmmaxou/genetical",
   "keywords": [
@@ -70,17 +68,12 @@
   },
   "types": "lib/types/src/genetical.d.ts",
   "scripts": {
-    "clean": "shx rm -rf _bundles lib lib-esm dist build",
-    "tsc": "tsc && tsc -m es6 --outDir build/lib-esm",
-    "prepare": "npm run tsc",
-    "serve": "webpack --watch --mode=development",
-    "nodemon": "nodemon dist/genetical.js",
-    "webpack:dev": "webpack",
-    "build": "npm run clean && npm run build:types && npm run build:js && npm run build:prod",
-    "build:js": "cross-env NODE_ENV=production tsc && tsc -m es6 --outDir build/lib-esm",
-    "build:types": "cross-env NODE_ENV=production tsc --emitDeclarationOnly",
-    "build:prod": "cross-env NODE_ENV=production webpack --mode=production",
-    "dev": "npm run webpack --mode=development && concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"npm:serve\" \"npm:nodemon\"",
+    "clean": "shx rm -rf dev build",
+    "nodemon": "nodemon dev/node/genetical.js",
+    "webpack:dev": "webpack --config webpack.config.development.js",
+    "build": "npm run clean && npm run build:prod",
+    "build:prod": "webpack --config=webpack.config.production.js",
+    "dev": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"npm:webpack:dev\" \"npm:nodemon\"",
     "start": "npm run tsc && node dist/genetical.js",
     "pretest": "npm run tsc",
     "test": "mocha",
@@ -89,12 +82,10 @@
   },
   "nyc": {
     "include": [
-      "src/**/*.ts",
-      "src/**/*.tsx"
+      "src/**/*.ts"
     ],
     "extension": [
-      ".ts",
-      ".tsx"
+      ".ts"
     ],
     "require": [
       "ts-node/register"
