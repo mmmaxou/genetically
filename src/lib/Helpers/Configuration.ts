@@ -1,36 +1,26 @@
+import {SinglePointCrossover} from '../Crossover/SinglePointCrossover';
+import {FlipBitMutation} from '../Mutation/FlipBitMutation';
+import {RouletteWheelSelection} from '../Selection/RouletteWheelSelection';
 import {BitChain} from './BitChain';
 import {
+  DecodeFunction,
+  EncodeFunction,
   FitnessFunctionObjective,
-  PopulationParams,
-  ChangeConfigurationParams,
-  RequiredConfigureParams,
-  CompleteConfigureParams,
+  GeneticAlgorithmConfiguration,
+  PopulationConfiguration,
+  RandomValueFunction,
+  FitnessFunction,
 } from './Params';
-import {FlipBitMutation} from '../Mutation/FlipBitMutation';
-import {SinglePointCrossover} from '../Crossover/SinglePointCrossover';
-import {RouletteWheelSelection} from '../Selection/RouletteWheelSelection';
 
-export const DEFAULT_CONFIGURATION_POPULATION: PopulationParams = {
+export const DEFAULT_CONFIGURATION_POPULATION: PopulationConfiguration = {
   popsize: 50,
 };
 
-export const DEFAULT_CONFIGURATION_GENETIC_ALGORITHM = {
-  encode: () => {
-    throw new Error('You need to give a custom encode function.');
-  },
-  decode: () => {
-    throw new Error('You need to give a custom decode function.');
-  },
-  fitness: () => {
-    throw new Error('You need to give a custom fitness function.');
-  },
-  randomValue: () => {
-    throw new Error('You need to give a custom randomValue function.');
-  },
-  verbose: 'DEBUG' as 'NONE' | 'INFO' | 'DEBUG',
+export const DEFAULT_CONFIGURATION_GENETIC_ALGORITHM: GeneticAlgorithmConfiguration<BitChain> = {
+  verbose: 'DEBUG',
   objective: FitnessFunctionObjective.MAXIMIZE,
   population: DEFAULT_CONFIGURATION_POPULATION,
-  selection: new RouletteWheelSelection(),
+  selection: new RouletteWheelSelection<BitChain>(),
   crossover: new SinglePointCrossover(),
   mutation: new FlipBitMutation(),
   iterations: 50,
@@ -38,12 +28,7 @@ export const DEFAULT_CONFIGURATION_GENETIC_ALGORITHM = {
   afterEach: () => {},
 };
 
-export const DEFAULT_CONFIGURATION = {
-  GENETIC_ALGORITHM: DEFAULT_CONFIGURATION_GENETIC_ALGORITHM,
-  POPULATION: DEFAULT_CONFIGURATION_POPULATION,
-};
-
-export class Configuration<T, EncodedType = BitChain> {
+export class Configuration<EncodedType = BitChain> {
   /**
    * ==================================
    * Attributes
@@ -53,14 +38,25 @@ export class Configuration<T, EncodedType = BitChain> {
   /**
    * Store the complete configuration
    */
-  private _config: CompleteConfigureParams<T, EncodedType>;
+  private _config: GeneticAlgorithmConfiguration<EncodedType>;
 
   /**
    * ==================================
    * Constructor
    * ==================================
    */
-  constructor(config: RequiredConfigureParams<T, EncodedType> | CompleteConfigureParams<T, EncodedType>) {
+  constructor(
+    private readonly encode: EncodeFunction<any, EncodedType>,
+    private readonly decode: DecodeFunction<any, EncodedType>,
+    private readonly randomValue: RandomValueFunction<any>,
+    private readonly fitness: FitnessFunction<any>,
+    config?: Partial<GeneticAlgorithmConfiguration<EncodedType>>
+  ) {
+    // @TODO:
+    // Verify encode
+    // Verify decode
+    // Verify randomValue
+    // Verify fitness
     this._config = this.configure(config);
   }
 
@@ -70,7 +66,7 @@ export class Configuration<T, EncodedType = BitChain> {
    * ==================================
    */
 
-  get(): CompleteConfigureParams<T, EncodedType> {
+  get(): GeneticAlgorithmConfiguration<EncodedType> {
     return this._config;
   }
 
@@ -83,11 +79,11 @@ export class Configuration<T, EncodedType = BitChain> {
   /**
    * Change the configuration on the fly
    */
-  public changeConfiguration(configuration: ChangeConfigurationParams<T, EncodedType>): void {
+  public changeConfiguration(configuration: Partial<GeneticAlgorithmConfiguration<EncodedType>>): void {
     /**
      * Create new configuration
      */
-    const config: CompleteConfigureParams<T, EncodedType> = {
+    const config: GeneticAlgorithmConfiguration<EncodedType> = {
       ...this._config,
       ...configuration,
     };
@@ -112,19 +108,18 @@ export class Configuration<T, EncodedType = BitChain> {
    * Change configuration
    */
   private configure(
-    configuration: RequiredConfigureParams<T, EncodedType> | CompleteConfigureParams<T, EncodedType>
-  ): CompleteConfigureParams<T, EncodedType> {
+    configuration?: Partial<GeneticAlgorithmConfiguration<EncodedType>>
+  ): GeneticAlgorithmConfiguration<EncodedType> {
+    /**
+     * Verify the type give is bitchain
+     */
+
     /**
      * Default configuration
      */
-    const popConfig: PopulationParams = {
-      ...DEFAULT_CONFIGURATION_POPULATION,
-      ...(configuration as CompleteConfigureParams<T, EncodedType>).population,
-    };
-    const config: CompleteConfigureParams<T, EncodedType> = {
-      ...(DEFAULT_CONFIGURATION_GENETIC_ALGORITHM as CompleteConfigureParams<T, any>),
+    const config: GeneticAlgorithmConfiguration<EncodedType> = {
+      ...(DEFAULT_CONFIGURATION_GENETIC_ALGORITHM as GeneticAlgorithmConfiguration<any>),
       ...configuration,
-      population: popConfig,
     };
 
     /**
@@ -141,13 +136,15 @@ export class Configuration<T, EncodedType = BitChain> {
   /**
    * Verify the given configuration is valid
    */
-  private testGeneticAlgorithmConfiguration(config: CompleteConfigureParams<T, EncodedType>): void | never {
+  private testGeneticAlgorithmConfiguration(config: GeneticAlgorithmConfiguration<EncodedType>): void | never {
     /**
      * Test
      */
-    const r = this._config.randomValue();
-    const enc = this._config.encode(r);
-    const dec = this._config.decode(enc);
+    const r = this.randomValue();
+    const enc = this.encode(r);
+    const dec = this.decode(enc);
+    const f = this.fitness;
+    console.log(f);
 
     /**
      * Deep equal between encode and decode

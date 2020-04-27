@@ -1,20 +1,18 @@
-import {CountTime} from './Helpers/CountTime';
-import {Configuration} from './Helpers/Configuration';
-import {Population} from './Population';
-import {
-  RequiredConfigureParams,
-  EncodeFunction,
-  DecodeFunction,
-  RandomValueFunction,
-  FitnessFunction,
-  ChangeConfigurationParams,
-  CompleteConfigureParams,
-} from './Helpers/Params';
 import {Chromosome} from './Chromosome';
-import {MutationStrategy} from './Mutation/GenericMutation';
 import {CrossoverFunction, CrossoverStatistics} from './Crossover/GenericCrossover';
-import {SelectionFunction, SelectionStatistics} from './Selection/SelectionGeneric';
 import {BitChain} from './Helpers/BitChain';
+import {Configuration} from './Helpers/Configuration';
+import {CountTime} from './Helpers/CountTime';
+import {
+  DecodeFunction,
+  EncodeFunction,
+  FitnessFunction,
+  GeneticAlgorithmConfiguration,
+  RandomValueFunction,
+} from './Helpers/Params';
+import {MutationStrategy} from './Mutation/GenericMutation';
+import {Population} from './Population';
+import {SelectionFunction, SelectionStatistics} from './Selection/SelectionGeneric';
 
 export class GeneticAlgorithm<T, EncodedType = BitChain> {
   /**
@@ -22,7 +20,7 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
    * Attributes
    * ==================================
    */
-  private config: Configuration<T, EncodedType>;
+  private config: Configuration<EncodedType>;
   private populations: Population<EncodedType>[] = [];
   private allTimeBestChromosome: Chromosome<EncodedType>;
   private time = 0;
@@ -35,8 +33,40 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
   /**
    * Require a configuration objet to start
    */
-  constructor(config: RequiredConfigureParams<T, EncodedType> | CompleteConfigureParams<T, EncodedType>) {
-    this.config = new Configuration(config);
+  constructor(
+    /**
+     * The encoding function takes a variable of your type T and must return a BitChain encoded version of this variable.
+     * It is the opposite of the decode function
+     * Must be provided
+     */
+    public readonly encode: EncodeFunction<T, EncodedType>,
+
+    /**
+     * The decoding function takes an encoded BitChain and must return a variable of your type T.
+     * Must be provided
+     * It is the opposite of the decode function
+     */
+    public readonly decode: DecodeFunction<T, EncodedType>,
+
+    /**
+     * A function returning a random value for initiating the neural network
+     * Must be provided
+     */
+    public readonly randomValue: RandomValueFunction<T>,
+
+    /**
+     * The core function. Evaluate how fit a chromosome is.
+     * You can use the objective parameter to choose if you want to maximize or minimize this function
+     * Must be provided
+     */
+    public readonly fitness: FitnessFunction<T>,
+
+    /**
+     * Parameters used to change the configuration of the GeneticAlgorithm Object
+     */
+    config?: Partial<GeneticAlgorithmConfiguration<EncodedType>>
+  ) {
+    this.config = new Configuration<EncodedType>(encode, decode, randomValue, fitness, config);
     this.populations = this.initGeneration();
     this.allTimeBestChromosome = this.lastPopulation.population[0];
   }
@@ -46,22 +76,6 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
    * Getters
    * ==================================
    */
-  get encode(): EncodeFunction<T, EncodedType> {
-    return this.configuration.encode;
-  }
-
-  get decode(): DecodeFunction<T, EncodedType> {
-    return this.configuration.decode;
-  }
-
-  get randomValue(): RandomValueFunction<T> {
-    return this.configuration.randomValue;
-  }
-
-  get fitness(): FitnessFunction<T> {
-    return this.configuration.fitness;
-  }
-
   get selection(): SelectionFunction<EncodedType> {
     return this.configuration.selection.selection;
   }
@@ -74,7 +88,7 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
     return this.configuration.mutation;
   }
 
-  get configuration(): CompleteConfigureParams<T, EncodedType> {
+  get configuration(): GeneticAlgorithmConfiguration<EncodedType> {
     return this.config.get();
   }
 
@@ -97,8 +111,11 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
   /**
    * Change the configuration on the fly
    */
-  public changeConfiguration(configuration: ChangeConfigurationParams<T, EncodedType>): void {
+  public changeConfiguration(configuration: GeneticAlgorithmConfiguration<EncodedType>): void {
     this.config.changeConfiguration(configuration);
+  }
+  get changeConfiration(): (configuration: Partial<GeneticAlgorithmConfiguration<EncodedType>>) => void {
+    return this.config.changeConfiguration;
   }
 
   /**

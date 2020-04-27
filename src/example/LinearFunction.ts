@@ -39,13 +39,9 @@ const fitness = (i: number): number => -1 * i ** 2;
  * Genetic algorithm creation
  */
 export const LinearGeneticAlgorithm = () =>
-  new GeneticAlgorithm<number>({
+  new GeneticAlgorithm<number>(encode, decode, randomValue, fitness, {
     ...DEFAULT_CONFIGURATION.GENETIC_ALGORITHM,
     objective: FitnessFunctionObjective.MINIMIZE,
-    encode,
-    decode,
-    randomValue,
-    fitness,
   });
 
 /**

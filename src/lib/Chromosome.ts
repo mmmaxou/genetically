@@ -1,5 +1,4 @@
 import {GeneticAlgorithm} from './GeneticAlgorithm';
-import {RequiredConfigureParams} from './Helpers/Params';
 import {BitChain} from './Helpers/BitChain';
 
 export class Chromosome<EncodedType = BitChain> {
@@ -36,7 +35,7 @@ export class Chromosome<EncodedType = BitChain> {
    * ==================================
    */
   constructor(private geneticAlgorithm: GeneticAlgorithm<any, EncodedType>, initialChain?: EncodedType) {
-    this._chain = initialChain || this.config.encode(this.config.randomValue());
+    this._chain = initialChain || this.geneticAlgorithm.encode(this.geneticAlgorithm.randomValue());
   }
 
   /**
@@ -44,13 +43,6 @@ export class Chromosome<EncodedType = BitChain> {
    * Getters
    * ==================================
    */
-
-  /**
-   * Return the configuration in use
-   */
-  get config(): RequiredConfigureParams<any, EncodedType> {
-    return this.geneticAlgorithm.configuration;
-  }
 
   /**
    * Return the chain in use
@@ -118,7 +110,7 @@ export class Chromosome<EncodedType = BitChain> {
     /**
      * Process
      */
-    this._fitnessScore = this.config.fitness(this.config.decode(this._chain));
+    this._fitnessScore = this.geneticAlgorithm.fitness(this.geneticAlgorithm.decode(this._chain));
 
     /**
      * Freeze computed
