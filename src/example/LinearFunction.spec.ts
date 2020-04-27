@@ -1,6 +1,7 @@
 // tslint:disable: no-unused-expression
 import test from 'ava';
-import {LinearFunctions} from './LinearFunction';
+import {Chromosome} from '../lib/Chromosome';
+import {LinearFunctions, LinearGeneticAlgorithm} from './LinearFunction';
 
 const randomValue = LinearFunctions.randomValue;
 const encode = LinearFunctions.encode;
@@ -41,72 +42,34 @@ test('decode function should decode into the first generated random value', (t) 
   t.deepEqual(x, dec, 'not the first generated number');
 });
 
-test('should return a number', (t) => {
+test('fitness function should return a number', (t) => {
   const x = 3;
   const fit = fitness(x);
   t.is(typeof fit, 'number', 'not a number');
 });
 
-test('should return the square of the number * -1', (t) => {
+test('fitness function should return the square of the number * -1', (t) => {
   const x = 3;
   const f = fitness(x);
   t.is(f, -9, 'not the square of 3');
 });
 
-/*
-describe('Helper functions', () => {
-  describe('createEncodeFunctionOfBase function', () => {
-    it('should return a function', () => {
-      expect(createEncodeFunctionOfBase(2, 8)).to.be.a('function');
-    });
-
-    it('should should throw with a chain length less than 2', () => {
-      expect(() => createEncodeFunctionOfBase(8, 8)).to.not.throw(Error);
-      expect(() => createEncodeFunctionOfBase(8, 0)).to.throw(Error);
-    });
-
-    it('should should throw with a base less than 2', () => {
-      expect(() => createEncodeFunctionOfBase(8, 8)).to.not.throw(Error);
-      expect(() => createEncodeFunctionOfBase(0, 8)).to.throw(Error);
-      expect(() => createEncodeFunctionOfBase(-515, 8)).to.throw(Error);
-      expect(() => createEncodeFunctionOfBase(Number.MIN_SAFE_INTEGER, 8)).to.throw(Error);
-    });
-
-    it('should should throw with a base more than 16', () => {
-      expect(() => createEncodeFunctionOfBase(8, 8)).to.not.throw(Error);
-      expect(() => createEncodeFunctionOfBase(36, 8)).to.throw(Error);
-      expect(() => createEncodeFunctionOfBase(515, 8)).to.throw(Error);
-      expect(() => createEncodeFunctionOfBase(Number.MAX_SAFE_INTEGER, 8)).to.throw(Error);
-    });
-  });
-});
-
-describe('Linear Genetic Algorithm', () => {
+test('fitness function should compute a fitness', (t) => {
   const ga = LinearGeneticAlgorithm();
-
-  describe('Computation', () => {
-    it('should compute a fitness', () => {
-      expect(ga.fitness(1)).to.be.equal(-1);
-      expect(ga.fitness(10)).to.be.equal(-10 * 10);
-      expect(ga.fitness(0)).to.be.equal(0);
-    });
-  });
-
-  describe('Generations', () => {
-    it('should create a whole population', () => {
-      expect(ga.lastPopulation.population).to.be.lengthOf(ga.configuration.population.popsize);
-    });
-
-    it('should run once', () => {
-      const c: Chromosome = ga.lastPopulation.population[0];
-
-      expect(ga.runOnce());
-
-      const c2 = ga.lastPopulation.population[0];
-
-      expect(c).to.not.deep.equal(c2);
-    });
-  });
+  t.is(ga.fitness(1), -1);
+  t.is(ga.fitness(10), -10 * 10);
+  t.is(ga.fitness(0), 0);
 });
 
-*/
+test('LinearGeneticAlgorithm should create a whole population', (t) => {
+  const ga = LinearGeneticAlgorithm();
+  t.is(ga.lastPopulation.population.length, ga.configuration.population.popsize);
+});
+
+test('LinearGeneticAlgorithm should run once', (t) => {
+  const ga = LinearGeneticAlgorithm();
+  const c: Chromosome = ga.lastPopulation.population[0];
+  ga.runOnce();
+  const c2 = ga.lastPopulation.population[0];
+  t.notDeepEqual(c, c2);
+});
