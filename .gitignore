@@ -1,42 +1,11 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
+node_modules
+build
+test
+src/**.js
+.idea/*
 
-# compiled output
-/dist
-/build
-/dev
-/node_modules
-/lib
-/lib-esm
-/_bundles
-
-# IDEs and editors
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
-
-# misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
-yarn-error.log
-testem.log
-/typings
-package-lock.json
-Todolist.md
-.angulardoc.json
-
-
-# System Files
-.DS_Store
-Thumbs.db
-
-# Added
 coverage
 .nyc_output
+*.log
+
+yarn.lock

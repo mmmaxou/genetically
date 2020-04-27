@@ -1,13 +1,9 @@
-import {CountTime} from './Helpers/CountTime';
 import {Chromosome} from './Chromosome';
-import {
-  PopulationParams,
-  FitnessFunctionObjective,
-  CompleteConfigureParams,
-} from './Helpers/Params';
 import {GeneticAlgorithm} from './GeneticAlgorithm';
 import {BitChain} from './Helpers/BitChain';
+import {CountTime} from './Helpers/CountTime';
 import {computeHistogram} from './Helpers/Helpers';
+import {CompleteConfigureParams, FitnessFunctionObjective, PopulationParams} from './Helpers/Params';
 
 /**
  * Contains the logic of a population
@@ -41,8 +37,7 @@ export class Population<EncodedType = BitChain> {
         // initialPopulation is an array of string
         // Create associated chromosomes
         this._population = (initialPopulation as EncodedType[]).map(
-          (chain: EncodedType) =>
-            new Chromosome<EncodedType>(this.geneticAlgorithm, chain)
+          (chain: EncodedType) => new Chromosome<EncodedType>(this.geneticAlgorithm, chain)
         );
       } else {
         // initialPopulation is an array of chromosome
@@ -176,22 +171,13 @@ export class Population<EncodedType = BitChain> {
     const mean = sum / this.population.length;
 
     /// Sort individuals
-    const MaximizeSort = (
-      A: Chromosome<EncodedType>,
-      B: Chromosome<EncodedType>
-    ) => {
+    const MaximizeSort = (A: Chromosome<EncodedType>, B: Chromosome<EncodedType>) => {
       return B.fitnessScore - A.fitnessScore;
     };
-    const MinimizeSort = (
-      A: Chromosome<EncodedType>,
-      B: Chromosome<EncodedType>
-    ) => {
+    const MinimizeSort = (A: Chromosome<EncodedType>, B: Chromosome<EncodedType>) => {
       return A.fitnessScore - B.fitnessScore;
     };
-    const SortFunction =
-      this.config.objective === FitnessFunctionObjective.MAXIMIZE
-        ? MaximizeSort
-        : MinimizeSort;
+    const SortFunction = this.config.objective === FitnessFunctionObjective.MAXIMIZE ? MaximizeSort : MinimizeSort;
     this.population.sort(SortFunction);
 
     /// Normalize individuals
@@ -251,10 +237,7 @@ Solution of the fittest is ${this.geneticAlgorithm.decode(this.fittest.chain)}
    * Generate a new population with empty individuals
    */
   private initPopulation(): Chromosome<EncodedType>[] {
-    return Array.from(
-      Array(this.popConfig.popsize),
-      () => new Chromosome<EncodedType>(this.geneticAlgorithm)
-    );
+    return Array.from(Array(this.popConfig.popsize), () => new Chromosome<EncodedType>(this.geneticAlgorithm));
   }
 
   private notComputedError(): Error {

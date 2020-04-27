@@ -1,53 +1,39 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [{
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Debug Project",
+      // we test in `build` to make cleanup fast and easy
+      "cwd": "${workspaceFolder}/build",
+      // Replace this with your project root. If there are multiple, you can
+      // automatically run the currently visible file with: "program": ${file}"
+      "program": "${workspaceFolder}/src/cli/cli.ts",
+      // "args": ["--no-install"],
+      "outFiles": ["${workspaceFolder}/build/main/**/*.js"],
       "skipFiles": [
-        "<node_internals>/**"
+        "<node_internals>/**/*.js",
+        "${workspaceFolder}/node_modules/**/*.js"
       ],
-      "program": "${workspaceFolder}\\bundle.js",
-      "preLaunchTask": "tsc: build - tsconfig.json",
-      "outFiles": [
-        "${workspaceFolder}/dist/**/*.js"
-      ]
+      "preLaunchTask": "npm: build",
+      "stopOnEntry": true,
+      "smartStep": true,
+      "runtimeArgs": ["--nolazy"],
+      "env": {
+        "TYPESCRIPT_STARTER_REPO_URL": "${workspaceFolder}"
+      },
+      "console": "externalTerminal"
     },
     {
       "type": "node",
       "request": "launch",
-      "name": "Mocha Current File",
-      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-      "args": [
-        "--no-timeouts",
-        "--colors",
-        "${file}",
-        "--require",
-        "ts-node/register"
-      ],
-      "console": "integratedTerminal",
-      "sourceMaps": true,
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Mocha All",
-      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-      "args": [
-        "-r",
-        "ts-node/register",
-        "--timeout",
-        "999999",
-        "--colors",
-        "${workspaceFolder}/modules/**/*-spec.ts",
-      ],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "protocol": "inspector"
-    },
-  ]
+      "name": "Debug Spec",
+      "program": "${workspaceRoot}/.vscode/debug-ts.js",
+      "args": ["${file}"],
+      "skipFiles": ["<node_internals>/**/*.js"],
+      // Consider using `npm run watch` or `yarn watch` for faster debugging
+      // "preLaunchTask": "npm: build",
+      // "smartStep": true,
+      "runtimeArgs": ["--nolazy"]
+    }]
 }
