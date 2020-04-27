@@ -1,7 +1,7 @@
 import {SinglePointCrossover} from '../Crossover/SinglePointCrossover';
 import {FlipBitMutation} from '../Mutation/FlipBitMutation';
 import {RouletteWheelSelection} from '../Selection/RouletteWheelSelection';
-import {BitChain} from './BitChain';
+import {BitChain, BitChainGuard} from './BitChain';
 import {
   DecodeFunction,
   EncodeFunction,
@@ -52,11 +52,6 @@ export class Configuration<EncodedType = BitChain> {
     private readonly fitness: FitnessFunction<any>,
     config?: Partial<GeneticAlgorithmConfiguration<EncodedType>>
   ) {
-    // @TODO:
-    // Verify encode
-    // Verify decode
-    // Verify randomValue
-    // Verify fitness
     this._config = this.configure(config);
   }
 
@@ -137,6 +132,12 @@ export class Configuration<EncodedType = BitChain> {
    * Verify the given configuration is valid
    */
   private testGeneticAlgorithmConfiguration(config: GeneticAlgorithmConfiguration<EncodedType>): void | never {
+    // @TODO:
+    // Verify encode
+    // Verify decode
+    // Verify randomValue
+    // Verify fitness
+
     /**
      * Test
      */
@@ -173,7 +174,7 @@ export class Configuration<EncodedType = BitChain> {
      * Bitchain currently is a string
      * If not a string, then mu
      */
-    if (typeof dec !== 'string') {
+    if (!BitChainGuard(dec)) {
       // Mutation test
       try {
         const m = config.mutation.mutation;
