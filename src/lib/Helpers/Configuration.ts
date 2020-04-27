@@ -60,11 +60,7 @@ export class Configuration<T, EncodedType = BitChain> {
    * Constructor
    * ==================================
    */
-  constructor(
-    config:
-      | RequiredConfigureParams<T, EncodedType>
-      | CompleteConfigureParams<T, EncodedType>
-  ) {
+  constructor(config: RequiredConfigureParams<T, EncodedType> | CompleteConfigureParams<T, EncodedType>) {
     this._config = this.configure(config);
   }
 
@@ -87,9 +83,7 @@ export class Configuration<T, EncodedType = BitChain> {
   /**
    * Change the configuration on the fly
    */
-  public changeConfiguration(
-    configuration: ChangeConfigurationParams<T, EncodedType>
-  ): void {
+  public changeConfiguration(configuration: ChangeConfigurationParams<T, EncodedType>): void {
     /**
      * Create new configuration
      */
@@ -118,9 +112,7 @@ export class Configuration<T, EncodedType = BitChain> {
    * Change configuration
    */
   private configure(
-    configuration:
-      | RequiredConfigureParams<T, EncodedType>
-      | CompleteConfigureParams<T, EncodedType>
+    configuration: RequiredConfigureParams<T, EncodedType> | CompleteConfigureParams<T, EncodedType>
   ): CompleteConfigureParams<T, EncodedType> {
     /**
      * Default configuration
@@ -130,10 +122,7 @@ export class Configuration<T, EncodedType = BitChain> {
       ...(configuration as CompleteConfigureParams<T, EncodedType>).population,
     };
     const config: CompleteConfigureParams<T, EncodedType> = {
-      ...(DEFAULT_CONFIGURATION_GENETIC_ALGORITHM as CompleteConfigureParams<
-        T,
-        any
-      >),
+      ...(DEFAULT_CONFIGURATION_GENETIC_ALGORITHM as CompleteConfigureParams<T, any>),
       ...configuration,
       population: popConfig,
     };
@@ -152,9 +141,7 @@ export class Configuration<T, EncodedType = BitChain> {
   /**
    * Verify the given configuration is valid
    */
-  private testGeneticAlgorithmConfiguration(
-    config: CompleteConfigureParams<T, EncodedType>
-  ) {
+  private testGeneticAlgorithmConfiguration(config: CompleteConfigureParams<T, EncodedType>): void | never {
     /**
      * Test
      */
@@ -180,16 +167,8 @@ export class Configuration<T, EncodedType = BitChain> {
     /**
      * Verbose
      */
-    if (
-      !(
-        config.verbose === 'DEBUG' ||
-        config.verbose === 'INFO' ||
-        config.verbose === 'NONE'
-      )
-    ) {
-      throw new Error(
-        `Config.verbose should be one of 'INFO', 'DEBUG', 'NONE'`
-      );
+    if (!(config.verbose === 'DEBUG' || config.verbose === 'INFO' || config.verbose === 'NONE')) {
+      throw new Error(`Config.verbose should be one of 'INFO', 'DEBUG', 'NONE'`);
     }
 
     /**
@@ -240,7 +219,7 @@ but you did not provide a custom CrossoverStrategy to handle it.`
   /**
    * Display error
    */
-  private error(message: string, object: any = '') {
+  private error(message: string, object: any = ''): void {
     if (this._config.verbose === 'DEBUG') {
       console.error(message, object);
     }

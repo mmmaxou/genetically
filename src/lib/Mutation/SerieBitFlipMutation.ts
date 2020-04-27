@@ -1,7 +1,4 @@
-import {
-  MutationStrategy,
-  DEFAULT_MUTATION_CONFIGURATION,
-} from './GenericMutation';
+import {MutationStrategy, DEFAULT_MUTATION_CONFIGURATION} from './GenericMutation';
 import {BitChain} from '../Helpers/BitChain';
 
 /**
@@ -13,9 +10,7 @@ export class SerieFlipBitMutation extends MutationStrategy<BitChain> {
   public _nextMutationCounter = 0;
   private invertedLogOfOneMinusProbability: number;
 
-  constructor(
-    probability: number = DEFAULT_MUTATION_CONFIGURATION.probability
-  ) {
+  constructor(probability: number = DEFAULT_MUTATION_CONFIGURATION.probability) {
     super(probability);
     this.invertedLogOfOneMinusProbability = 1 / Math.log(1 - probability);
   }
@@ -63,7 +58,7 @@ export class SerieFlipBitMutation extends MutationStrategy<BitChain> {
   /**
    * Compute the next mutation
    */
-  private computeNextMutation() {
+  private computeNextMutation(): void {
     const p = Math.random();
     const iln1mp = this.invertedLogOfOneMinusProbability;
     this._nextMutationCounter = ~~(Math.log(1 - p) * iln1mp);

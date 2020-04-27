@@ -10,7 +10,7 @@ import {shuffleArray} from '../Helpers/Helpers';
  */
 export class SinglePointCrossover extends CrossoverStrategy<BitChain> {
   public crossover(
-    chains: BitChain[],
+    chains: readonly BitChain[],
     mutation: MutationStrategy,
     statistics = new CrossoverStatistics()
   ): BitChain[] {
@@ -19,27 +19,28 @@ export class SinglePointCrossover extends CrossoverStrategy<BitChain> {
      */
     const created: BitChain[] = [];
     const start = new CountTime();
-    chains = shuffleArray(chains);
+    const shuffledChains = shuffleArray(chains);
+
     /**
      * For loop to create children
      */
-    for (let i = 0; i < chains.length; i += 2) {
-      const A = chains[i];
+    for (let i = 0; i < shuffledChains.length; i += 2) {
+      const A = shuffledChains[i];
 
       /**
        * If the amount of population is odd
        * Push the last element
        */
-      if (i + 1 >= chains.length) {
+      if (i + 1 >= shuffledChains.length) {
         created.push(A);
         continue;
       }
-      const B = chains[i + 1];
+      const B = shuffledChains[i + 1];
 
       /**
        * A point on both parents' chromosomes is picked randomly, and designated a 'crossover point'.
        */
-      const crossoverPoint = ~~(Math.random() * chains.length);
+      const crossoverPoint = ~~(Math.random() * shuffledChains.length);
 
       /**
        * Bits to the right of that point are swapped between the two parent chromosomes.

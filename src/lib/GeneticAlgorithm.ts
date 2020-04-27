@@ -12,14 +12,8 @@ import {
 } from './Helpers/Params';
 import {Chromosome} from './Chromosome';
 import {MutationStrategy} from './Mutation/GenericMutation';
-import {
-  CrossoverFunction,
-  CrossoverStatistics,
-} from './Crossover/GenericCrossover';
-import {
-  SelectionFunction,
-  SelectionStatistics,
-} from './Selection/SelectionGeneric';
+import {CrossoverFunction, CrossoverStatistics} from './Crossover/GenericCrossover';
+import {SelectionFunction, SelectionStatistics} from './Selection/SelectionGeneric';
 import {BitChain} from './Helpers/BitChain';
 
 export class GeneticAlgorithm<T, EncodedType = BitChain> {
@@ -41,11 +35,7 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
   /**
    * Require a configuration objet to start
    */
-  constructor(
-    config:
-      | RequiredConfigureParams<T, EncodedType>
-      | CompleteConfigureParams<T, EncodedType>
-  ) {
+  constructor(config: RequiredConfigureParams<T, EncodedType> | CompleteConfigureParams<T, EncodedType>) {
     this.config = new Configuration(config);
     this.populations = this.initGeneration();
     this.allTimeBestChromosome = this.lastPopulation.population[0];
@@ -94,9 +84,7 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
 
   get lastPopulation(): Population<EncodedType> {
     if (this.populations.length === 0) {
-      throw new Error(
-        `Population array of genetic algorithm is currently empty`
-      );
+      throw new Error(`Population array of genetic algorithm is currently empty`);
     }
     return this.populations[this.populations.length - 1];
   }
@@ -109,9 +97,7 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
   /**
    * Change the configuration on the fly
    */
-  public changeConfiguration(
-    configuration: ChangeConfigurationParams<T, EncodedType>
-  ): void {
+  public changeConfiguration(configuration: ChangeConfigurationParams<T, EncodedType>): void {
     this.config.changeConfiguration(configuration);
   }
 
@@ -159,21 +145,14 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
      * Selection
      */
     const selectionStatistics = new SelectionStatistics();
-    const selected: EncodedType[] = this.selection(
-      this.lastPopulation,
-      selectionStatistics
-    );
+    const selected: EncodedType[] = this.selection(this.lastPopulation, selectionStatistics);
     /**
      * Crossover
      * and
      * Mutation
      */
     const crossoverStatistics = new CrossoverStatistics();
-    const crossed: EncodedType[] = this.crossover(
-      selected,
-      this.mutation,
-      crossoverStatistics
-    );
+    const crossed: EncodedType[] = this.crossover(selected, this.mutation, crossoverStatistics);
 
     /**
      * Create new population
@@ -198,20 +177,14 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
       /**
        * After each
        */
-      this.configuration.afterEach(
-        this.lastPopulation,
-        this.populations.length
-      );
+      this.configuration.afterEach(this.lastPopulation, this.populations.length);
 
       /**
        * Stop conditions
        */
       if (
         this.populations.length >= this.configuration.iterations ||
-        this.configuration.stopCondition(
-          this.lastPopulation,
-          this.populations.length
-        )
+        this.configuration.stopCondition(this.lastPopulation, this.populations.length)
       ) {
         stop = true;
       }
@@ -250,16 +223,14 @@ All time best code is ${this.decode(this.allTimeBest.chain)}
    * Private
    * ==================================
    */
-  private tryToSaveAllTimeBest() {
+  private tryToSaveAllTimeBest(): void {
     /**
      * Save the all time best
      */
     const currentBest = this.lastPopulation.fittest;
     if (!this.allTimeBestChromosome) {
       this.allTimeBestChromosome = currentBest;
-    } else if (
-      this.allTimeBestChromosome.fitnessScore < currentBest.fitnessScore
-    ) {
+    } else if (this.allTimeBestChromosome.fitnessScore < currentBest.fitnessScore) {
       this.allTimeBestChromosome = currentBest;
     }
   }

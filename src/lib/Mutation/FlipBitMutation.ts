@@ -1,7 +1,4 @@
-import {
-  MutationStrategy,
-  DEFAULT_MUTATION_CONFIGURATION,
-} from './GenericMutation';
+import {MutationStrategy, DEFAULT_MUTATION_CONFIGURATION} from './GenericMutation';
 import {NaiveFlipBitMutation} from './NaiveFlipBitMutation';
 import {SerieFlipBitMutation} from './SerieBitFlipMutation';
 import {BitChain} from '../Helpers/BitChain';
@@ -13,15 +10,9 @@ import {BitChain} from '../Helpers/BitChain';
 export class FlipBitMutation extends MutationStrategy<BitChain> {
   private strategy: MutationStrategy;
 
-  constructor(
-    probability: number = DEFAULT_MUTATION_CONFIGURATION.probability
-  ) {
+  constructor(probability: number = DEFAULT_MUTATION_CONFIGURATION.probability) {
     super(probability);
-    if (probability > 0.65) {
-      this.strategy = new NaiveFlipBitMutation(probability);
-    } else {
-      this.strategy = new SerieFlipBitMutation(probability);
-    }
+    this.strategy = probability > 0.65 ? new NaiveFlipBitMutation(probability) : new SerieFlipBitMutation(probability);
   }
 
   public mutation(chain: BitChain): BitChain {

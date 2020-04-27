@@ -26,7 +26,7 @@ export const timerFunction = (functionToTime: () => any, iterations: number = 10
 };
 
 // https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb
-export const shuffleArray = (arr: readonly any[]) => {
+export const shuffleArray = <T>(arr: readonly T[]) => {
   const array = arr.slice();
   // tslint:disable-next-line: no-let
   for (let i = array.length - 1; i > 0; i--) {

@@ -95,7 +95,8 @@
   "ava": {
     "failFast": true,
     "files": [
-      "build/main/**/*.spec.js"
+      "build/main/**/*.spec.js",
+      "!build/main/**.test.js"
     ]
   },
   "config": {

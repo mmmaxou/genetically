@@ -35,15 +35,8 @@ export class Chromosome<EncodedType = BitChain> {
    * Constructor
    * ==================================
    */
-  constructor(
-    private geneticAlgorithm: GeneticAlgorithm<any, EncodedType>,
-    initialChain?: EncodedType
-  ) {
-    if (initialChain) {
-      this._chain = initialChain;
-    } else {
-      this._chain = this.config.encode(this.config.randomValue());
-    }
+  constructor(private geneticAlgorithm: GeneticAlgorithm<any, EncodedType>, initialChain?: EncodedType) {
+    this._chain = initialChain || this.config.encode(this.config.randomValue());
   }
 
   /**
@@ -83,9 +76,7 @@ export class Chromosome<EncodedType = BitChain> {
    */
   get normalizedFitnessScore(): number {
     if (!this._normalized) {
-      throw new Error(
-        'You must call chromosome.normalizeBaseOnSumOfFitness( sum ) before'
-      );
+      throw new Error('You must call chromosome.normalizeBaseOnSumOfFitness( sum ) before');
     } else {
       return this._normalizedFitnessScore;
     }
@@ -143,7 +134,7 @@ export class Chromosome<EncodedType = BitChain> {
    *
    * TODO : Normalize based on INV SUM
    */
-  public normalizeBaseOnSumOfFitness(sum: number) {
+  public normalizeBaseOnSumOfFitness(sum: number): void {
     this._normalized = true;
     this._normalizedFitnessScore = this._fitnessScore / sum;
   }
