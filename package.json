@@ -75,7 +75,7 @@
     "webpack:prod": "webpack --config=webpack.config.production.js",
     "build": "npm run clean && npm run webpack:prod",
     "dev": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"npm:webpack:dev\" \"npm:nodemon\"",
-    "start": "npm run tsc && node dist/genetical.js",
+    "start": "npm run webpack:prod && node demonstration-node/index.js",
     "pretest": "tsc",
     "test": "mocha",
     "test:watch": "mocha --watch",
