@@ -2,6 +2,8 @@
 
 # compiled output
 /dist
+/build
+/dev
 /node_modules
 /lib
 /lib-esm

@@ -1,7 +1,7 @@
-import {SelectionStrategy, SelectionStatistics} from './SelectionGeneric';
-import {Population} from '../Population';
 import {Chromosome} from '../Chromosome';
 import {BitChain} from '../Helpers/BitChain';
+import {Population} from '../Population';
+import {SelectionStatistics, SelectionStrategy} from './SelectionGeneric';
 
 /**
  * https://arxiv.org/pdf/1109.3627.pdf

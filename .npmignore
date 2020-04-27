@@ -13,5 +13,5 @@ coverage
 test
 dist
 node_modules
-src
+dev
 demonstration

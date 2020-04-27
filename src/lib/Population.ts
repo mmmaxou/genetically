@@ -7,7 +7,6 @@ import {
 } from './Helpers/Params';
 import {GeneticAlgorithm} from './GeneticAlgorithm';
 import {BitChain} from './Helpers/BitChain';
-import assert from 'assert';
 import {computeHistogram} from './Helpers/Helpers';
 
 /**
@@ -85,7 +84,9 @@ export class Population<EncodedType = BitChain> {
    * Get the fittest individual
    */
   get fittest(): Chromosome<EncodedType> {
-    assert(this.computed, this.notComputedError());
+    if (!this.computed) {
+      throw this.notComputedError();
+    }
     return this._fittest;
   }
 
@@ -93,7 +94,9 @@ export class Population<EncodedType = BitChain> {
    * Get the least fittest individual
    */
   get leastFit(): Chromosome<EncodedType> {
-    assert(this.computed, this.notComputedError());
+    if (!this.computed) {
+      throw this.notComputedError();
+    }
     return this._leastFit;
   }
 
@@ -101,7 +104,9 @@ export class Population<EncodedType = BitChain> {
    * Get the mean fitness of the population
    */
   get sumFitness(): number {
-    assert(this.computed, this.notComputedError());
+    if (!this.computed) {
+      throw this.notComputedError();
+    }
     return this._sumFitness;
   }
 
@@ -109,12 +114,16 @@ export class Population<EncodedType = BitChain> {
    * Get the mean fitness of the population
    */
   get meanFitness(): number {
-    assert(this.computed, this.notComputedError());
+    if (!this.computed) {
+      throw this.notComputedError();
+    }
     return this._meanFitness;
   }
 
   get histogram(): number[][] {
-    assert(this.computed, this.notComputedError());
+    if (!this.computed) {
+      throw this.notComputedError();
+    }
     return this._histogram;
   }
 

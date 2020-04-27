@@ -1,6 +1,6 @@
-import {CountTime} from './../Helpers/CountTime';
-import {Population} from '../Population';
 import {BitChain} from '../Helpers/BitChain';
+import {CountTime} from '../Helpers/CountTime';
+import {Population} from '../Population';
 
 /**
  * Type for selection strategy

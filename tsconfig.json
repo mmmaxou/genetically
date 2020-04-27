@@ -8,18 +8,18 @@
     "noUnusedLocals": true,
     "noImplicitAny": true,
     "declaration": true,
-    "declarationDir": "lib/types",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "strict": true,
+    // "declarationDir": "build/lib/types",
     "baseUrl": "./",
-    "outDir": "lib",
+    // "outDir": "build/lib",
     "module": "commonjs",
     "target": "es5",
     "lib": ["dom", "es2015"],
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "sourceMap": true,
-    "strict": true,
     "typeRoots": ["node_modules/@types"]
   },
   "include": ["src/**/*", "test/**/*"],
-  "exclude": ["node_modules", "lib", "dist"]
+  "exclude": ["node_modules", "build"]
 }
