@@ -60,22 +60,23 @@
     "machine learning"
   ],
   "license": "ISC",
-  "main": "lib/src/genetical.js",
+  "main": "build/node/genetical.js",
   "name": "genetical",
   "repository": {
     "type": "git",
     "url": "git://github.com/mmmaxou/genetical.git"
   },
-  "types": "lib/types/src/genetical.d.ts",
+  "type": "module",
+  "types": "build/node/types/genetical.d.ts",
   "scripts": {
     "clean": "shx rm -rf dev build",
-    "nodemon": "nodemon dev/node/genetical.js",
+    "nodemon": "nodemon demonstration-node/index.js",
     "webpack:dev": "webpack --config webpack.config.development.js",
-    "build": "npm run clean && npm run build:prod",
-    "build:prod": "webpack --config=webpack.config.production.js",
+    "webpack:prod": "webpack --config=webpack.config.production.js",
+    "build": "npm run clean && npm run webpack:prod",
     "dev": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"npm:webpack:dev\" \"npm:nodemon\"",
     "start": "npm run tsc && node dist/genetical.js",
-    "pretest": "npm run tsc",
+    "pretest": "tsc",
     "test": "mocha",
     "test:watch": "mocha --watch",
     "coverage": "nyc npm run test"
