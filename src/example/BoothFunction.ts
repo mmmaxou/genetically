@@ -1,7 +1,7 @@
-import {DEFAULT_CONFIGURATION} from '../lib/Helpers/Configuration';
 import {FitnessFunctionObjective} from '../lib/Helpers/Params';
 import {GeneticAlgorithm} from '../lib/GeneticAlgorithm';
 import {createEncodeFunctionOfBase} from '../lib/Helpers/Helpers';
+import {DEFAULT_CONFIGURATION_GENETIC_ALGORITHM} from '../lib/Helpers/Configuration';
 
 /**
  * Motivation for function optimization
@@ -113,13 +113,9 @@ const fitness = (struct: BoothSolutionStruct): number => {
  * Genetic algorithm creation
  */
 export const BoothGeneticAlgorithm = () =>
-  new GeneticAlgorithm<BoothSolutionStruct>({
-    ...DEFAULT_CONFIGURATION.GENETIC_ALGORITHM,
+  new GeneticAlgorithm<BoothSolutionStruct>(encode, decode, randomValue, fitness, {
+    ...DEFAULT_CONFIGURATION_GENETIC_ALGORITHM,
     objective: FitnessFunctionObjective.MINIMIZE,
-    encode,
-    decode,
-    randomValue,
-    fitness,
   });
 
 /**

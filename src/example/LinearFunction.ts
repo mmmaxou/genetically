@@ -1,7 +1,7 @@
-import {DEFAULT_CONFIGURATION} from '../lib/Helpers/Configuration';
 import {GeneticAlgorithm} from '../lib/GeneticAlgorithm';
 import {createEncodeFunctionOfBase} from '../lib/Helpers/Helpers';
 import {FitnessFunctionObjective} from '../lib/Helpers/Params';
+import {DEFAULT_CONFIGURATION_GENETIC_ALGORITHM} from '../lib/Helpers/Configuration';
 
 /**
  * Function to minimize :
@@ -40,7 +40,7 @@ const fitness = (i: number): number => -1 * i ** 2;
  */
 export const LinearGeneticAlgorithm = () =>
   new GeneticAlgorithm<number>(encode, decode, randomValue, fitness, {
-    ...DEFAULT_CONFIGURATION.GENETIC_ALGORITHM,
+    ...DEFAULT_CONFIGURATION_GENETIC_ALGORITHM,
     objective: FitnessFunctionObjective.MINIMIZE,
   });
 

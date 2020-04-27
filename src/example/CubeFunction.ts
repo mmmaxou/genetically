@@ -1,7 +1,7 @@
 import {GeneticAlgorithm} from '../lib/GeneticAlgorithm';
 import {createEncodeFunctionOfBase} from '../lib/Helpers/Helpers';
 import {FitnessFunctionObjective} from '../lib/Helpers/Params';
-import {DEFAULT_CONFIGURATION} from '../lib/Helpers/Configuration';
+import {DEFAULT_CONFIGURATION_GENETIC_ALGORITHM} from '../lib/Helpers/Configuration';
 
 /**
  * Function to maximize :
@@ -39,13 +39,9 @@ const fitness = (i: number): number => i ** 3;
  * Genetic algorithm creation
  */
 export const CubeGeneticAlgorithm = () =>
-  new GeneticAlgorithm<number>({
-    ...DEFAULT_CONFIGURATION.GENETIC_ALGORITHM,
+  new GeneticAlgorithm<number>(encode, decode, randomValue, fitness, {
+    ...DEFAULT_CONFIGURATION_GENETIC_ALGORITHM,
     objective: FitnessFunctionObjective.MINIMIZE,
-    encode,
-    decode,
-    randomValue,
-    fitness,
   });
 
 /**

@@ -58,7 +58,7 @@ test('fitness function should compute a fitness', (t) => {
   const ga = LinearGeneticAlgorithm();
   t.is(ga.fitness(1), -1);
   t.is(ga.fitness(10), -10 * 10);
-  t.is(ga.fitness(0), 0);
+  t.is(ga.fitness(0), 0 || -0);
 });
 
 test('LinearGeneticAlgorithm should create a whole population', (t) => {

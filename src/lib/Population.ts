@@ -3,7 +3,7 @@ import {GeneticAlgorithm} from './GeneticAlgorithm';
 import {BitChain} from './Helpers/BitChain';
 import {CountTime} from './Helpers/CountTime';
 import {computeHistogram} from './Helpers/Helpers';
-import {CompleteConfigureParams, FitnessFunctionObjective, PopulationParams} from './Helpers/Params';
+import {GeneticAlgorithmConfiguration, PopulationConfiguration, FitnessFunctionObjective} from './Helpers/Params';
 
 /**
  * Contains the logic of a population
@@ -57,14 +57,14 @@ export class Population<EncodedType = BitChain> {
   /**
    * Return the configuration in use
    */
-  get config(): CompleteConfigureParams<any, EncodedType> {
+  get config(): GeneticAlgorithmConfiguration<EncodedType> {
     return this.geneticAlgorithm.configuration;
   }
 
   /**
    * Return the configuration of the population in use
    */
-  get popConfig(): PopulationParams {
+  get popConfig(): PopulationConfiguration {
     return this.config.population;
   }
 
