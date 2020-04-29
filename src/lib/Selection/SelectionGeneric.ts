@@ -29,15 +29,9 @@ export class SelectionStatistics {
  * Interface for a selection strategy
  */
 export abstract class SelectionStrategy<EncodedType = any> {
-  public abstract selection(
-    population: Population<EncodedType>,
-    statistics?: SelectionStatistics
-  ): EncodedType[];
+  public abstract selection(population: Population<EncodedType>, statistics?: SelectionStatistics): EncodedType[];
 
-  public selectionWithStatistics(
-    population: Population<EncodedType>,
-    statistics: SelectionStatistics
-  ): EncodedType[] {
+  public selectionWithStatistics(population: Population<EncodedType>, statistics: SelectionStatistics): EncodedType[] {
     const timer = new CountTime();
     const averageIteration = population.population.length * 3;
     const averageTime = averageIteration * 0.0005;

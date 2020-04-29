@@ -7,13 +7,8 @@ import {SelectionStatistics, SelectionStrategy} from './SelectionGeneric';
  * https://arxiv.org/pdf/1109.3627.pdf
  * Article about roulette wheel theory
  */
-export class RouletteWheelSelection<
-  EncodedType = BitChain
-> extends SelectionStrategy<EncodedType> {
-  public selection(
-    pop: Population<EncodedType>,
-    statistics?: SelectionStatistics
-  ): EncodedType[] {
+export class RouletteWheelSelection<EncodedType = BitChain> extends SelectionStrategy<EncodedType> {
+  public selection(pop: Population<EncodedType>, statistics?: SelectionStatistics): EncodedType[] {
     /**
      * Init
      */
@@ -28,10 +23,7 @@ export class RouletteWheelSelection<
     /**
      * Loop
      */
-    while (
-      ctr < averageIteration * 10 &&
-      selected.length < pop.config.population.popsize
-    ) {
+    while (ctr < averageIteration * 10 && selected.length < pop.config.population.popsize) {
       ctr++;
 
       /**
