@@ -126,3 +126,12 @@ export const logme = (identifier: string) => (value: any) => console.log(`[${ide
 
 // tslint:disable-next-line: no-console
 export const traceme = (identifier: string) => (value: any) => console.trace(`[${identifier}] is`, value);
+
+export const unpackVariableNames = (litteral: {[key: string]: any}) => {
+  return Object.entries(litteral)
+    .map(([key, value]) => `${key} : ${value}`)
+    .join('; ');
+};
+export const showVariablesName = (litteral: {[key: string]: any}) => {
+  return Object.entries(litteral).forEach(([key, value]) => console.log(key, 'is', value));
+};

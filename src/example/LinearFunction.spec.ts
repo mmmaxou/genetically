@@ -1,6 +1,7 @@
 import test from 'ava';
 import {Chromosome} from '../lib/Genetic/Chromosome';
 import {LinearFunction, LinearGeneticAlgorithm} from './LinearFunction';
+import {unpackVariableNames} from '../lib/Helpers/Helpers';
 
 const randomValue = LinearFunction.randomValue;
 const encode = LinearFunction.encode;
@@ -10,47 +11,47 @@ const fitness = LinearFunction.fitness;
 test('random value should be a number between -32 and 32', (t) => {
   const x = randomValue();
   t.is(typeof x, 'number', 'not a number');
-  t.true(x > -32, 'less than 32');
-  t.true(x < 32, 'more than 32');
+  t.true(x > -32, unpackVariableNames({x}));
+  t.true(x < 32, unpackVariableNames({x}));
 });
 
 test('encode function should encode a string of length 6', (t) => {
   const x = randomValue();
   const enc = encode(x);
-  t.is(typeof enc, 'string', 'not a string');
-  t.is(enc.length, 6, 'length is not 6');
+  t.is(typeof enc, 'string', unpackVariableNames({enc}));
+  t.is(enc.length, 6, unpackVariableNames({'enc.length': enc.length}));
 });
 
 test('encode function should encode a string with only 0 and 1 ', (t) => {
   const x = randomValue();
   const enc = encode(x);
-  t.falsy(enc.match(/[^01]/), 'Something else than a 0 or a 1');
+  t.falsy(enc.match(/[^01]/), unpackVariableNames({enc}));
 });
 
 test('decode function should decode into a number', (t) => {
   const x = randomValue();
   const enc = encode(x);
   const dec = decode(enc);
-  t.is(typeof dec, 'number', 'not a number');
+  t.is(typeof dec, 'number', unpackVariableNames({dec}));
 });
 
 test('decode function should decode into the first generated random value', (t) => {
   const x = randomValue();
   const enc = encode(x);
   const dec = decode(enc);
-  t.deepEqual(x, dec, 'not the first generated number');
+  t.deepEqual(x, dec, unpackVariableNames({x, dec}));
 });
 
 test('fitness function should return a number', (t) => {
   const x = 3;
   const fit = fitness(x);
-  t.is(typeof fit, 'number', 'not a number');
+  t.is(typeof fit, 'number', unpackVariableNames({fit}));
 });
 
 test('fitness function should return the square of the number * -1', (t) => {
   const x = 3;
   const f = fitness(x);
-  t.is(f, -9, 'not the square of 3');
+  t.is(f, -9, unpackVariableNames({f}));
 });
 
 test('fitness function should compute a fitness', (t) => {
@@ -70,5 +71,5 @@ test('LinearGeneticAlgorithm should run once', (t) => {
   const c: Chromosome = ga.lastPopulation.population[0];
   ga.runOnce();
   const c2 = ga.lastPopulation.population[0];
-  t.notDeepEqual(c, c2);
+  t.notDeepEqual(c, c2, unpackVariableNames({c, c2}));
 });

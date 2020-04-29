@@ -1,11 +1,9 @@
 import test from 'ava';
 import {LinearGeneticAlgorithm} from '../../example/LinearFunction';
-import {Population} from '../Genetic/Population';
 import {Chromosome} from '../Genetic/Chromosome';
-import {ITERATIONS} from '../../consts';
-import {SelectionStatistics} from './SelectionGeneric';
+import {Population} from '../Genetic/Population';
 import {RouletteWheelSelection} from './RouletteWheelSelection';
-import {FitnessFunctionObjective} from '../Helpers/Params';
+import {SelectionStatistics} from './SelectionGeneric';
 
 const ga = LinearGeneticAlgorithm();
 let pop: Population;
@@ -32,20 +30,4 @@ test('Roulette wheel should create a population of config.popsize length', (t) =
   const c = roulette.selectionWithStatistics(pop, statistics);
   t.true(Array.isArray(c), 'Not an array');
   t.is(c.length, pop.popConfig.popsize, 'Population size is not the same');
-});
-
-test('should have on average a better fitness than the former population', (t) => {
-  let cptMore = 0;
-  for (let i = 0; i < ITERATIONS; i++) {
-    const c = roulette.selection(pop);
-    const newPop = new Population(ga, c);
-    const objective: FitnessFunctionObjective = newPop.config.objective;
-    newPop.run();
-    if (objective === FitnessFunctionObjective.MAXIMIZE) {
-      cptMore += newPop.meanFitness > pop.meanFitness ? 1 : 0;
-    } else if (objective === FitnessFunctionObjective.MINIMIZE) {
-      cptMore += newPop.meanFitness < pop.meanFitness ? 1 : 0;
-    }
-  }
-  t.true(cptMore > ITERATIONS / 2.5, 'Fitness is not better than former population');
 });
