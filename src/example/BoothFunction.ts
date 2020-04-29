@@ -1,5 +1,5 @@
 import {FitnessFunctionObjective} from '../lib/Helpers/Params';
-import {GeneticAlgorithm} from '../lib/GeneticAlgorithm';
+import {GeneticAlgorithm} from '../lib/Genetic/GeneticAlgorithm';
 import {createEncodeFunctionOfBase} from '../lib/Helpers/Helpers';
 import {DEFAULT_CONFIGURATION_GENETIC_ALGORITHM} from '../lib/Helpers/Configuration';
 

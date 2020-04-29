@@ -1,4 +1,4 @@
-import {GeneticAlgorithm} from '../lib/GeneticAlgorithm';
+import {GeneticAlgorithm} from '../lib/Genetic/GeneticAlgorithm';
 import {createEncodeFunctionOfBase} from '../lib/Helpers/Helpers';
 import {FitnessFunctionObjective} from '../lib/Helpers/Params';
 import {DEFAULT_CONFIGURATION_GENETIC_ALGORITHM} from '../lib/Helpers/Configuration';
@@ -47,7 +47,7 @@ export const LinearGeneticAlgorithm = () =>
 /**
  * Exporting Linear Functions
  */
-export const LinearFunctions = {
+export const LinearFunction = {
   GeneticAlgorithm: LinearGeneticAlgorithm,
   encode,
   decode,

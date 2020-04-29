@@ -1,6 +1,6 @@
-import {Chromosome} from '../Chromosome';
+import {Chromosome} from '../Genetic/Chromosome';
 import {BitChain} from '../Helpers/BitChain';
-import {Population} from '../Population';
+import {Population} from '../Genetic/Population';
 import {SelectionStatistics, SelectionStrategy} from './SelectionGeneric';
 
 /**

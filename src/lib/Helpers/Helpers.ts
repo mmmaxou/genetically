@@ -121,3 +121,8 @@ function quantile(arr: readonly number[], p: number) {
   id = Math.ceil(id);
   return arr[id];
 }
+
+export const logme = (identifier: string) => (value: any) => console.log(`[${identifier}] is`, value);
+
+// tslint:disable-next-line: no-console
+export const traceme = (identifier: string) => (value: any) => console.trace(`[${identifier}] is`, value);

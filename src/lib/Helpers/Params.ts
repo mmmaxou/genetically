@@ -1,6 +1,6 @@
 import {CrossoverStrategy} from '../Crossover/GenericCrossover';
 import {MutationStrategy} from '../Mutation/GenericMutation';
-import {Population} from '../Population';
+import {Population} from '../Genetic/Population';
 import {SelectionStrategy} from '../Selection/SelectionGeneric';
 import {BitChain} from './BitChain';
 

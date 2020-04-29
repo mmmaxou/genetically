@@ -1,9 +1,9 @@
 import {Chromosome} from './Chromosome';
 import {GeneticAlgorithm} from './GeneticAlgorithm';
-import {BitChain} from './Helpers/BitChain';
-import {CountTime} from './Helpers/CountTime';
-import {computeHistogram} from './Helpers/Helpers';
-import {GeneticAlgorithmConfiguration, PopulationConfiguration, FitnessFunctionObjective} from './Helpers/Params';
+import {BitChain} from '../Helpers/BitChain';
+import {CountTime} from '../Helpers/CountTime';
+import {computeHistogram} from '../Helpers/Helpers';
+import {FitnessFunctionObjective, GeneticAlgorithmConfiguration, PopulationConfiguration} from '../Helpers/Params';
 
 /**
  * Contains the logic of a population

@@ -1,11 +1,11 @@
 import test from 'ava';
-import {Chromosome} from '../lib/Chromosome';
-import {LinearFunctions, LinearGeneticAlgorithm} from './LinearFunction';
+import {Chromosome} from '../lib/Genetic/Chromosome';
+import {LinearFunction, LinearGeneticAlgorithm} from './LinearFunction';
 
-const randomValue = LinearFunctions.randomValue;
-const encode = LinearFunctions.encode;
-const decode = LinearFunctions.decode;
-const fitness = LinearFunctions.fitness;
+const randomValue = LinearFunction.randomValue;
+const encode = LinearFunction.encode;
+const decode = LinearFunction.decode;
+const fitness = LinearFunction.fitness;
 
 test('random value should be a number between -32 and 32', (t) => {
   const x = randomValue();

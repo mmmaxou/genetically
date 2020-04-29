@@ -1,18 +1,18 @@
-import {Chromosome} from './Chromosome';
-import {CrossoverFunction, CrossoverStatistics} from './Crossover/GenericCrossover';
-import {BitChain} from './Helpers/BitChain';
-import {Configuration} from './Helpers/Configuration';
-import {CountTime} from './Helpers/CountTime';
+import {CrossoverFunction, CrossoverStatistics} from '../Crossover/GenericCrossover';
+import {BitChain} from '../Helpers/BitChain';
+import {Configuration} from '../Helpers/Configuration';
+import {CountTime} from '../Helpers/CountTime';
 import {
   DecodeFunction,
   EncodeFunction,
   FitnessFunction,
   GeneticAlgorithmConfiguration,
   RandomValueFunction,
-} from './Helpers/Params';
-import {MutationStrategy} from './Mutation/GenericMutation';
+} from '../Helpers/Params';
+import {MutationStrategy} from '../Mutation/GenericMutation';
 import {Population} from './Population';
-import {SelectionFunction, SelectionStatistics} from './Selection/SelectionGeneric';
+import {SelectionFunction, SelectionStatistics} from '../Selection/SelectionGeneric';
+import {Chromosome} from './Chromosome';
 
 export class GeneticAlgorithm<T, EncodedType = BitChain> {
   /**
@@ -102,6 +102,11 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
     }
     return this.populations[this.populations.length - 1];
   }
+
+  get changeConfiguration() {
+    return this.config.changeConfiguration;
+  }
+
   /**
    * ==================================
    * Public
@@ -111,12 +116,6 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
   /**
    * Change the configuration on the fly
    */
-  public changeConfiguration(configuration: GeneticAlgorithmConfiguration<EncodedType>): void {
-    this.config.changeConfiguration(configuration);
-  }
-  get changeConfiration(): (configuration: Partial<GeneticAlgorithmConfiguration<EncodedType>>) => void {
-    return this.config.changeConfiguration;
-  }
 
   /**
    * Create a fresh population

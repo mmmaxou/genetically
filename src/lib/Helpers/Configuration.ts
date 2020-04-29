@@ -52,7 +52,7 @@ export class Configuration<EncodedType = BitChain> {
     private readonly fitness: FitnessFunction<any>,
     config?: Partial<GeneticAlgorithmConfiguration<EncodedType>>
   ) {
-    this._config = this.configure(config);
+    this._config = this.initialize(config);
   }
 
   /**
@@ -102,7 +102,7 @@ export class Configuration<EncodedType = BitChain> {
   /**
    * Change configuration
    */
-  private configure(
+  private initialize(
     configuration?: Partial<GeneticAlgorithmConfiguration<EncodedType>>
   ): GeneticAlgorithmConfiguration<EncodedType> {
     /**
@@ -145,7 +145,6 @@ export class Configuration<EncodedType = BitChain> {
     const enc = this.encode(r);
     const dec = this.decode(enc);
     const f = this.fitness;
-    console.log(f);
 
     /**
      * Deep equal between encode and decode
@@ -211,6 +210,14 @@ but you did not provide a custom CrossoverStrategy to handle it.`,
 but you did not provide a custom CrossoverStrategy to handle it.`
         );
       }
+    }
+
+    /**
+     * Fitness function returns a number
+     */
+    if (typeof f(r) !== 'number') {
+      this.error(`\x1b[31mThe fitness function must return a number`);
+      throw new Error(`\x1b[31mThe fitness function must return a number`);
     }
   }
 
