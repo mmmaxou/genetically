@@ -22,7 +22,15 @@ export class MutationStatistics {
  * Class for a selection strategy
  */
 export abstract class MutationStrategy<EncodedType = BitChain> {
-  constructor(protected probability: number = DEFAULT_MUTATION_CONFIGURATION.probability) {}
+  constructor(protected probability: number = DEFAULT_MUTATION_CONFIGURATION.probability) {
+    if (probability === 0) {
+      throw new Error('A probability of 0 will not work. Use the class NoMutation instead.');
+    } else if (probability > 1) {
+      throw new Error(`A probability can't be > 1; given is ${probability}`);
+    } else if (probability < 0) {
+      throw new Error(`A probability can't be <= 0; given is ${probability}`);
+    }
+  }
 
   /**
    * Compute statistics
