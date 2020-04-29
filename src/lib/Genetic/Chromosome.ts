@@ -1,5 +1,5 @@
-import {GeneticAlgorithm} from './GeneticAlgorithm';
 import {BitChain} from '../Helpers/BitChain';
+import {GeneticAlgorithm} from './GeneticAlgorithm';
 
 export class Chromosome<EncodedType = BitChain> {
   /**

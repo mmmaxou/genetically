@@ -19,13 +19,23 @@ export const createEncodeFunctionOfBase = (base: number, chainLength: number) =>
     return res;
   };
 };
+
+/**
+ * Time a function
+ * Run it 10000 times by default
+ * @internal
+ */
 export const timerFunction = (functionToTime: () => any, iterations: number = 10000): number => {
   const timer = new CountTime();
   [...Array(iterations)].map(() => functionToTime());
   return timer.time();
 };
 
-// https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb
+/**
+ * Return a shuffled version of the array
+ * https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb
+ * @internal
+ */
 export const shuffleArray = <T>(arr: readonly T[]) => {
   const array = arr.slice();
   // tslint:disable-next-line: no-let
@@ -40,7 +50,11 @@ export const shuffleArray = <T>(arr: readonly T[]) => {
   return array;
 };
 
-// https://github.com/baus/compute-histogram
+/**
+ * Compute the histogram of arr
+ * https://github.com/baus/compute-histogram
+ * @internal
+ */
 // tslint:disable-next-line: typedef
 export function computeHistogram(arr: readonly number[], numBins = 0, trimTailPercentage = 0.0) {
   // tslint:disable-next-line: readonly-array
@@ -91,18 +105,23 @@ export function computeHistogram(arr: readonly number[], numBins = 0, trimTailPe
   return bins;
 }
 
-// Simple helper function
-const ascending = (a: number, b: number): number => a - b;
-
-// https://github.com/compute-io/iqr/blob/master/lib/index.js
+/**
+ * Compute the IQR of arr
+ * https://github.com/compute-io/iqr/blob/master/lib/index.js
+ * @internal
+ */
 // tslint:disable-next-line: typedef
 function computeIQR(arr: readonly number[]) {
   const tab = arr.slice();
-  tab.sort(ascending);
+  tab.sort((a, b) => a - b);
   return quantile(tab, 0.75) - quantile(tab, 0.25);
 }
 
-// https://github.com/compute-io/quantile/blob/master/lib/index.js
+/**
+ * Compute the quantile of array
+ * https://github.com/compute-io/quantile/blob/master/lib/index.js
+ * @internal
+ */
 // tslint:disable-next-line: typedef
 function quantile(arr: readonly number[], p: number) {
   const len = arr.length;
@@ -122,16 +141,37 @@ function quantile(arr: readonly number[], p: number) {
   return arr[id];
 }
 
+/**
+ * Log the value, identified by identifier name
+ * @internal
+ */
 export const logme = (identifier: string) => (value: any) => console.log(`[${identifier}] is`, value);
 
+/**
+ * Trace the value, identified by identifier name
+ * @internal
+ */
 // tslint:disable-next-line: no-console
 export const traceme = (identifier: string) => (value: any) => console.trace(`[${identifier}] is`, value);
 
+/**
+ * Log variable names of the object
+ * @internal
+ */
 export const unpackVariableNames = (litteral: {[key: string]: any}) => {
   return Object.entries(litteral)
     .map(([key, value]) => `${key} : ${value}`)
     .join('; ');
 };
+
+/**
+ * Display variable names of the object
+ * @internal
+ */
 export const showVariablesName = (litteral: {[key: string]: any}) => {
   return Object.entries(litteral).forEach(([key, value]) => console.log(key, 'is', value));
+};
+
+export type Immutable<T> = {
+  readonly [K in keyof T]: Immutable<T[K]>;
 };

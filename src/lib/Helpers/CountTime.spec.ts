@@ -1,8 +1,3 @@
-// // tslint:disable: no-unused-expression
-// import {ITERATIONS} from './consts';
-// import {CountTime} from './../src/lib/Helpers/CountTime';
-// import {expect} from 'chai';
-
 import test from 'ava';
 import {CountTime} from './CountTime';
 

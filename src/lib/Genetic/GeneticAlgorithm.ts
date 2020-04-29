@@ -104,7 +104,7 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
   }
 
   get changeConfiguration() {
-    return this.config.changeConfiguration;
+    return this.config.changeConfiguration.bind(this.config);
   }
 
   /**

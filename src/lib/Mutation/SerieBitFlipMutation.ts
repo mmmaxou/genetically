@@ -1,5 +1,6 @@
 import {MutationStrategy, DEFAULT_MUTATION_CONFIGURATION} from './GenericMutation';
 import {BitChain} from '../Helpers/BitChain';
+import {Immutable} from '../Helpers/Helpers';
 
 /**
  * Flip bit mutation
@@ -7,7 +8,7 @@ import {BitChain} from '../Helpers/BitChain';
  * Use probabilities to compute a counter for the next flip bit
  */
 export class SerieFlipBitMutation extends MutationStrategy<BitChain> {
-  public _nextMutationCounter = 0;
+  private _nextMutationCounter = 0;
   private invertedLogOfOneMinusProbability: number;
 
   constructor(probability: number = DEFAULT_MUTATION_CONFIGURATION.probability) {
@@ -18,26 +19,20 @@ export class SerieFlipBitMutation extends MutationStrategy<BitChain> {
   /**
    * Mutate a chain
    */
-  public mutation(chain: BitChain): BitChain {
-    let returnChain: BitChain;
+  public mutation(chain: Immutable<BitChain>): BitChain {
     // console.log('chain length is ', chain.length);
     // console.log('next mutation counter is ', this._nextMutationCounter);
 
     // If the length of the chain is less than the _nextMutationCounter,
     // Don't mutate and return the chain
     // Decrement _nextMutationCounter
-    if (chain.length < this._nextMutationCounter) {
+    if (chain.length === 0 || chain.length < this._nextMutationCounter) {
       this._nextMutationCounter -= chain.length;
-      returnChain = chain;
-    } else if (chain.length === this._nextMutationCounter + 1) {
-      const begin: BitChain = chain.substring(0, this._nextMutationCounter);
-      const flipped: BitChain = chain[0] === '0' ? '1' : '0';
-      this.computeNextMutation();
-      returnChain = begin + flipped;
+      return chain;
     } else {
       // Operate a bit flip on the selected bit chain number and redo a mutation
       const begin: BitChain = chain.substring(0, this._nextMutationCounter);
-      const flipped: BitChain = chain[0] === '0' ? '1' : '0';
+      const flipped: BitChain = chain[this._nextMutationCounter] === '0' ? '1' : '0';
       const end: BitChain = chain.substring(this._nextMutationCounter + 1);
 
       // console.log('begining is', begin);
@@ -46,13 +41,8 @@ export class SerieFlipBitMutation extends MutationStrategy<BitChain> {
 
       // Complete chain
       this.computeNextMutation();
-      returnChain = begin + flipped + this.mutation(end);
+      return begin + flipped + this.mutation(end);
     }
-
-    /**
-     * Returns
-     */
-    return returnChain;
   }
 
   /**
