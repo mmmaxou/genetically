@@ -1,4 +1,3 @@
-// tslint:disable: no-unused-expression
 import test from 'ava';
 import {Chromosome} from '../lib/Chromosome';
 import {LinearFunctions, LinearGeneticAlgorithm} from './LinearFunction';
