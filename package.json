@@ -8,7 +8,7 @@
     "url": "https://github.com/mmmaxou/genetically/issues"
   },
   "name": "genetically",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Genetic Algorithm library designed for typescript",
   "main": "build/main/genetically.js",
   "typings": "build/main/genetically.d.ts",
