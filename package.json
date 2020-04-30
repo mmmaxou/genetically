@@ -10,9 +10,9 @@
   "name": "genetically",
   "version": "1.0.1",
   "description": "A Genetic Algorithm library designed for typescript",
-  "main": "build/main/index.js",
-  "typings": "build/main/index.d.ts",
-  "module": "build/module/index.js",
+  "main": "build/main/genetically.js",
+  "typings": "build/main/genetically.d.ts",
+  "module": "build/module/genetically.js",
   "repository": "https://github.com/mmmaxou/genetically",
   "license": "MIT",
   "keywords": [
