@@ -1,16 +1,19 @@
 .github
 .vscode
 .nyc_output
+.node_modules
 
 coverage
 build/docs
 
 **/*.spec.*
+*.log
 
+.editorconfig
 .prettierignore
 .prettierrc
 .travis.yml
+package-lock.json
 tsconfig.json
 tsconfig.module.json
 tslint.json
-*.log
