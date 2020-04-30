@@ -1,14 +1,14 @@
 import {Chromosome} from '../Genetic/Chromosome';
-import {BitChain} from '../Helpers/BitChain';
 import {Population} from '../Genetic/Population';
-import {SelectionStatistics, SelectionStrategy} from './SelectionGeneric';
+import {BitChain} from '../Helpers/BitChain';
+import {SelectionStrategy} from './SelectionGeneric';
 
 /**
  * https://arxiv.org/pdf/1109.3627.pdf
  * Article about roulette wheel theory
  */
 export class RouletteWheelSelection<EncodedType = BitChain> extends SelectionStrategy<EncodedType> {
-  public selection(pop: Population<EncodedType>, statistics?: SelectionStatistics): EncodedType[] {
+  public selection(pop: Population<EncodedType>): EncodedType[] {
     /**
      * Init
      */
@@ -49,11 +49,6 @@ export class RouletteWheelSelection<EncodedType = BitChain> extends SelectionStr
       if (accepted) {
         selected.push(individual.cloneChain());
       }
-    }
-
-    /// Add counter to statistics
-    if (statistics) {
-      statistics.iterations = ctr;
     }
 
     /// Return the selected bitchains

@@ -1,18 +1,11 @@
-import {CrossoverFunction, CrossoverStatistics} from '../Crossover/GenericCrossover';
+import {CrossoverStatistics} from '../Crossover/GenericCrossover';
 import {BitChain} from '../Helpers/BitChain';
 import {Configuration} from '../Helpers/Configuration';
 import {CountTime} from '../Helpers/CountTime';
-import {
-  DecodeFunction,
-  EncodeFunction,
-  FitnessFunction,
-  GeneticAlgorithmConfiguration,
-  RandomValueFunction,
-} from '../Helpers/Params';
-import {MutationStrategy} from '../Mutation/GenericMutation';
-import {Population} from './Population';
-import {SelectionFunction, SelectionStatistics} from '../Selection/SelectionGeneric';
+import {GeneticAlgorithmConfiguration} from '../Helpers/Params';
+import {SelectionStatistics} from '../Selection/SelectionGeneric';
 import {Chromosome} from './Chromosome';
+import {Population} from './Population';
 
 export class GeneticAlgorithm<T, EncodedType = BitChain> {
   /**
@@ -20,7 +13,7 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
    * Attributes
    * ==================================
    */
-  private config: Configuration<EncodedType>;
+  private config: Configuration<T, EncodedType>;
   private populations: Population<EncodedType>[] = [];
   private allTimeBestChromosome: Chromosome<EncodedType>;
   private time = 0;
@@ -39,34 +32,34 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
      * It is the opposite of the decode function
      * Must be provided
      */
-    public readonly encode: EncodeFunction<T, EncodedType>,
+    public readonly encode: (x: T) => EncodedType,
 
     /**
      * The decoding function takes an encoded BitChain and must return a variable of your type T.
      * Must be provided
      * It is the opposite of the decode function
      */
-    public readonly decode: DecodeFunction<T, EncodedType>,
+    public readonly decode: (s: EncodedType) => T,
 
     /**
      * A function returning a random value for initiating the neural network
      * Must be provided
      */
-    public readonly randomValue: RandomValueFunction<T>,
+    public readonly randomValue: () => T,
 
     /**
      * The core function. Evaluate how fit a chromosome is.
      * You can use the objective parameter to choose if you want to maximize or minimize this function
      * Must be provided
      */
-    public readonly fitness: FitnessFunction<T>,
+    public readonly fitness: (individual: T) => number,
 
     /**
      * Parameters used to change the configuration of the GeneticAlgorithm Object
      */
     config?: Partial<GeneticAlgorithmConfiguration<EncodedType>>
   ) {
-    this.config = new Configuration<EncodedType>(encode, decode, randomValue, fitness, config);
+    this.config = new Configuration<T, EncodedType>(encode, decode, randomValue, fitness, config);
     this.populations = this.initGeneration();
     this.allTimeBestChromosome = this.lastPopulation.population[0];
   }
@@ -76,20 +69,16 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
    * Getters
    * ==================================
    */
-  get selection(): SelectionFunction<EncodedType> {
-    return this.configuration.selection.selection;
+  get selection() {
+    return this.config.selection;
   }
 
-  get crossover(): CrossoverFunction<EncodedType> {
-    return this.configuration.crossover.crossover;
+  get crossover() {
+    return this.config.crossover;
   }
 
-  get mutation(): MutationStrategy<EncodedType> {
-    return this.configuration.mutation;
-  }
-
-  get configuration(): GeneticAlgorithmConfiguration<EncodedType> {
-    return this.config.get();
+  get mutation() {
+    return this.config.mutation;
   }
 
   get allTimeBest(): Chromosome<EncodedType> {
@@ -101,6 +90,10 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
       throw new Error(`Population array of genetic algorithm is currently empty`);
     }
     return this.populations[this.populations.length - 1];
+  }
+
+  get configuration() {
+    return this.config;
   }
 
   get changeConfiguration() {
@@ -161,14 +154,14 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
      * Selection
      */
     const selectionStatistics = new SelectionStatistics();
-    const selected: EncodedType[] = this.selection(this.lastPopulation, selectionStatistics);
+    const selected: EncodedType[] = this.selection.selectionWithStatistics(this.lastPopulation, selectionStatistics);
     /**
      * Crossover
      * and
      * Mutation
      */
     const crossoverStatistics = new CrossoverStatistics();
-    const crossed: EncodedType[] = this.crossover(selected, this.mutation, crossoverStatistics);
+    const crossed: EncodedType[] = this.crossover.crossoverWithStatistics(selected, this.mutation, crossoverStatistics);
 
     /**
      * Create new population
@@ -193,14 +186,14 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
       /**
        * After each
        */
-      this.configuration.afterEach(this.lastPopulation, this.populations.length);
+      this.config.afterEach(this.lastPopulation, this.populations.length);
 
       /**
        * Stop conditions
        */
       if (
-        this.populations.length >= this.configuration.iterations ||
-        this.configuration.stopCondition(this.lastPopulation, this.populations.length)
+        this.populations.length >= this.config.iterations ||
+        this.config.stopCondition(this.lastPopulation, this.populations.length)
       ) {
         stop = true;
       }

@@ -1,24 +1,18 @@
-import {CountTime} from '../Helpers/CountTime';
-import {CrossoverStrategy, CrossoverStatistics} from './GenericCrossover';
-import {MutationStrategy} from '../Mutation/GenericMutation';
 import {BitChain} from '../Helpers/BitChain';
 import {shuffleArray} from '../Helpers/Helpers';
+import {MutationStrategy} from '../Mutation/GenericMutation';
+import {CrossoverStrategy} from './GenericCrossover';
 
 /**
  * https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)#Single-point_crossover
  * Single Point Crossover
  */
 export class SinglePointCrossover extends CrossoverStrategy<BitChain> {
-  public crossover(
-    chains: readonly BitChain[],
-    mutation: MutationStrategy,
-    statistics = new CrossoverStatistics()
-  ): BitChain[] {
+  public crossover(chains: readonly BitChain[], mutation: MutationStrategy): BitChain[] {
     /**
      * Init
      */
     const created: BitChain[] = [];
-    const start = new CountTime();
     const shuffledChains = shuffleArray(chains);
 
     /**
@@ -58,11 +52,6 @@ export class SinglePointCrossover extends CrossoverStrategy<BitChain> {
        */
       created.push(m1, m2);
     }
-
-    /**
-     * Returns
-     */
-    statistics.time += start.time();
     return created;
   }
 }

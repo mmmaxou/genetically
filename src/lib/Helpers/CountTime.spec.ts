@@ -19,7 +19,7 @@ test('Precision with more than 1s', (t) => {
     setTimeout(() => {
       const end = time.time();
       t.assert(end > 330);
-      t.assert(end < 350);
+      t.assert(end < 400);
       resolve();
     }, 340);
   });

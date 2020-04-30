@@ -1,7 +1,7 @@
 import test from 'ava';
-import {GeneticAlgorithm} from './GeneticAlgorithm';
-import {unpackVariableNames} from '../Helpers/Helpers';
 import {DEFAULT_CONFIGURATION_GENETIC_ALGORITHM} from '../Helpers/Configuration';
+import {unpackVariableNames} from '../Helpers/Helpers';
+import {GeneticAlgorithm} from './GeneticAlgorithm';
 
 test('Create a pointless Genetic algorithm', (t) => {
   const ga = new GeneticAlgorithm(
@@ -13,20 +13,25 @@ test('Create a pointless Genetic algorithm', (t) => {
   t.is(typeof ga, 'object', unpackVariableNames({ga}));
 });
 
-const pointlessGA = new GeneticAlgorithm(
-  (x) => x,
-  (x) => x,
-  () => 1,
-  (x) => x
-);
-
 test('Load default configuration', (t) => {
-  t.is(typeof pointlessGA.configuration, 'object');
-  const defaultMap = new Map();
-  Object.entries(DEFAULT_CONFIGURATION_GENETIC_ALGORITHM).map(([key, value]) => defaultMap.set(key, value));
-  const currentMap = new Map();
-  Object.entries(pointlessGA.configuration).map(([key, value]) => currentMap.set(key, value));
-  t.deepEqual(defaultMap, currentMap);
+  const stringGA = new GeneticAlgorithm<number, string>(
+    () => '1',
+    () => 1,
+    () => 1,
+    () => 1
+  );
+  t.is(typeof stringGA.configuration, 'object');
+  const deft = DEFAULT_CONFIGURATION_GENETIC_ALGORITHM;
+  const conf = stringGA.configuration;
+  t.deepEqual(deft.afterEach, conf.afterEach);
+  t.deepEqual(deft.crossover, conf.crossover);
+  t.deepEqual(deft.iterations, conf.iterations);
+  t.deepEqual(deft.mutation, conf.mutation);
+  t.deepEqual(deft.objective, conf.objective);
+  t.deepEqual(deft.population, conf.population);
+  t.deepEqual(deft.selection, conf.selection);
+  t.deepEqual(deft.stopCondition, conf.stopCondition);
+  t.deepEqual(deft.verbose, conf.verbose);
 });
 
 test('Allow changing configuration', (t) => {

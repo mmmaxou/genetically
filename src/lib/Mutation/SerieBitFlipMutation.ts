@@ -31,9 +31,10 @@ export class SerieFlipBitMutation extends MutationStrategy<BitChain> {
       return chain;
     } else {
       // Operate a bit flip on the selected bit chain number and redo a mutation
-      const begin: BitChain = chain.substring(0, this._nextMutationOccurance);
-      const flipped: BitChain = chain[this._nextMutationOccurance] === '0' ? '1' : '0';
-      const end: BitChain = chain.substring(this._nextMutationOccurance + 1);
+      const begin: BitChain = chain.substring(0, this._nextMutationOccurance) || '';
+      const flipped: BitChain =
+        chain[this._nextMutationOccurance] === '0' ? (chain[this._nextMutationOccurance] === '1' ? '0' : '1') : '';
+      const end: BitChain = chain.substring(this._nextMutationOccurance + 1) || '';
 
       // console.log('begining is', begin);
       // console.log('flipped is', flipped);

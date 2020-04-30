@@ -16,12 +16,12 @@ let statistics: CrossoverStatistics;
 let chains: BitChain[];
 
 test.beforeEach(() => {
-  chains = ga.selection(pop);
+  chains = ga.selection.selection(pop);
   statistics = new CrossoverStatistics();
 });
 
 test('should create a population of config.popsize length', (t) => {
-  const c = singlePoint.crossover(chains, new NoMutation(), statistics);
+  const c = singlePoint.crossoverWithStatistics(chains, new NoMutation(), statistics);
   t.true(Array.isArray(c), 'Not an array');
   t.true(c.length === pop.popConfig.popsize, 'Length is not configured one');
 });

@@ -1,14 +1,6 @@
-import {BitChain} from '../Helpers/BitChain';
-import {CountTime} from '../Helpers/CountTime';
 import {Population} from '../Genetic/Population';
-
-/**
- * Type for selection strategy
- */
-export type SelectionFunction<EncodedType = BitChain> = (
-  population: Population<EncodedType>,
-  statistics?: SelectionStatistics
-) => EncodedType[];
+import {CountTime} from '../Helpers/CountTime';
+import {BitChain} from '../Helpers/BitChain';
 
 /**
  * Interface for statistics
@@ -28,8 +20,8 @@ export class SelectionStatistics {
 /**
  * Interface for a selection strategy
  */
-export abstract class SelectionStrategy<EncodedType = any> {
-  public abstract selection(population: Population<EncodedType>, statistics?: SelectionStatistics): EncodedType[];
+export abstract class SelectionStrategy<EncodedType = BitChain> {
+  public abstract selection(population: Population<EncodedType>): EncodedType[];
 
   public selectionWithStatistics(population: Population<EncodedType>, statistics: SelectionStatistics): EncodedType[] {
     const timer = new CountTime();

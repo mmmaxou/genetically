@@ -40,7 +40,7 @@
     "test:lint": "tslint --project .",
     "test:unit": "ava",
     "test:nyc": "nyc ava",
-    "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch --verbose\"",
+    "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"build:module -- -w\" \"test:unit -- --watch --verbose\"",
     "cov": "run-s build test:nyc cov:html && open-cli coverage/index.html",
     "cov:html": "nyc report --reporter=html",
     "cov:send": "nyc report --reporter=lcov && codecov",
@@ -51,7 +51,7 @@
     "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs",
     "version": "standard-version",
     "reset": "git clean -dfx && git reset --hard && npm i",
-    "clean": "trash build test",
+    "clean": "shx rm -rf build",
     "prepare-release": "run-s reset test cov:check doc:html version doc:publish"
   },
   "scripts-info": {

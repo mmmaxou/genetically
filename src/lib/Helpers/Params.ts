@@ -4,13 +4,6 @@ import {Population} from '../Genetic/Population';
 import {SelectionStrategy} from '../Selection/SelectionGeneric';
 import {BitChain} from './BitChain';
 
-export type EncodeFunction<T, EncodedType = BitChain> = (x: T) => EncodedType;
-export type DecodeFunction<T, EncodedType = BitChain> = (s: EncodedType) => T;
-export type RandomValueFunction<T> = () => T;
-export type FitnessFunction<T> = (individual: T) => number;
-export type StopConditionFunction<EncodedType = BitChain> = (pop: Population<EncodedType>, i: number) => boolean;
-export type AfterEachFunction<EncodedType = BitChain> = (pop: Population<EncodedType>, i: number) => void;
-
 export enum FitnessFunctionObjective {
   MINIMIZE,
   MAXIMIZE,
@@ -44,29 +37,28 @@ export interface GeneticAlgorithmConfiguration<EncodedType = BitChain> {
   /**
    * The selection function used to create new population. Use your own selection function or use one provided in Selection namespace
    */
-  selection: SelectionStrategy<EncodedType>;
-
+  selection: ((population: Population<EncodedType>) => EncodedType[]) | SelectionStrategy<EncodedType>;
   /**
    * The crossover function used to mix two encoded chromosomes into two descendant.
    * Use your own crossover function or use one provided in Crossover namespace
    */
-  crossover: CrossoverStrategy<EncodedType>;
+  crossover: ((chains: EncodedType[], mutation: MutationStrategy) => EncodedType[]) | CrossoverStrategy<EncodedType>;
 
   /**
    * The mutation function used to alter a chromosome after the crossover
    * Use your own mutation function or use one provided in Mutation namespace
    */
-  mutation: MutationStrategy<EncodedType>;
+  mutation: ((chain: EncodedType) => EncodedType) | MutationStrategy<EncodedType>;
 
   /**
    * A function returning a boolean. If the function returns true, the evolution will stop
    */
-  stopCondition: StopConditionFunction<EncodedType>;
+  stopCondition: (pop: Population<EncodedType>, i: number) => boolean;
 
   /**
    * A visitor function running after each iteration of the population
    */
-  afterEach: AfterEachFunction<EncodedType>;
+  afterEach: (pop: Population<EncodedType>, i: number) => void;
 }
 
 /**
