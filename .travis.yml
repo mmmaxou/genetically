@@ -1,4 +1,3 @@
-sudo: false
 language: node_js
 node_js:
   - '10'
@@ -8,5 +7,6 @@ cache:
   directories:
     - '$HOME/.npm'
 after_success:
+  - npm run test:nyc
   - npm run cov:send
   - npm run cov:check
