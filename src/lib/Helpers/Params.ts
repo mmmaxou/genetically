@@ -57,8 +57,9 @@ export interface GeneticAlgorithmConfiguration<EncodedType = BitChain> {
 
   /**
    * A visitor function running after each iteration of the population
+   * You can return a Promise that will delay the execution of the next iteration until it resolves.
    */
-  afterEach: (pop: Population<EncodedType>, i: number) => void;
+  afterEach: (pop: Population<EncodedType>, i: number) => void | Promise<void>;
 }
 
 /**

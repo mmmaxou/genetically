@@ -17,6 +17,8 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
   private populations: Population<EncodedType>[] = [];
   private allTimeBestChromosome: Chromosome<EncodedType>;
   private time = 0;
+  private _timer: CountTime;
+  private _running = false;
 
   /**
    * ==================================
@@ -60,8 +62,9 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
     config?: Partial<GeneticAlgorithmConfiguration<EncodedType>>
   ) {
     this.config = new Configuration<T, EncodedType>(encode, decode, randomValue, fitness, config);
-    this.populations = this.initGeneration();
+    this.populations = [new Population<EncodedType>(this)];
     this.allTimeBestChromosome = this.lastPopulation.population[0];
+    this._timer = new CountTime();
   }
 
   /**
@@ -107,21 +110,10 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
    */
 
   /**
-   * Change the configuration on the fly
-   */
-
-  /**
-   * Create a fresh population
-   */
-  public initGeneration(): Population<EncodedType>[] {
-    return [new Population<EncodedType>(this)];
-  }
-
-  /**
    * Refresh the last population
    */
   public refreshPopulation(): void {
-    this.populations[this.populations.length - 1] = this.initGeneration()[0];
+    this.populations[this.populations.length - 1] = new Population<EncodedType>(this);
   }
 
   /**
@@ -170,44 +162,21 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
     this.populations.push(newPop);
   }
 
+  public runOnceFast(): void {
+    this.runPopulation();
+    const selected: EncodedType[] = this.selection.selection(this.lastPopulation);
+    const crossed: EncodedType[] = this.crossover.crossover(selected, this.mutation);
+    const newPop = new Population(this, crossed);
+    this.populations.push(newPop);
+  }
+
   /**
    * Evolve
    */
-  public run(): void {
-    let stop = false;
-    const timer = new CountTime();
-    while (!stop) {
-      /**
-       * Run once
-       */
-      this.runOnce();
-      this.runPopulation();
-
-      /**
-       * After each
-       */
-      this.config.afterEach(this.lastPopulation, this.populations.length);
-
-      /**
-       * Stop conditions
-       */
-      if (
-        this.populations.length >= this.config.iterations ||
-        this.config.stopCondition(this.lastPopulation, this.populations.length)
-      ) {
-        stop = true;
-      }
-
-      /**
-       * Save time
-       */
-      this.time = timer.time();
-    }
-
-    /**
-     * Save the all time best
-     */
-    this.tryToSaveAllTimeBest();
+  public run(): Promise<Population<EncodedType>> {
+    this._running = true;
+    this._timer.reset();
+    return this.run__Recurr();
   }
 
   /**
@@ -241,6 +210,58 @@ All time best code is ${this.decode(this.allTimeBest.chain)}
       this.allTimeBestChromosome = currentBest;
     } else if (this.allTimeBestChromosome.fitnessScore < currentBest.fitnessScore) {
       this.allTimeBestChromosome = currentBest;
+    }
+  }
+
+  private run__Recurr(): Promise<Population<EncodedType>> {
+    /**
+     * Recursive function
+     */
+    const stop =
+      this.populations.length >= this.config.iterations ||
+      this.config.stopCondition(this.lastPopulation, this.populations.length) ||
+      !this._running;
+
+    if (stop) {
+      return new Promise((resolve) => {
+        /**
+         * Run once
+         */
+        this.runPopulation();
+
+        /**
+         * Save the all time best
+         */
+        this.tryToSaveAllTimeBest();
+
+        /**
+         * Stop the timer
+         */
+        this.time = this._timer.time();
+        this._running = false;
+
+        /**
+         * Resolve the last population
+         */
+        resolve(this.lastPopulation);
+      });
+    } else {
+      return new Promise((resolve) => {
+        /**
+         * Run once
+         */
+        this.runOnceFast();
+
+        /**
+         * After each
+         */
+        const maybePromise = this.config.afterEach(this.lastPopulation, this.populations.length);
+        if (maybePromise) {
+          maybePromise.then(() => resolve(this.run__Recurr()));
+        } else {
+          resolve(this.run__Recurr());
+        }
+      });
     }
   }
 }

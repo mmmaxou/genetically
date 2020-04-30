@@ -22,7 +22,7 @@ test('Create a configuration', (t) => {
   t.is(conf.verbose, DEFAULT_CONFIGURATION_GENETIC_ALGORITHM.verbose);
 });
 
-test('Error if configuration is not made of string and no Crossover', (t) => {
+test('Validate configuration', (t) => {
   t.plan(1);
   t.notThrows(() => {
     const conf = new Configuration<number, number>(
@@ -36,6 +36,7 @@ test('Error if configuration is not made of string and no Crossover', (t) => {
 });
 
 test('Encode and decode are opposite', (t) => {
+  t.plan(1);
   t.throws(() => {
     const conf = new Configuration<number, number>(
       (x) => x,

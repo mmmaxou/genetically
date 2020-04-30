@@ -24,18 +24,19 @@ export * from './lib/Genetic/Chromosome';
 export * from './lib/Genetic/GeneticAlgorithm';
 export * from './lib/Genetic/Population';
 /**
- * Crossover
- */
-export * from './lib/Crossover/GenericCrossover';
-export * from './lib/Crossover/NoCrossover';
-export * from './lib/Crossover/SinglePointCrossover';
-/**
  * Helpers
  */
 export * from './lib/Helpers/BitChain';
 export * from './lib/Helpers/Configuration';
 export * from './lib/Helpers/Helpers';
 export * from './lib/Helpers/Params';
+/**
+ * Crossover
+ */
+export * from './lib/Crossover/GenericCrossover';
+export * from './lib/Crossover/NoCrossover';
+export * from './lib/Crossover/SinglePointCrossover';
+export * from './lib/Crossover/DynamicalCrossover';
 /**
  * Mutations
  */
@@ -44,11 +45,13 @@ export * from './lib/Mutation/GenericMutation';
 export * from './lib/Mutation/NaiveFlipBitMutation';
 export * from './lib/Mutation/NoMutation';
 export * from './lib/Mutation/SerieBitFlipMutation';
+export * from './lib/Mutation/DynamicalMutation';
 /**
  * Selection
  */
 export * from './lib/Selection/RouletteWheelSelection';
 export * from './lib/Selection/SelectionGeneric';
+export * from './lib/Selection/DynamicalSelection';
 
 export const Genetically = {
   Chromosome,
