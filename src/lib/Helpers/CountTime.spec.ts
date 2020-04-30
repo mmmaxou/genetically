@@ -11,3 +11,16 @@ test('Should count time', (t) => {
   t.true(typeof end === 'number');
   t.true(end > 0);
 });
+
+test('Precision with more than 1s', (t) => {
+  t.plan(2);
+  const time = new CountTime();
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const end = time.time();
+      t.assert(end > 330);
+      t.assert(end < 350);
+      resolve();
+    }, 340);
+  });
+});

@@ -1,4 +1,4 @@
-import {performance} from 'perf_hooks';
+import hirestime from 'hirestime';
 
 /**
  * Give you an interval of time in milliseconds
@@ -6,14 +6,22 @@ import {performance} from 'perf_hooks';
  * Work in both Node JS and browser
  */
 export class CountTime {
-  private _start = 0;
+  private _elapsed: {
+    (): number;
+    s: () => number;
+    ms: () => number;
+    ns: () => number;
+    milliseconds(): number;
+    seconds(): number;
+    nanoseconds(): number;
+  };
   constructor() {
-    this.reset();
+    this._elapsed = this.reset();
   }
-  reset(): void {
-    this._start = performance.now();
+  reset() {
+    return hirestime();
   }
   time(): number {
-    return performance.now() - this._start;
+    return this._elapsed.milliseconds();
   }
 }

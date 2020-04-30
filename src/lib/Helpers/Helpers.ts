@@ -171,7 +171,3 @@ export const unpackVariableNames = (litteral: {[key: string]: any}) => {
 export const showVariablesName = (litteral: {[key: string]: any}) => {
   return Object.entries(litteral).forEach(([key, value]) => console.log(key, 'is', value));
 };
-
-export type Immutable<T> = {
-  readonly [K in keyof T]: Immutable<T[K]>;
-};

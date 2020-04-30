@@ -1,6 +1,5 @@
 import {CountTime} from './../Helpers/CountTime';
 import {BitChain} from '../Helpers/BitChain';
-import {Immutable} from '../Helpers/Helpers';
 
 /**
  * Inspiration for mutation strategies
@@ -45,5 +44,5 @@ export abstract class MutationStrategy<EncodedType = BitChain> {
   /**
    * Mutate a chain
    */
-  public abstract mutation(chain: Immutable<EncodedType>): EncodedType;
+  public abstract mutation(chain: EncodedType): EncodedType;
 }

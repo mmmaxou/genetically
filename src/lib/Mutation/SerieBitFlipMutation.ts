@@ -1,6 +1,5 @@
 import {MutationStrategy, DEFAULT_MUTATION_CONFIGURATION} from './GenericMutation';
 import {BitChain} from '../Helpers/BitChain';
-import {Immutable} from '../Helpers/Helpers';
 
 /**
  * Flip bit mutation
@@ -20,7 +19,7 @@ export class SerieFlipBitMutation extends MutationStrategy<BitChain> {
   /**
    * Mutate a chain
    */
-  public mutation(chain: Immutable<BitChain>): BitChain {
+  public mutation(chain: BitChain): BitChain {
     // console.log('chain length is ', chain.length);
     // console.log('next mutation counter is ', this._nextMutationCounter);
 
