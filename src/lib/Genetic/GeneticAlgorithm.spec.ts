@@ -8,9 +8,9 @@ import {NoSelection} from '../Selection/NoSelection';
 import {CountTime} from '../Helpers/CountTime';
 
 test('Create a pointless Genetic algorithm', (t) => {
-  const ga = new GeneticAlgorithm(
-    (x) => x,
-    (x) => x,
+  const ga = new GeneticAlgorithm<number, string>(
+    (x) => '' + x,
+    (x) => +x,
     () => 1,
     (x) => x
   );
@@ -40,8 +40,8 @@ test('Load default configuration', (t) => {
 
 test('Allow changing configuration', (t) => {
   const ga = new GeneticAlgorithm(
-    (x) => x,
-    (x) => x,
+    (x) => '' + x,
+    (x) => +x,
     () => 1,
     (x) => x
   );

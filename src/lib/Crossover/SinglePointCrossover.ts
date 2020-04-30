@@ -25,11 +25,11 @@ export class SinglePointCrossover extends CrossoverStrategy<BitChain> {
        * If the amount of population is odd
        * Push the last element
        */
-      if (i + 1 >= shuffledChains.length) {
-        created.push(A);
-        continue;
-      }
-      const B = shuffledChains[i + 1];
+
+      const B =
+        i + 1 >= shuffledChains.length
+          ? shuffledChains[~~(Math.random() * (shuffledChains.length - 1))]
+          : shuffledChains[i + 1];
 
       /**
        * A point on both parents' chromosomes is picked randomly, and designated a 'crossover point'.
@@ -50,7 +50,11 @@ export class SinglePointCrossover extends CrossoverStrategy<BitChain> {
       /**
        * Add them to creation
        */
-      created.push(m1, m2);
+      if (i + 1 >= shuffledChains.length) {
+        created.push(m1);
+      } else {
+        created.push(m1, m2);
+      }
     }
     return created;
   }

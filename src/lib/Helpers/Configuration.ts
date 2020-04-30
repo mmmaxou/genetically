@@ -183,13 +183,13 @@ export class Configuration<T, EncodedType = BitChain> {
      * Deep equal between encode and decode
      */
     if (JSON.stringify(r) !== JSON.stringify(dec)) {
-      this.error(`Error during Genetic Algorithm configuration :`);
-      this.error(`Given configuration is wrong`);
-      this.error('Random value is', r);
-      this.error('Encoded value is', enc);
-      this.error('Decoded value is', dec);
       throw new Error(
-        `Error trying to encode then decode a random value.
+        `Error during Genetic Algorithm configuration
+        Given configuration is wrong
+        Random value is ${r}
+        Encoded value is ${enc}
+        Decoded value is ${dec}
+        Error trying to encode then decode a random value.
 code: 'decode(encode(randomValue))' is different than randomValue`
       );
     }
@@ -211,34 +211,22 @@ code: 'decode(encode(randomValue))' is different than randomValue`
       try {
         this.mutation.mutation(enc);
       } catch (e) {
-        this.error(`Error during Genetic Algorithm configuration :`);
-        this.error(`Given configuration is wrong`);
-        this.error(
-          `You used a type other than BitChain(=string),
-but you did not provide a custom MutationStrategy to handle it.`,
-          r
-        );
-        throw new Error(
-          `You used a type other than BitChain(=string),
-but you did not provide a custom MutationStrategy to handle it.`
-        );
+        console.error('Error is ', e);
+        throw new Error(`Error during Genetic Algorithm configuration
+          Given configuration is wrong
+          You used a type other than BitChain(=string),
+          but you did not provide a custom MutationStrategy to handle it.`);
       }
 
       // Crossover test
       try {
-        const m = this.mutation;
-        const c = this.crossover.crossover;
-        c([enc], m);
+        this.crossover.crossover([enc], this.mutation);
       } catch (e) {
-        this.error(`Error during Genetic Algorithm configuration :`);
-        this.error(`Given configuration is wrong`);
-        this.error(
-          `You used a type other than BitChain(=string),
-but you did not provide a custom CrossoverStrategy to handle it.`,
-          r
-        );
+        console.error('Error is ', e);
         throw new Error(
-          `You used a type other than BitChain(=string),
+          `Error during Genetic Algorithm configuration :
+          Given configuration is wrong
+          You used a type other than BitChain(=string),
 but you did not provide a custom CrossoverStrategy to handle it.`
         );
       }
@@ -248,17 +236,7 @@ but you did not provide a custom CrossoverStrategy to handle it.`
      * Fitness function returns a number
      */
     if (typeof f(r) !== 'number') {
-      this.error(`The fitness function must return a number`);
       throw new Error(`The fitness function must return a number`);
-    }
-  }
-
-  /**
-   * Display error
-   */
-  private error(message: string, object: any = ''): void {
-    if (((this._config && this._config.verbose) || DEFAULT_CONFIGURATION_GENETIC_ALGORITHM.verbose) === 'DEBUG') {
-      console.error(message, object);
     }
   }
 }
