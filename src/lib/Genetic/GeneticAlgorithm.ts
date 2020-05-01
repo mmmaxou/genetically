@@ -226,10 +226,8 @@ All time best code is ${this.decode(this.allTimeBest.chain)}
         this.tryToSaveAllTimeBest();
         this.time = this._timer.time();
         this._running = false;
-        const maybePromise = this.config.afterEach(this.lastPopulation, this.populations.length);
-        if (maybePromise) {
-          maybePromise.then(() => resolve(this.lastPopulation));
-          resolve();
+        if (this.config.waitBetweenIterations) {
+          this.config.waitBetweenIterations().then(() => resolve(this.lastPopulation));
         } else {
           resolve(this.lastPopulation);
         }
@@ -239,11 +237,10 @@ All time best code is ${this.decode(this.allTimeBest.chain)}
         /**
          * After each
          */
-        const maybePromise = this.config.afterEach(this.lastPopulation, this.populations.length);
-        if (maybePromise) {
-          maybePromise.then(() => resolve(this.run__Recurr()));
+        if (this.config.waitBetweenIterations) {
+          this.config.waitBetweenIterations().then(() => resolve(this.lastPopulation));
         } else {
-          resolve(this.run__Recurr());
+          resolve(this.lastPopulation);
         }
       });
     }

@@ -17,7 +17,7 @@ test('Create a configuration', (t) => {
   );
 
   t.true(typeof conf === 'object');
-  t.is(conf.afterEach, DEFAULT_CONFIGURATION_GENETIC_ALGORITHM.afterEach);
+  t.is(conf.waitBetweenIterations, DEFAULT_CONFIGURATION_GENETIC_ALGORITHM.waitBetweenIterations);
   t.is(conf.crossover, DEFAULT_CONFIGURATION_GENETIC_ALGORITHM.crossover);
   t.is(conf.iterations, DEFAULT_CONFIGURATION_GENETIC_ALGORITHM.iterations);
   t.is(conf.mutation, DEFAULT_CONFIGURATION_GENETIC_ALGORITHM.mutation);

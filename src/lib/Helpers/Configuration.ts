@@ -23,7 +23,7 @@ export const DEFAULT_CONFIGURATION_GENETIC_ALGORITHM: GeneticAlgorithmConfigurat
   mutation: new FlipBitMutation(),
   iterations: 50,
   stopCondition: () => false,
-  afterEach: () => {},
+  waitBetweenIterations: undefined,
 };
 
 export class Configuration<T, EncodedType = BitChain> {
@@ -99,8 +99,8 @@ export class Configuration<T, EncodedType = BitChain> {
   get stopCondition() {
     return this._config.stopCondition;
   }
-  get afterEach() {
-    return this._config.afterEach;
+  get waitBetweenIterations() {
+    return this._config.waitBetweenIterations;
   }
 
   /**

@@ -29,7 +29,7 @@ test('Load default configuration', (t) => {
   t.is(typeof stringGA.configuration, 'object');
   const deft = DEFAULT_CONFIGURATION_GENETIC_ALGORITHM;
   const conf = stringGA.configuration;
-  t.deepEqual(deft.afterEach, conf.afterEach);
+  t.deepEqual(deft.waitBetweenIterations, conf.waitBetweenIterations);
   t.deepEqual(deft.crossover, conf.crossover);
   t.deepEqual(deft.iterations, conf.iterations);
   t.deepEqual(deft.mutation, conf.mutation);
@@ -70,7 +70,7 @@ test('Wait a few seconds after each run', (t) => {
       mutation: new NoMutation(),
       crossover: new NoCrossover(),
       selection: new NoSelection(),
-      afterEach() {
+      waitBetweenIterations() {
         return new Promise((resolve) => {
           setTimeout(() => {
             resolve();
@@ -178,14 +178,10 @@ test.only('Debug length', (t) => {
       // crossover: new NoCrossover(),
       objective: FitnessFunctionObjective.MINIMIZE,
       iterations: 1000,
-      afterEach: (pop: Population<string>) => {
-        // fittest = pop.fittest.chain;
-        // fittestScore = pop.fittest.fitnessScore;
-        // console.log(pop.fittest.chain.length);
+      waitBetweenIterations: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
             resolve();
-            return pop.sumFitness;
           }, 0);
         });
       },
