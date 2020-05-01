@@ -5,6 +5,6 @@ export class DynamicalMutation<EncodedType> extends MutationStrategy<EncodedType
     super(probability);
   }
   public mutation(chain: EncodedType): EncodedType {
-    return this._mutation(chain);
+    return Math.random() < this.probability ? this._mutation(chain) : chain;
   }
 }

@@ -26,15 +26,22 @@ export class SerieFlipBitMutation extends MutationStrategy<BitChain> {
     // If the length of the chain is less than the _nextMutationCounter,
     // Don't mutate and return the chain
     // Decrement _nextMutationCounter
-    if (chain.length === 0 || chain.length < this._nextMutationOccurance) {
+    if (chain.length === 0 || chain.length <= this._nextMutationOccurance) {
       this._nextMutationOccurance -= chain.length;
-      return chain;
+      return '' + chain;
     } else {
       // Operate a bit flip on the selected bit chain number and redo a mutation
-      const begin: BitChain = chain.substring(0, this._nextMutationOccurance) || '';
-      const flipped: BitChain =
-        chain[this._nextMutationOccurance] === '0' ? (chain[this._nextMutationOccurance] === '1' ? '0' : '1') : '';
-      const end: BitChain = chain.substring(this._nextMutationOccurance + 1) || '';
+      const begin = chain.substring(0, this._nextMutationOccurance) || '';
+      const flipped =
+        chain[this._nextMutationOccurance] !== '0' ? (chain[this._nextMutationOccurance] === '1' ? '0' : '1') : '0';
+      const end = chain.substring(this._nextMutationOccurance + 1) || '';
+      if (begin.length + flipped.length + end.length !== chain.length) {
+        console.log('chain is', chain);
+        console.log('begin is', begin);
+        console.log('flipped is', flipped);
+        console.log('end is', end);
+        throw new Error('Error in size');
+      }
 
       // console.log('begining is', begin);
       // console.log('flipped is', flipped);
@@ -44,7 +51,7 @@ export class SerieFlipBitMutation extends MutationStrategy<BitChain> {
 
       // Complete chain
       this._nextMutationOccurance = this.computeNextMutation();
-      return begin + flipped + this.mutation(end);
+      return '' + begin + '' + flipped + '' + this.mutation(end);
     }
   }
 

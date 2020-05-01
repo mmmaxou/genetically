@@ -214,9 +214,8 @@ All time best code is ${this.decode(this.allTimeBest.chain)}
   }
 
   private run__Recurr(): Promise<Population<EncodedType>> {
-    /**
-     * Recursive function
-     */
+    this.runOnce();
+    this.runPopulation();
     const stop =
       this.populations.length >= this.config.iterations ||
       this.config.stopCondition(this.lastPopulation, this.populations.length) ||
@@ -224,34 +223,19 @@ All time best code is ${this.decode(this.allTimeBest.chain)}
 
     if (stop) {
       return new Promise((resolve) => {
-        /**
-         * Run once
-         */
-        this.runPopulation();
-
-        /**
-         * Save the all time best
-         */
         this.tryToSaveAllTimeBest();
-
-        /**
-         * Stop the timer
-         */
         this.time = this._timer.time();
         this._running = false;
-
-        /**
-         * Resolve the last population
-         */
-        resolve(this.lastPopulation);
+        const maybePromise = this.config.afterEach(this.lastPopulation, this.populations.length);
+        if (maybePromise) {
+          maybePromise.then(() => resolve(this.lastPopulation));
+          resolve();
+        } else {
+          resolve(this.lastPopulation);
+        }
       });
     } else {
       return new Promise((resolve) => {
-        /**
-         * Run once
-         */
-        this.runOnceFast();
-
         /**
          * After each
          */

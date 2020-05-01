@@ -52,6 +52,7 @@ export * from './lib/Mutation/DynamicalMutation';
 export * from './lib/Selection/RouletteWheelSelection';
 export * from './lib/Selection/SelectionGeneric';
 export * from './lib/Selection/DynamicalSelection';
+export * from './lib/Selection/NoSelection';
 
 export const Genetically = {
   Chromosome,

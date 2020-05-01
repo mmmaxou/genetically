@@ -12,20 +12,15 @@ export class RouletteWheelSelection<EncodedType = BitChain> extends SelectionStr
     /**
      * Init
      */
-    const fitnessMax = pop.fittest.normalizedFitnessScore;
     // const fitnessMin = pop.leastFit.normalizedFitnessScore;
     // console.log('fitness max is ', fitnessMax);
     // console.log('fitness min is ', fitnessMin);
     const selected: EncodedType[] = [];
-    const averageIteration = pop.population.length * 3;
-    let ctr = 0;
 
     /**
      * Loop
      */
-    while (ctr < averageIteration * 10 && selected.length < pop.config.population.popsize) {
-      ctr++;
-
+    while (selected.length < pop.config.population.popsize) {
       /**
        * 1.
        * Select randomly one of the individuals (say,i).
@@ -44,9 +39,8 @@ export class RouletteWheelSelection<EncodedType = BitChain> extends SelectionStr
        * (i.e., in the case of rejection, another selection attempt is made)
        */
       const rng = Math.random();
-      const p = individual.normalizedFitnessScore / fitnessMax;
-      const accepted = p >= rng;
-      if (accepted) {
+      const p = individual.normalizedFitnessScore / pop.fittest.normalizedFitnessScore;
+      if (p >= rng) {
         selected.push(individual.cloneChain());
       }
     }
