@@ -9,7 +9,7 @@
 
 A Genetic Algorithm library designed for typescript
 
-Live example and informations about genetically can be founds in the [demonstration]()
+Live example and informations about genetically can be founds in the [demonstration](https://mmmaxou.github.io/genetically-demonstration-browser/)
 
 ## Install
 

@@ -10,5 +10,3 @@ after_success:
   - npm run test:nyc
   - npm run cov:send
   - npm run cov:check
-  - npm run doc:html
-  - npm run doc:publish
