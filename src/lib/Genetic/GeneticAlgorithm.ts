@@ -162,7 +162,6 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
      */
     const newPop = new Population(this, crossed);
     this.populations.push(newPop);
-    this.emitPeek();
   }
 
   /**
@@ -185,6 +184,15 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
     this._running = true;
     this._timer.reset();
     return this.run__Recurr();
+  }
+
+  public pause(): void {
+    this._running = false;
+  }
+
+  public resume(): void {
+    this._running = true;
+    this.run__Recurr();
   }
 
   /**
@@ -228,6 +236,7 @@ All time best code is ${this.decode(this.allTimeBest.chain)}
   private run__Recurr(): Promise<Population<EncodedType>> {
     this.runOnce();
     this.runPopulation();
+    this.emitPeek();
     const stop =
       this.populations.length >= this.config.iterations ||
       this.config.stopCondition(this.lastPopulation, this.populations.length) ||

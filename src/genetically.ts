@@ -29,6 +29,7 @@ export * from './lib/Genetic/Population';
 export * from './lib/Helpers/BitChain';
 export * from './lib/Helpers/Configuration';
 export * from './lib/Helpers/Helpers';
+export * from './lib/Helpers/NanoEvents';
 export * from './lib/Helpers/Params';
 /**
  * Crossover
