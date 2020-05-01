@@ -11,8 +11,8 @@ const fitness = LinearFunction.fitness;
 test('random value should be a number between -32 and 32', (t) => {
   const x = randomValue();
   t.is(typeof x, 'number', 'not a number');
-  t.true(x > -32, unpackVariableNames({x}));
-  t.true(x < 32, unpackVariableNames({x}));
+  t.true(x >= -32, unpackVariableNames({x}));
+  t.true(x <= 32, unpackVariableNames({x}));
 });
 
 test('encode function should encode a string of length 6', (t) => {

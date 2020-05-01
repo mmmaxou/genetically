@@ -18,8 +18,8 @@ test('Precision with more than 1s', (t) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const end = time.time();
-      t.assert(end > 330);
-      t.assert(end < 400);
+      t.assert(end > 240);
+      t.assert(end < 440);
       resolve();
     }, 340);
   });

@@ -2,6 +2,7 @@ import {CrossoverStatistics} from '../Crossover/GenericCrossover';
 import {BitChain} from '../Helpers/BitChain';
 import {Configuration} from '../Helpers/Configuration';
 import {CountTime} from '../Helpers/CountTime';
+import {Emitter, Unsubscribe} from '../Helpers/NanoEvents';
 import {GeneticAlgorithmConfiguration} from '../Helpers/Params';
 import {SelectionStatistics} from '../Selection/SelectionGeneric';
 import {Chromosome} from './Chromosome';
@@ -19,6 +20,7 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
   private time = 0;
   private _timer: CountTime;
   private _running = false;
+  private _emitter = new Emitter();
 
   /**
    * ==================================
@@ -160,8 +162,14 @@ export class GeneticAlgorithm<T, EncodedType = BitChain> {
      */
     const newPop = new Population(this, crossed);
     this.populations.push(newPop);
+    this.emitPeek();
   }
 
+  /**
+   * Same than run once but faster.
+   * Don't save all time best
+   * Don't use statistics
+   */
   public runOnceFast(): void {
     this.runPopulation();
     const selected: EncodedType[] = this.selection.selection(this.lastPopulation);
@@ -194,6 +202,10 @@ All time best code is ${this.decode(this.allTimeBest.chain)}
 
 `);
     this.lastPopulation.display();
+  }
+
+  public onPeek(callback: (population: Population<EncodedType>, iteration: number) => void): Unsubscribe {
+    return this._emitter.on('peek', callback);
   }
 
   /**
@@ -234,15 +246,22 @@ All time best code is ${this.decode(this.allTimeBest.chain)}
       });
     } else {
       return new Promise((resolve) => {
-        /**
-         * After each
-         */
         if (this.config.waitBetweenIterations) {
-          this.config.waitBetweenIterations().then(() => resolve(this.lastPopulation));
+          this.config.waitBetweenIterations().then(() => resolve(this.run__Recurr()));
         } else {
-          resolve(this.lastPopulation);
+          resolve(this.run__Recurr());
         }
       });
     }
+  }
+
+  /**
+   * Events system :
+   * Peek
+   * Return the last population
+   */
+
+  private emitPeek() {
+    this._emitter.emit('peek', this.lastPopulation, this.populations.length - 1);
   }
 }

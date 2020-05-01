@@ -88,7 +88,7 @@ test('Wait a few seconds after each run', (t) => {
   });
 });
 
-test.only('Debug length', (t) => {
+test('Debug length', (t) => {
   const encode = (sentence: string): string => {
     return sentence;
   };
@@ -196,4 +196,23 @@ test.only('Debug length', (t) => {
     t.is(objectiveSentence.length, geneticAlgorithm.lastPopulation.fittest.chain.length);
     t.is(objectiveSentence.length, geneticAlgorithm.lastPopulation.population[1].chain.length);
   });
+});
+
+test.only('Peek the state of the algorithm each iteration', (t) => {
+  const ga = new GeneticAlgorithm(
+    (x) => '' + x,
+    (x) => +x,
+    () => 1,
+    (x) => x,
+    {iterations: 10}
+  );
+  let cpt = 1;
+
+  ga.onPeek((population: Population<string>, i) => {
+    population.run();
+    t.is(cpt, i, unpackVariableNames({cpt, i}));
+    cpt++;
+  });
+
+  ga.run();
 });
