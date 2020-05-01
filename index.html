@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>genetical</title>
+	<title>genetically</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">genetical</a>
+					<a href="index.html" class="title">genetically</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -54,7 +54,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> genetical</h1>
+			<h1> genetically</h1>
 		</div>
 	</div>
 </header>
@@ -62,10 +62,114 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<a href="#genetical" id="genetical" style="color: inherit; text-decoration: none;">
-					<h1>genetical</h1>
+				<p><a href="https://travis-ci.org/mmmaxou/genetically"><img src="https://travis-ci.org/mmmaxou/genetically.svg?branch=master" alt="Build Status"></a>
+					<a href="https://codecov.io/gh/mmmaxou/genetically"><img src="https://codecov.io/gh/mmmaxou/genetically/branch/master/graph/badge.svg" alt="codecov"></a>
+					<img src="https://img.shields.io/bundlephobia/min/genetically" alt="npm bundle size">
+					<img src="https://img.shields.io/github/issues/mmmaxou/genetically" alt="GitHub issues">
+					<img src="https://img.shields.io/github/last-commit/mmmaxou/genetically" alt="GitHub last commit">
+				<img src="https://img.shields.io/github/package-json/v/mmmaxou/genetically" alt="GitHub package.json version"></p>
+				<a href="#genetically" id="genetically" style="color: inherit; text-decoration: none;">
+					<h1>Genetically</h1>
 				</a>
 				<p>A Genetic Algorithm library designed for typescript</p>
+				<p>Live example and informations about genetically can be founds in the <a href="">demonstration</a></p>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>Install</h2>
+				</a>
+				<p>Using npm :</p>
+				<pre><code class="language-bash">$ npm install -S genetically</code></pre>
+				<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
+					<h2>Examples</h2>
+				</a>
+				<p>Take a look at the examples on <a href="https://en.wikipedia.org/wiki/Test_functions_for_optimization">simple functions made for optimization problems</a>:</p>
+				<ul>
+					<li><a href="https://github.com/mmmaxou/genetically/blob/master/src/example/LinearFunction.ts">Linear function</a> <code>f(x) = -x²</code></li>
+					<li><a href="https://github.com/mmmaxou/genetically/blob/master/src/example/CubeFunction.ts">Cube function</a> <code>f(x) = x³</code></li>
+					<li><a href="https://github.com/mmmaxou/genetically/blob/master/src/example/BoothFunction.ts">Booth function</a> <code>f(x, y) = (x + 2y - 7) ** 2 + (2x + y - 5) ** 2</code></li>
+					<li><a href="https://github.com/mmmaxou/genetically/blob/master/src/example/BealeFunction.ts">Baele function</a> <code>f(x, y) = (1.5 - x - x*y) ** 2 + (2.25 - x + (x*y) ** 2) ** 2 + (2.625 - x + (x*y) ** 3) ** 2</code></li>
+				</ul>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<p>Simple use case</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {GeneticAlgorithm} <span class="hljs-keyword">from</span> <span class="hljs-string">'genetically'</span>;
+
+<span class="hljs-keyword">const</span> genetic = <span class="hljs-keyword">new</span> GeneticAlgorithm&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;(
+  encodeFunction,
+  decodeFunction,
+  randomValueFunction,
+  fitnessFunction,
+  configurationObject
+);
+
+genetic.run();</code></pre>
+				<p>More complex usage with the LinearGeneticAlgorithm example.</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {
+  createEncodeFunctionOfBase,
+  FitnessFunctionObjective,
+  GeneticAlgorithm,
+  LinearGeneticAlgorithm,
+} <span class="hljs-keyword">from</span> <span class="hljs-string">'./genetically'</span>;
+
+<span class="hljs-comment">// Create a GeneticAlgorithm Object from a test function</span>
+<span class="hljs-keyword">const</span> gaLinear = LinearGeneticAlgorithm();
+gaLinear.run();
+gaLinear.display();
+
+<span class="hljs-comment">// Or create you own genetic algorithm</span>
+
+<span class="hljs-comment">/**
+ * Random starting value
+ */</span>
+<span class="hljs-keyword">const</span> randomValue = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">64</span>) - <span class="hljs-number">32</span>;
+
+<span class="hljs-comment">/**
+ * Transform x
+ * start is [-32, 32]
+ * end is   [000000, 111111]
+ */</span>
+<span class="hljs-keyword">const</span> encoder6 = createEncodeFunctionOfBase(<span class="hljs-number">2</span>, <span class="hljs-number">6</span>);
+<span class="hljs-keyword">const</span> encode = <span class="hljs-function">(<span class="hljs-params">x: <span class="hljs-built_in">number</span></span>) =&gt;</span> encoder6(x + <span class="hljs-number">32</span>);
+
+<span class="hljs-comment">/**
+ * Transform x
+ * start is [000000, 111111]
+ * end is [-32, 32]
+ */</span>
+<span class="hljs-keyword">const</span> decode = <span class="hljs-function">(<span class="hljs-params">x: <span class="hljs-built_in">string</span></span>) =&gt;</span> <span class="hljs-built_in">parseInt</span>(x, <span class="hljs-number">2</span>) - <span class="hljs-number">32</span>;
+
+<span class="hljs-comment">/**
+ * Function to optimize
+ * f(x) = x²
+ */</span>
+<span class="hljs-keyword">const</span> fitness = <span class="hljs-function">(<span class="hljs-params">i: <span class="hljs-built_in">number</span></span>) =&gt;</span> <span class="hljs-number">-1</span> * i ** <span class="hljs-number">2</span>;
+
+<span class="hljs-comment">// Make the genetic algorithm object</span>
+<span class="hljs-keyword">const</span> ga = <span class="hljs-keyword">new</span> GeneticAlgorithm&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;(
+  encode,
+  decode,
+  randomValue,
+  fitness,
+  {
+    objective: FitnessFunctionObjective.MINIMIZE,
+  }
+);
+
+<span class="hljs-comment">// Compute the fitness of the population and display it</span>
+ga.runPopulation();
+ga.display();
+
+<span class="hljs-comment">// Evolve the population</span>
+ga.run();
+
+<span class="hljs-comment">// After the evolution is complete, display it</span>
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'End evolution'</span>);
+ga.display();</code></pre>
+				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+					<h2>Documentation</h2>
+				</a>
+				<p>Please take a look at the <a href="https://mmmaxou.github.io/genetically/">documentation</a> for references on how to use the library.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -102,6 +206,18 @@
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/crossoverstrategy.html" class="tsd-kind-icon">Crossover<wbr>Strategy</a>
 					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/dynamicalcrossover.html" class="tsd-kind-icon">Dynamical<wbr>Crossover</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/dynamicalmutation.html" class="tsd-kind-icon">Dynamical<wbr>Mutation</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/dynamicalselection.html" class="tsd-kind-icon">Dynamical<wbr>Selection</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/emitter.html" class="tsd-kind-icon">Emitter</a>
+					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/flipbitmutation.html" class="tsd-kind-icon">Flip<wbr>Bit<wbr>Mutation</a>
 					</li>
@@ -124,6 +240,9 @@
 						<a href="classes/nomutation.html" class="tsd-kind-icon">No<wbr>Mutation</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/noselection.html" class="tsd-kind-icon">No<wbr>Selection</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/population.html" class="tsd-kind-icon">Population</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
@@ -141,38 +260,20 @@
 					<li class=" tsd-kind-class">
 						<a href="classes/singlepointcrossover.html" class="tsd-kind-icon">Single<wbr>Point<wbr>Crossover</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/eventsmap.html" class="tsd-kind-icon">Events<wbr>Map</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/geneticalgorithmconfiguration.html" class="tsd-kind-icon">Genetic<wbr>Algorithm<wbr>Configuration</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/populationconfiguration.html" class="tsd-kind-icon">Population<wbr>Configuration</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#aftereachfunction" class="tsd-kind-icon">After<wbr>Each<wbr>Function</a>
-					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#bitchain" class="tsd-kind-icon">Bit<wbr>Chain</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#crossoverfunction" class="tsd-kind-icon">Crossover<wbr>Function</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#decodefunction" class="tsd-kind-icon">Decode<wbr>Function</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#encodefunction" class="tsd-kind-icon">Encode<wbr>Function</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#fitnessfunction" class="tsd-kind-icon">Fitness<wbr>Function</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#randomvaluefunction" class="tsd-kind-icon">Random<wbr>Value<wbr>Function</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#selectionfunction" class="tsd-kind-icon">Selection<wbr>Function</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#stopconditionfunction" class="tsd-kind-icon">Stop<wbr>Condition<wbr>Function</a>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#unsubscribe" class="tsd-kind-icon">Unsubscribe</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#bealegeneticalgorithm" class="tsd-kind-icon">Beale<wbr>Genetic<wbr>Algorithm</a>
@@ -238,7 +339,7 @@
 						<a href="globals.html#functions" class="tsd-kind-icon">Functions</a>
 					</li>
 					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#genetical" class="tsd-kind-icon">Genetical</a>
+						<a href="globals.html#genetically" class="tsd-kind-icon">Genetically</a>
 					</li>
 					<li class=" tsd-kind-object-literal">
 						<a href="globals.html#helper" class="tsd-kind-icon">Helper</a>

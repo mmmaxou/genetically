@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>GeneticAlgorithmConfiguration | genetical</title>
+	<title>GeneticAlgorithmConfiguration | genetically</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">genetical</a>
+					<a href="../index.html" class="title">genetically</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -87,7 +87,6 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="geneticalgorithmconfiguration.html#aftereach" class="tsd-kind-icon">after<wbr>Each</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="geneticalgorithmconfiguration.html#crossover" class="tsd-kind-icon">crossover</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="geneticalgorithmconfiguration.html#iterations" class="tsd-kind-icon">iterations</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="geneticalgorithmconfiguration.html#mutation" class="tsd-kind-icon">mutation</a></li>
@@ -96,6 +95,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="geneticalgorithmconfiguration.html#selection" class="tsd-kind-icon">selection</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="geneticalgorithmconfiguration.html#stopcondition" class="tsd-kind-icon">stop<wbr>Condition</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="geneticalgorithmconfiguration.html#verbose" class="tsd-kind-icon">verbose</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="geneticalgorithmconfiguration.html#waitbetweeniterations" class="tsd-kind-icon">wait<wbr>Between<wbr>Iterations</a></li>
 							</ul>
 						</section>
 					</div>
@@ -104,22 +104,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="aftereach" class="tsd-anchor"></a>
-					<h3>after<wbr>Each</h3>
-					<div class="tsd-signature tsd-kind-icon">after<wbr>Each<span class="tsd-signature-symbol">:</span> <a href="../globals.html#aftereachfunction" class="tsd-signature-type">AfterEachFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in lib/Helpers/Params.ts:69</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="crossover" class="tsd-anchor"></a>
 					<h3>crossover</h3>
-					<div class="tsd-signature tsd-kind-icon">crossover<span class="tsd-signature-symbol">:</span> <a href="../classes/crossoverstrategy.html" class="tsd-signature-type">CrossoverStrategy</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">crossover<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> | </span><a href="../classes/crossoverstrategy.html" class="tsd-signature-type">CrossoverStrategy</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in lib/Helpers/Params.ts:53</li>
+							<li>Defined in lib/Helpers/Params.ts:45</li>
 						</ul>
 					</aside>
 				</section>
@@ -129,17 +119,17 @@
 					<div class="tsd-signature tsd-kind-icon">iterations<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in lib/Helpers/Params.ts:37</li>
+							<li>Defined in lib/Helpers/Params.ts:30</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="mutation" class="tsd-anchor"></a>
 					<h3>mutation</h3>
-					<div class="tsd-signature tsd-kind-icon">mutation<span class="tsd-signature-symbol">:</span> <a href="../classes/mutationstrategy.html" class="tsd-signature-type">MutationStrategy</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">mutation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> | </span><a href="../classes/mutationstrategy.html" class="tsd-signature-type">MutationStrategy</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in lib/Helpers/Params.ts:59</li>
+							<li>Defined in lib/Helpers/Params.ts:51</li>
 						</ul>
 					</aside>
 				</section>
@@ -149,7 +139,7 @@
 					<div class="tsd-signature tsd-kind-icon">objective<span class="tsd-signature-symbol">:</span> <a href="../enums/fitnessfunctionobjective.html" class="tsd-signature-type">FitnessFunctionObjective</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in lib/Helpers/Params.ts:32</li>
+							<li>Defined in lib/Helpers/Params.ts:25</li>
 						</ul>
 					</aside>
 				</section>
@@ -159,29 +149,53 @@
 					<div class="tsd-signature tsd-kind-icon">population<span class="tsd-signature-symbol">:</span> <a href="populationconfiguration.html" class="tsd-signature-type">PopulationConfiguration</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in lib/Helpers/Params.ts:42</li>
+							<li>Defined in lib/Helpers/Params.ts:35</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="selection" class="tsd-anchor"></a>
 					<h3>selection</h3>
-					<div class="tsd-signature tsd-kind-icon">selection<span class="tsd-signature-symbol">:</span> <a href="../classes/selectionstrategy.html" class="tsd-signature-type">SelectionStrategy</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">selection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> | </span><a href="../classes/selectionstrategy.html" class="tsd-signature-type">SelectionStrategy</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in lib/Helpers/Params.ts:47</li>
+							<li>Defined in lib/Helpers/Params.ts:40</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="stopcondition" class="tsd-anchor"></a>
 					<h3>stop<wbr>Condition</h3>
-					<div class="tsd-signature tsd-kind-icon">stop<wbr>Condition<span class="tsd-signature-symbol">:</span> <a href="../globals.html#stopconditionfunction" class="tsd-signature-type">StopConditionFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">stop<wbr>Condition<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in lib/Helpers/Params.ts:64</li>
+							<li>Defined in lib/Helpers/Params.ts:56</li>
 						</ul>
 					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>pop<span class="tsd-signature-symbol">: </span><a href="../classes/population.html" class="tsd-signature-type">Population</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span>, i<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>pop: <a href="../classes/population.html" class="tsd-signature-type">Population</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span></h5>
+											</li>
+											<li>
+												<h5>i: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="verbose" class="tsd-anchor"></a>
@@ -189,7 +203,17 @@
 					<div class="tsd-signature tsd-kind-icon">verbose<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"NONE"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"INFO"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"DEBUG"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in lib/Helpers/Params.ts:27</li>
+							<li>Defined in lib/Helpers/Params.ts:20</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="waitbetweeniterations" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> wait<wbr>Between<wbr>Iterations</h3>
+					<div class="tsd-signature tsd-kind-icon">wait<wbr>Between<wbr>Iterations<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in lib/Helpers/Params.ts:62</li>
 						</ul>
 					</aside>
 				</section>
@@ -210,9 +234,6 @@
 					<li class="current tsd-kind-interface tsd-has-type-parameter">
 						<a href="geneticalgorithmconfiguration.html" class="tsd-kind-icon">Genetic<wbr>Algorithm<wbr>Configuration</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="geneticalgorithmconfiguration.html#aftereach" class="tsd-kind-icon">after<wbr>Each</a>
-							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="geneticalgorithmconfiguration.html#crossover" class="tsd-kind-icon">crossover</a>
 							</li>
@@ -236,6 +257,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="geneticalgorithmconfiguration.html#verbose" class="tsd-kind-icon">verbose</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="geneticalgorithmconfiguration.html#waitbetweeniterations" class="tsd-kind-icon">wait<wbr>Between<wbr>Iterations</a>
 							</li>
 						</ul>
 					</li>

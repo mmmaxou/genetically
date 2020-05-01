@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Configuration | genetical</title>
+	<title>Configuration | genetically</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">genetical</a>
+					<a href="../index.html" class="title">genetically</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -57,7 +57,7 @@
 					<a href="configuration.html">Configuration</a>
 				</li>
 			</ul>
-			<h1>Class Configuration&lt;EncodedType&gt;</h1>
+			<h1>Class Configuration&lt;T, EncodedType&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -67,6 +67,9 @@
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
+					<li>
+						<h4>T</h4>
+					</li>
 					<li>
 						<h4>EncodedType</h4>
 					</li>
@@ -91,10 +94,23 @@
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="configuration.html#crossover" class="tsd-kind-icon">crossover</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="configuration.html#iterations" class="tsd-kind-icon">iterations</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="configuration.html#mutation" class="tsd-kind-icon">mutation</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="configuration.html#objective" class="tsd-kind-icon">objective</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="configuration.html#population" class="tsd-kind-icon">population</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="configuration.html#selection" class="tsd-kind-icon">selection</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="configuration.html#stopcondition" class="tsd-kind-icon">stop<wbr>Condition</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="configuration.html#verbose" class="tsd-kind-icon">verbose</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="configuration.html#waitbetweeniterations" class="tsd-kind-icon">wait<wbr>Between<wbr>Iterations</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="configuration.html#changeconfiguration" class="tsd-kind-icon">change<wbr>Configuration</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="configuration.html#get" class="tsd-kind-icon">get</a></li>
 							</ul>
 						</section>
 					</div>
@@ -106,28 +122,94 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Configuration<span class="tsd-signature-symbol">(</span>encode<span class="tsd-signature-symbol">: </span><a href="../globals.html#encodefunction" class="tsd-signature-type">EncodeFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span>, decode<span class="tsd-signature-symbol">: </span><a href="../globals.html#decodefunction" class="tsd-signature-type">DecodeFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span>, randomValue<span class="tsd-signature-symbol">: </span><a href="../globals.html#randomvaluefunction" class="tsd-signature-type">RandomValueFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>, fitness<span class="tsd-signature-symbol">: </span><a href="../globals.html#fitnessfunction" class="tsd-signature-type">FitnessFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>, config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/geneticalgorithmconfiguration.html" class="tsd-signature-type">GeneticAlgorithmConfiguration</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="configuration.html" class="tsd-signature-type">Configuration</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Configuration<span class="tsd-signature-symbol">(</span>encode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, decode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, randomValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, fitness<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, config<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/geneticalgorithmconfiguration.html" class="tsd-signature-type">GeneticAlgorithmConfiguration</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="configuration.html" class="tsd-signature-type">Configuration</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in lib/Helpers/Configuration.ts:41</li>
+									<li>Defined in lib/Helpers/Configuration.ts:42</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>encode: <a href="../globals.html#encodefunction" class="tsd-signature-type">EncodeFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>encode: <span class="tsd-signature-type">function</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EncodedType</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>x: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">EncodedType</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
 								</li>
 								<li>
-									<h5>decode: <a href="../globals.html#decodefunction" class="tsd-signature-type">DecodeFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>decode: <span class="tsd-signature-type">function</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>s<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>s: <span class="tsd-signature-type">EncodedType</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
 								</li>
 								<li>
-									<h5>randomValue: <a href="../globals.html#randomvaluefunction" class="tsd-signature-type">RandomValueFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>randomValue: <span class="tsd-signature-type">function</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
 								</li>
 								<li>
-									<h5>fitness: <a href="../globals.html#fitnessfunction" class="tsd-signature-type">FitnessFunction</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>fitness: <span class="tsd-signature-type">function</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>individual<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>individual: <span class="tsd-signature-type">T</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> config: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/geneticalgorithmconfiguration.html" class="tsd-signature-type">GeneticAlgorithmConfiguration</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
@@ -136,6 +218,99 @@
 							<h4 class="tsd-returns-title">Returns <a href="configuration.html" class="tsd-signature-type">Configuration</a></h4>
 						</li>
 					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="crossover" class="tsd-anchor"></a>
+					<h3>crossover</h3>
+					<div class="tsd-signature tsd-kind-icon">crossover<span class="tsd-signature-symbol">:</span> </div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in lib/Helpers/Configuration.ts:96</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="iterations" class="tsd-anchor"></a>
+					<h3>iterations</h3>
+					<div class="tsd-signature tsd-kind-icon">iterations<span class="tsd-signature-symbol">:</span> </div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in lib/Helpers/Configuration.ts:84</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="mutation" class="tsd-anchor"></a>
+					<h3>mutation</h3>
+					<div class="tsd-signature tsd-kind-icon">mutation<span class="tsd-signature-symbol">:</span> </div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in lib/Helpers/Configuration.ts:93</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="objective" class="tsd-anchor"></a>
+					<h3>objective</h3>
+					<div class="tsd-signature tsd-kind-icon">objective<span class="tsd-signature-symbol">:</span> </div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in lib/Helpers/Configuration.ts:81</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="population" class="tsd-anchor"></a>
+					<h3>population</h3>
+					<div class="tsd-signature tsd-kind-icon">population<span class="tsd-signature-symbol">:</span> </div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in lib/Helpers/Configuration.ts:87</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="selection" class="tsd-anchor"></a>
+					<h3>selection</h3>
+					<div class="tsd-signature tsd-kind-icon">selection<span class="tsd-signature-symbol">:</span> </div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in lib/Helpers/Configuration.ts:90</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="stopcondition" class="tsd-anchor"></a>
+					<h3>stop<wbr>Condition</h3>
+					<div class="tsd-signature tsd-kind-icon">stop<wbr>Condition<span class="tsd-signature-symbol">:</span> </div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in lib/Helpers/Configuration.ts:99</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="verbose" class="tsd-anchor"></a>
+					<h3>verbose</h3>
+					<div class="tsd-signature tsd-kind-icon">verbose<span class="tsd-signature-symbol">:</span> </div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in lib/Helpers/Configuration.ts:78</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="waitbetweeniterations" class="tsd-anchor"></a>
+					<h3>wait<wbr>Between<wbr>Iterations</h3>
+					<div class="tsd-signature tsd-kind-icon">wait<wbr>Between<wbr>Iterations<span class="tsd-signature-symbol">:</span> </div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in lib/Helpers/Configuration.ts:102</li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -150,7 +325,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in lib/Helpers/Configuration.ts:77</li>
+									<li>Defined in lib/Helpers/Configuration.ts:115</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -160,23 +335,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="get" class="tsd-anchor"></a>
-					<h3>get</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/geneticalgorithmconfiguration.html" class="tsd-signature-type">GeneticAlgorithmConfiguration</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in lib/Helpers/Configuration.ts:64</li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/geneticalgorithmconfiguration.html" class="tsd-signature-type">GeneticAlgorithmConfiguration</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EncodedType</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -200,11 +358,35 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="configuration.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="configuration.html#changeconfiguration" class="tsd-kind-icon">change<wbr>Configuration</a>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="configuration.html#crossover" class="tsd-kind-icon">crossover</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="configuration.html#iterations" class="tsd-kind-icon">iterations</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="configuration.html#mutation" class="tsd-kind-icon">mutation</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="configuration.html#objective" class="tsd-kind-icon">objective</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="configuration.html#population" class="tsd-kind-icon">population</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="configuration.html#selection" class="tsd-kind-icon">selection</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="configuration.html#stopcondition" class="tsd-kind-icon">stop<wbr>Condition</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="configuration.html#verbose" class="tsd-kind-icon">verbose</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="configuration.html#waitbetweeniterations" class="tsd-kind-icon">wait<wbr>Between<wbr>Iterations</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="configuration.html#get" class="tsd-kind-icon">get</a>
+								<a href="configuration.html#changeconfiguration" class="tsd-kind-icon">change<wbr>Configuration</a>
 							</li>
 						</ul>
 					</li>
